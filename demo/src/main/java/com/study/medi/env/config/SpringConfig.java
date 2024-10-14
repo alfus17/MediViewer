@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+// 스프링부트  설정 변경하는 config 파일
 @Configuration
 public class SpringConfig implements WebMvcConfigurer {
 	@Value("${dicome.img.path}") // 변수 파일에 등록된 java.file.test 값 가져오기
