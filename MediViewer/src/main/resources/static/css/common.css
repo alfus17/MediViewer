@@ -1,0 +1,57 @@
+.body {
+	display: flex;
+	flex-direction: row;
+	margin: 4% 2% 2%;
+	border: 0;
+	padding: 0;
+}
+
+.aside_control_panel {
+	width: 4vw;
+	margin: 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: beige;
+	height: 85vh;
+	margin-right: 2%
+}
+
+.aside_control_menu_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100%);
+}
+
+.menu_content {
+	margin-top: 1vh;
+	margin-bottom: 5vh;
+	display: flex;
+    flex-direction: column;
+	aspect-ratio: 1 / 1.2;
+}
+
+.menu_icon_container {
+	position: relative;
+	align-self: center;
+    display: block;
+    width: 70%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.menu_icon {
+	position: absolute;
+	width: 70%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.menu_label {
+	margin-top: 0.4vh;
+	align-self: center;
+	font-size: 13px;
+}

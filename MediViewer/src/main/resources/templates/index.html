@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MediViewer</title>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+	<link rel="stylesheet" href="/css/common.css">
+	<link rel="stylesheet" href="/css/list.css">
+	<link rel="stylesheet" href="/css/container.css">
+	<link rel="stylesheet" href="/css/modal.css">
+</head>
+
+<body class="body">
+
+	<!-- list aside 영역 -->
+	<aside class="aside_control_panel">
+		<span class="menu_content">
+				<span class="menu_icon_container">
+					<img class="menu_icon" src="/img/icon/user.png" alt="">					
+				</span>
+				<label class="menu_label">사용자</label>
+			</span>
+		<span class="aside_control_menu_container">
+			<span class="menu_content" id="calendarOpenSwitch">
+				<span class="menu_icon_container">
+					<img class="menu_icon" src="/img/icon/calendar.png" alt="">					
+				</span>
+				<label class="menu_label">기간 선택</label>
+			</span>
+			<span class="menu_content">
+				<span class="menu_icon_container">
+					<img class="menu_icon" src="/img/icon/logout.png" alt="">					
+				</span>
+				<label class="menu_label">로그아웃</label>
+			</span>
+		</span>
+	</aside>
+	<aside th:replace="~{/fragments/modal.html :: calendar-modal}"></aside>
+
+	<!-- list main 영역 -->
+	<main class="main_list">
+
+		<!-- list 영역 -->
+		<aside class="aside_date_query">
+			<button type="button" name="btnDateDur" value="null">x</button>
+			<button type="button" name="btnDateDur" value="1">1D</button>
+			<button type="button" name="btnDateDur" value="3">3D</button>
+			<button type="button" name="btnDateDur" value="7">7D</button>
+			<button type="button" name="btnDateDur" value="30">30D</button>
+		</aside>
+
+		<div class="div_list_area">
+			<section class="section_list_container">
+				<div class="div_list_control_panel">
+					<div class="div_list_query_panel">
+						<section>
+							<select name="queryType" id="queryType"> <!-- onchange="setQueryStringContainer()" -->
+								<option value="pID">환자아이디</option>
+								<option value="pName">환자명</option>
+								<option value="modality">장비명</option>
+								<option value="studyDesc">검사설명</option>
+							</select>
+
+							<span id="queryStringContainer">
+								<input type="text" id="queryString" placeholder="환자아이디를 입력하세요...">
+							</span>
+
+							<select name="queryJudgement" id="queryJudgement">
+								<option value="null">판독 상태</option>
+								<option value="NR">읽지않음</option>
+								<option value="RD">열람중</option>
+								<option value="PJ">예비 판독</option>
+								<option value="JD">판독</option>
+							</select>
+
+							<button type="submit" id="doQuery">검색</button>
+							<button type="reset" id="resetQuery">초기화</button>
+						</section>
+
+						<section>
+							<button type="button">o</button>
+							<button type="button">o</button>
+							<select class="select_page_size" name="listPageSize" id="listPageSize" onselect="setListPageSize()">
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="50">50</option>
+							</select>
+							<label for="listPageSize">개 항목으로 보기</label>
+						</section>
+					</div>
+
+					<section>
+						<ul th:replace="~{/fragments/list.html :: patient-list}"></ul>
+					</section>
+				</div>
+			</section>
+
+			<div class="div_etc_area">
+				<!-- history 영역 -->
+				<section th:replace="~{/fragments/list.html :: hist-list}"></section>
+				<!-- thumbnail 영역 -->
+				<!-- 확대 버튼 누르면 모달창 나오게 만들기 모달은 이미지영역 / 코멘트 영역 포함 -->
+				<span class="span_prev_img_container" id="previewImageContainer">
+					<button class="btn_prev_img_extend" onclick=""></button>
+				</span>
+			</div>
+		</div>
+	</main>
+
+	<script src="/js/modalControl.js"></script>
+	<script src="/js/setQueryStringContainer.js"></script>
+	<script src="/js/setStudyListContent.js"></script>
+	<script src="/js/setHistListContent.js"></script>
+	<script src="/js/listSort.js"></script>
+	<script src="/js/calendar.js"></script>
+	<script>
+		let isCalendarOpen = false;
+		let isPreviewOpen = false;
+		const items = [];
+		const histItems = [];
+		const histPData = [];
+		const sortOrder = [];
+		
+		function getDefList() {
+			return axios.get('/api/lists/items')
+				.then(response => {
+					const queryData = response.data;
+					
+					if(items.length > 0){
+						items.splice(0, items.length);						
+					}
+					
+					if(queryData.length > 0){
+						items.push(...queryData)			
+					}
+				})
+				.catch(error => {
+					console.error(error);
+				})
+		}
+		
+		window.onload = () => {
+			console.log("onLoad")
+
+			
+			getDefList();
+		}
+	</script>
+</body>
+
+</html>
