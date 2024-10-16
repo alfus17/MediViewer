@@ -44,7 +44,7 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 	                               @Param("pID") String pID,
 	                               @Param("pName") String pName,
 	                               @Param("modality") String modality,
-	                               @Param("state") int state, 
+	                               @Param("state") Integer state, // Integer 자료형 사용
 	                               @Param("startDate") String startDate,
 	                               @Param("endDate") String endDate);
 
