@@ -14,18 +14,6 @@
         <span class="w5" name="itemHeader" id="seriesCnt">시리즈</span>
         <span class="w5" name="itemHeader" id="imageCnt">이미지</span>
      </li>
-  
-     <li th:each="item : ${items}" id="${item.studyKey}" onclick="setHistPData('${item.pID}', '${item.pName}')" ondblclick="goDetail(this.id)">
-        <input class="checkbox" type="checkbox" name="selectOne">
-        <span class="w10" th:text="${item.pID}">환자 아이디</span>
-        <span class="w10" th:text="${item.pName}">환자 이름</span>
-        <span class="w8" th:text="${item.modality}">검사 장비</span>
-        <span class="span_study_desc" th:text="${item.studyDesc}">검사 설명</span>
-        <span class="w10" th:text="${item.studyDate}">검사 일시</span>
-        <span class="w5" th:text="${item.reportStatus}">판독 상태</span>
-        <span class="w5" th:text="${item.seriesCnt}">시리즈</span>
-        <span class="w5" th:text="${item.imageCnt}">이미지</span>
-     </li>
      <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
   </ul>
   
@@ -54,7 +42,7 @@
 			<span class="w5" name="itemHeader" id="histImageCnt">이미지</span>
 		</li>
 		
-		<li th:each="histItem : ${histItems}" id="h'${histItem.studyKey}'" onclick="`클릭 시`" ondblclick="goDetail(this.id)">
+		<li th:each="histItem : ${histItems}" id="h`${histItem.studyKey}`" onclick="`클릭 시`" ondblclick="goDetail(this.id)">
 			<span class="w8" th:text="${histItem.modality}">검사 장비</span>
 			<span class="span_study_desc" th:text="${histItem.studyDesc}">검사 설명</span>
 			<span class="w10" th:text="${histItem.studyDate}">검사 일시</span>
