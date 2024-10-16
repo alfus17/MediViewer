@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+	<aside th:fragment="calendar-modal" class="aside_modal_area">
+		<div class="flatpickr">
+			<input type="text" id="calendarInput" placeholder="Select Date.." data-input style="display: none;"> <!-- input is mandatory -->
+
+			<a class="input-button" title="toggle" data-toggle>
+			    <i class="icon-calendar"></i>
+			</a>
+
+			<a class="input-button" title="clear" data-clear>
+			    <i class="icon-close"></i>
+			</a>
+		</div>
+		
+		<div class="date_area">
+			<span class="date_container">
+				<label class="label_date" for="startDate">시작일</label>
+				<input class="input_date_ro" id="startDate" readonly disabled>
+			</span>
+			<span class="date_container">
+				<label class="label_date" for="endDate">종료일</label>
+				<input class="input_date_ro" id="endDate" readonly disabled>
+			</span>
+		</div>
+		
+		<div>
+			<input type="button" id="doSelectedDurationQuery" value="검색">
+			<input type="button" id="clearCalendarBtn" value="초기화">
+		</div>
+	</aside>
+
+	<span id="calendarSpan"></span>
+  
+  <figure th:fragment="preview-modal">
+	  <img />
+	  <span></span>
+  </figure>
+</html>

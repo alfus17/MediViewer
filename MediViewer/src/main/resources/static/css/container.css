@@ -1,0 +1,48 @@
+.ul_studylist_container {
+	padding: 0;
+	list-style: none;
+	width: 100%;
+	text-align: center;
+	border: solid 1px black;
+}
+
+.ul_studylist_container > li {
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.checkbox {
+	width: 3%;
+}
+
+.w5 {
+	width: 5%;
+}
+
+.w8 {
+	width: 8%;
+}
+
+.w10 {
+	width: 10%;
+}
+
+.span_study_desc {
+	min-width: 40%;
+	width: auto;
+	max-width: 43%;
+}
+
+.section_history_area {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%
+}
+
+.div_history_info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}

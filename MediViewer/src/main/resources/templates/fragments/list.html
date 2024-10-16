@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+  <ul class="ul_studylist_container" name="studyList" th:fragment="patient-list">
+     <li>
+        <input class="checkbox" type="checkbox" id="selectAll">
+        <span class="w10" name="itemHeader" id="pID">환자 아이디</span>
+        <span class="w10" name="itemHeader" id="pName">환자 이름</span>
+        <span class="w8" name="itemHeader" id="modality">검사 장비</span>
+        <span class="span_study_desc" name="itemHeader" id="studyDesc">검사 설명</span>
+        <span class="w10" name="itemHeader" id="studyDate">검사 일시</span>
+        <span class="w5" name="itemHeader" id="reportStatus">판독 상태</span>
+        <span class="w5" name="itemHeader" id="seriesCnt">시리즈</span>
+        <span class="w5" name="itemHeader" id="imageCnt">이미지</span>
+     </li>
+  
+     <li th:each="item : ${items}" id="${item.studyKey}" onclick="setHistPData('${item.pID}', '${item.pName}')" ondblclick="goDetail(this.id)">
+        <input class="checkbox" type="checkbox" name="selectOne">
+        <span class="w10" th:text="${item.pID}">환자 아이디</span>
+        <span class="w10" th:text="${item.pName}">환자 이름</span>
+        <span class="w8" th:text="${item.modality}">검사 장비</span>
+        <span class="span_study_desc" th:text="${item.studyDesc}">검사 설명</span>
+        <span class="w10" th:text="${item.studyDate}">검사 일시</span>
+        <span class="w5" th:text="${item.reportStatus}">판독 상태</span>
+        <span class="w5" th:text="${item.seriesCnt}">시리즈</span>
+        <span class="w5" th:text="${item.imageCnt}">이미지</span>
+     </li>
+     <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
+  </ul>
+  
+  <section th:fragment="hist-list" class="section_history_area">
+	  <label for="">과거 검사 이력</label>
+	  <div class="div_history_info">
+		  <span>
+			  <span name="pIdVerticalSpan">|</span>
+			  <label for="pIdVerticalSpan" name="pIdLabel">환자 아이디: </label>
+			  <label for="pIdLabel" id="histPID"></label>
+		  </span>
+		  
+		  <span>
+			  <span name="pNameVerticalSpan">|</span>
+			  <label for="pNameVerticalSpan" name="pNameLabel">환자 이름: </label>
+			  <label for="pNameLabel" id="histPName"></label>			  
+		  </span>
+	  </div>
+	  <ul class="ul_studylist_container" name="histStudyList">
+		<li>
+			<span class="w8" name="itemHeader" id="histModality">검사 장비</span>
+			<span class="span_study_desc" name="itemHeader" id="histStudyDesc">검사 설명</span>
+			<span class="w10" name="itemHeader" id="histStudyDate">검사 일시</span>
+			<span class="w10" name="itemHeader" id="histReportStatus">판독 상태</span>
+			<span class="w5" name="itemHeader" id="histSeriesCnt">시리즈</span>
+			<span class="w5" name="itemHeader" id="histImageCnt">이미지</span>
+		</li>
+		
+		<li th:each="histItem : ${histItems}" id="h'${histItem.studyKey}'" onclick="`클릭 시`" ondblclick="goDetail(this.id)">
+			<span class="w8" th:text="${histItem.modality}">검사 장비</span>
+			<span class="span_study_desc" th:text="${histItem.studyDesc}">검사 설명</span>
+			<span class="w10" th:text="${histItem.studyDate}">검사 일시</span>
+	        <span class="w10" th:text="${histItem.reportStatus}">판독 상태</span>
+	        <span class="w5" th:text="${histItem.seriesCnt}">시리즈</span>
+	        <span class="w5" th:text="${histItem.imageCnt}">이미지</span>
+		</li>
+     <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
+  </ul>
+  </section>
+</html>
