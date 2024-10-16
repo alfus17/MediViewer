@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.tjoeun.mediviewer.domain.ReqParams;
 import com.tjoeun.mediviewer.domain.StudyTab;
 import com.tjoeun.mediviewer.service.CommentService;
 import com.tjoeun.mediviewer.service.ImageTabService;
@@ -55,35 +58,26 @@ public class ListController {
 	}
 	
 
-	@GetMapping("/query")
-	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@PathVariable("pID") String pID, @PathVariable("pName") String pName){
-		
-		HashMap<String , Object> reqParams =  new HashMap<>();
-		
-		return ResponseEntity.ok().body(studyService.findAllByParams(null, null,reqParams)); 
-	}
-	
-	
-	
-//	@PostMapping("/query")
-//	public String getAllWorkList(@RequestBody HashMap<String, Object> params , Model model){
-//		// 파라미터 받기
-//       String pID = (String) params.get("pID");
-//       String pName = (String) params.get("pName");
-//       String modality = (String) params.get("modality");
-//       String state = (String) params.get("state");
-//       int slice = Integer.parseInt((String) params.get("slice"));
-//       int nowPage = Integer.parseInt((String) params.get("nowpage"));
-//       String [] date = (String[]) params.get("date");
-//       
-//       Sort sort = Sort.by(Sort.Order.desc("inserted"));
-//       Pageable pageable = PageRequest.of(nowPage - 1, slice, sort);
-//              
-////       System.out.println("result : "+studyService.getAllStudyTab(pageable));
-//       
-//       return "index";
+//	@GetMapping("/query")
+//	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@PathVariable("pID") String pID, @PathVariable("pName") String pName){
 //		
+//		HashMap<String , Object> reqParams =  new HashMap<>();
+//		
+//		return ResponseEntity.ok().body(studyService.findAllByParams(null, null,reqParams)); 
 //	}
 	
 	
-}
+	
+	@PostMapping("/query")
+	@ResponseBody
+	public String getAllWorkList(@RequestBody ReqParams params, Model model){
+		// 파라미터 받기
+		System.out.println("ListController ReqParams : " + params);
+		
+		studyService.findAllByParams(params);
+       
+       return null;
+		
+	}
+}	
+	

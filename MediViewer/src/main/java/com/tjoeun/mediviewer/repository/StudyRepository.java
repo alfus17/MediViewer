@@ -35,18 +35,8 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 	        + "st.AI_NUMBER_OF_FINDINGS as aiNumberOfFindings, "
 	        + "st.AI_REPORT as aiReport "
 	        + "from STUDYTAB st "
-	        + "where (:pID IS NULL OR st.PID = :pID) "
-	        + "and (:pName IS NULL OR st.PNAME LIKE %:pName%) "
-	        + "and (:modality IS NULL OR st.MODALITY = :modality) "
-	        + "and (:state IS NULL OR st.REPORTSTATUS = :state) "
-	        + "and (:startDate IS NULL OR :endDate IS NULL OR st.STUDYDATE BETWEEN :startDate AND :endDate)")
-	Page<WorkList> findAllByParams(Pageable pageable,
-	                               @Param("pID") String pID,
-	                               @Param("pName") String pName,
-	                               @Param("modality") String modality,
-	                               @Param("state") Integer state, // Integer 자료형 사용
-	                               @Param("startDate") String startDate,
-	                               @Param("endDate") String endDate);
+	        + "where " + sqlStr , nativeQuery = true)
+	Page<WorkList> findAllByParams(Pageable pageable,  String sqlStr);
 
 
 
