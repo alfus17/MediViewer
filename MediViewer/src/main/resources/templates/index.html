@@ -113,6 +113,7 @@
 		</div>
 	</main>
 
+	<script src="/js/commonAxios.js"></script>
 	<script src="/js/modalControl.js"></script>
 	<script src="/js/setQueryStringContainer.js"></script>
 	<script src="/js/setStudyListContent.js"></script>
@@ -122,32 +123,16 @@
 	<script>
 		let isCalendarOpen = false;
 		let isPreviewOpen = false;
+		let totalCnt;
 		const items = [];
 		const histItems = [];
 		const histPData = [];
 		const sortOrder = [];
 		
-		function getDefList() {
-			return axios.get('/api/lists/items')
-				.then(response => {
-					const queryData = response.data;
-					
-					if(items.length > 0){
-						items.splice(0, items.length);						
-					}
-					
-					if(queryData.length > 0){
-						items.push(...queryData)			
-					}
-				})
-				.catch(error => {
-					console.error(error);
-				})
-		}
+		
 		
 		window.onload = () => {
 			console.log("onLoad")
-
 			
 			getDefList();
 		}
