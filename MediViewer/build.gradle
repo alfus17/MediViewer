@@ -44,6 +44,10 @@ dependencies {
 	
 	// Password Crypto
 	implementation 'org.springframework.security:spring-security-crypto:6.3.1'
+	
+	// 시큐리티
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	
 }
 
 tasks.named('test') {
