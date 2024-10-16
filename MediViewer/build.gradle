@@ -44,6 +44,9 @@ dependencies {
 	
 	// Password Crypto
 	implementation 'org.springframework.security:spring-security-crypto:6.3.1'
+	
+	// QueryDsl
+	implementation 'com.querydsl:querydsl-jpa'
 }
 
 tasks.named('test') {
