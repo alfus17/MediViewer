@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/cornerstone-core"></script>
+<script src="https://unpkg.com/cornerstone-tools"></script>
+<script src="https://unpkg.com/dicom-parser"></script>
+<script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
+<style>
+	#dicomImage {
+		height:600px;
+	}
+</style>
+</head>
+<body>
+
+	<div id="dicomImage"
+         style="width:512px;height:512px"
+         oncontextmenu="return false"
+         onmousedown="return false">
+    </div>
+
+    <br>
+
+    <button id="hFlip" type="button" class="btn btn-default">좌우반전</button>
+    <button id="invert" type="button" class="btn btn-default">흑백반전</button>
+    <button id="reset" type="button" class="btn btn-default">Reset</button>
+    
+<script src="js/imgLoad.js"></script>
+<script src="js/easyButton.js"></script>
+</body>
+</html>
