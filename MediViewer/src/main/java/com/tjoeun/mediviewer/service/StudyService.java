@@ -24,9 +24,6 @@ public class StudyService {
 	final static int DEF_SLICE = 10;
 	final static int DEF_NOW_PAGE = 0;
 	
-	final static String QUERY_CONNECTOR = " and ";
-	final static String[] QUERY_FIELD = {"pID", "pName", "modality", "reportStatus", "sDate", "eDate"};
-	
 	public Pageable setPageable(Integer nowPage, Integer slice) {
 		if(nowPage != null && slice != null) {
 			Sort sort = Sort.by(Sort.Order.desc("studyDate"));
@@ -57,37 +54,21 @@ public class StudyService {
 	
 	public HashMap<String, Object> getQueryStudyTab(ReqParams params) {
 		HashMap<String, Object> result = new HashMap<>();
-		StringBuilder sql = new StringBuilder();
+		
+		System.out.println(params);
 		
 		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
-		System.out.println(pageable);
+		Page<WorkList> items = studyRepo.findByDynamicQuery(
+				params.getPid(),
+				params.getPname(),
+				params.getModality(),
+				params.getStatus(),
+				params.getSdate(),
+				params.getEdate(),
+				pageable);
 		
-		if(params.getPID() != null && !(params.getPID()).equals("")) {
-			sql.append(QUERY_FIELD[0]).append("=").append(params.getPID()).append(QUERY_CONNECTOR);
-		}
-		
-		if(params.getPName() != null && !(params.getPName()).equals("")) {
-			sql.append(QUERY_FIELD[1]).append("=").append(params.getPName()).append(QUERY_CONNECTOR);
-		}
-		
-		if(params.getModality() != null && !(params.getModality()).equals("")) {
-			sql.append(QUERY_FIELD[2]).append("=").append(params.getModality()).append(QUERY_CONNECTOR);
-		}
-		
-		if(params.getStatus() != null && params.getStatus() != 0) {
-			sql.append(QUERY_FIELD[3]).append("=").append(params.getStatus()).append(QUERY_CONNECTOR);
-		}
-		
-		if(params.getSDate() != null && !(params.getSDate()).equals("")) {
-			sql.append(QUERY_FIELD[4]).append("=").append(params.getSDate()).append(QUERY_CONNECTOR);
-		}
-		
-		if(params.getEDate() != null && !(params.getEDate()).equals("")) {
-			sql.append(QUERY_FIELD[5]).append("=").append(params.getEDate()).append(QUERY_CONNECTOR);
-		}
-		
-		System.out.println(sql.toString());
-		
-		return null;
+		result.put("count", items.getTotalElements());
+		result.put("items", items.getContent());
+		return result;
 	}
 }

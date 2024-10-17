@@ -4,11 +4,13 @@ function resetSelectors(e) {
 	$("#queryString").prop("placeholder", "환자아이디를 입력하세요...");
 	$("#queryJudgement").prop("selectedIndex", 0);
 	
+	
 	if($(e.target).is("#resetQuery")){
+		resetItems(items);
+		resetItems(histItems);
 		getDefList();
 	};
 	
-	resetHistData();
 }
 
 // 기간 선택 후 쿼리 로직

@@ -48,6 +48,7 @@ public class ListController {
 	
 	@PostMapping("/query")
 	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@RequestBody ReqParams params) {
+		System.out.println(params);
 		return ResponseEntity.ok().body(studyService.getQueryStudyTab(params)); 
 	}	
 	
