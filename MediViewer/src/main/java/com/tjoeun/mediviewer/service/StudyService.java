@@ -2,6 +2,7 @@ package com.tjoeun.mediviewer.service;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.mediviewer.domain.ReqParams;
+import com.tjoeun.mediviewer.domain.StudyTab;
 import com.tjoeun.mediviewer.domain.WorkList;
 import com.tjoeun.mediviewer.repository.StudyRepository;
 
@@ -52,52 +54,74 @@ public class StudyService {
 		System.out.println(pageable);
 		Page<WorkList> items = studyRepo.findBy(pageable);
 		
+		// modalities 가져오기
+		List<String> modalityList = studyRepo.findModality();
+		System.out.println("Service_modalityList : " + modalityList);
+		
+		// reportStatus 가져오기 
+		List<String> reportStatusList = studyRepo.findReportStatus();
+		System.out.println("Service_reportStatusList : " + reportStatusList);
+		
+		result.put("reportStatus", reportStatusList);
+		result.put("modalities", modalityList);
 		result.put("count", items.getTotalElements());
 		result.put("items", items.getContent());
+		
 		return result;
 	}
 	
-	// 전부 쿼리 파라미터로 검색데이터 가져오기 
+	
+	
+	
+//	// 전부 쿼리 파라미터로 검색데이터 가져오기 
+//	public HashMap<String, Object> findAllByParams(ReqParams params)  {
+//		// 결과값 리턴 데이터 
+//		HashMap<String, Object> result = new HashMap<>();
+//		StringBuilder sql  = new StringBuilder();
+//		
+//		// 필드 목록 가져오기 리플렉터 사용
+//		Field[] fields = params.getClass().getDeclaredFields();
+//		
+//		// sql문 만들기
+//		for(Field field : fields) {
+//			field.setAccessible(true);// 필드 접근권한 허용
+////			System.out.println("service_findAllByParams : " + field.getName());
+////			System.out.println("service_findAllByParams_val: " + field.get(params));
+//			
+//			try {
+//				if(field.get(params) != null && !(field.getName().equals("eDate"))  && !(field.getName().equals("sDate"))) {
+//					if(!(field.getName().equals("nowPage")) && !(field.getName().equals("slice"))) {
+//						sql.append(field.getName()).append(" = ").append( field.get(params)).append(SQL_CONNECTOR);
+//					}
+//				}
+//				
+//			} catch (Exception e) {
+//				System.out.println("error : " + e);
+//			}
+//		}
+//		sql.append(" 1 = 1");
+//		System.out.println("Service_findAllByParams_sql : " + sql);
+//	
+//		// 기본 페이징 처리 세팅 
+//		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
+//		System.out.println(pageable);
+//		
+//		
+//		// 쿼리 
+//		Page<WorkList> items = studyRepo.findAllByParams(pageable , sql.toString());
+//		
+//		
+//		result.put("count", items.getTotalElements());
+//		result.put("items", items.getContent());
+//		return result;
+//	}
+	
 	public HashMap<String, Object> findAllByParams(ReqParams params)  {
 		// 결과값 리턴 데이터 
 		HashMap<String, Object> result = new HashMap<>();
 		StringBuilder sql  = new StringBuilder();
 		
-		// 필드 목록 가져오기 리플렉터 사용
-		Field[] fields = params.getClass().getDeclaredFields();
-		
-		// sql문 만들기
-		for(Field field : fields) {
-			field.setAccessible(true);// 필드 접근권한 허용
-//			System.out.println("service_findAllByParams : " + field.getName());
-//			System.out.println("service_findAllByParams_val: " + field.get(params));
-			
-			try {
-				if(field.get(params) != null && !(field.getName().equals("eDate"))  && !(field.getName().equals("sDate"))) {
-					if(!(field.getName().equals("nowPage")) && !(field.getName().equals("slice"))) {
-						sql.append(field.getName()).append(" = ").append( field.get(params)).append(SQL_CONNECTOR);
-					}
-				}
-				
-			} catch (Exception e) {
-				System.out.println("error : " + e);
-			}
-		}
-		sql.append(" 1 = 1");
-		System.out.println("ervice_findAllByParams_sql : " + sql);
-	
-		// 기본 페이징 처리 세팅 
-		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
-		System.out.println(pageable);
-		
-		
-		// 쿼리 
-		Page<WorkList> items = studyRepo.findAllByParams(pageable , sql.toString());
-		
-		
-		result.put("count", items.getTotalElements());
-		result.put("items", items.getContent());
-		return result;
+		return null;
 	}
 	
 	

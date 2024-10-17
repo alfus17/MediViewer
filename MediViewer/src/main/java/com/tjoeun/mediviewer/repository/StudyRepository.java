@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.tjoeun.mediviewer.domain.StudyTab;
 import com.tjoeun.mediviewer.domain.WorkList;
 
+import java.util.*;
+
 @Repository
 public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 
@@ -35,8 +37,14 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 	        + "st.AI_NUMBER_OF_FINDINGS as aiNumberOfFindings, "
 	        + "st.AI_REPORT as aiReport "
 	        + "from STUDYTAB st "
-	        + "where " + sqlStr , nativeQuery = true)
-	Page<WorkList> findAllByParams(Pageable pageable,  String sqlStr);
+	        + "where :sql"  , nativeQuery = true)
+	Page<WorkList> findAllByParams(Pageable pageable, @Param("sql") String sql);
+
+	@Query(value ="SELECT DISTINCT st.MODALITY FROM StudyTab st" ,  nativeQuery = true)
+	List<String> findModality();
+	
+	@Query(value ="SELECT DISTINCT st.REPORTSTATUS FROM StudyTab st" ,  nativeQuery = true)
+	List<String> findReportStatus();
 
 
 

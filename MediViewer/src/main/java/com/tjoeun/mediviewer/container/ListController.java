@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.tjoeun.mediviewer.domain.ReqParams;
 import com.tjoeun.mediviewer.domain.StudyTab;
@@ -59,25 +57,29 @@ public class ListController {
 	
 
 //	@GetMapping("/query")
-//	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@PathVariable("pID") String pID, @PathVariable("pName") String pName){
+//	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@Param("pID") String pID, @Param("pName") String pName){
 //		
 //		HashMap<String , Object> reqParams =  new HashMap<>();
 //		
+//		reqParams.put("pID",pID);
+//		reqParams.get("pName");
+//		reqParams.get("modality");
+//		reqParams.get("state");
+//		reqParams.get("startDate");
+//		reqParams.get("endDate");
+//		
 //		return ResponseEntity.ok().body(studyService.findAllByParams(null, null,reqParams)); 
 //	}
-	
+//	
 	
 	
 	@PostMapping("/query")
-	@ResponseBody
-	public String getAllWorkList(@RequestBody ReqParams params, Model model){
-		// 파라미터 받기
-		System.out.println("ListController ReqParams : " + params);
-		
+	public String getAllWorkList(@RequestBody ReqParams params , Model model){
+		System.out.println("ListController_ReqParams : " + params);
 		studyService.findAllByParams(params);
-       
-       return null;
+       return "index";
 		
 	}
-}	
 	
+	
+}
