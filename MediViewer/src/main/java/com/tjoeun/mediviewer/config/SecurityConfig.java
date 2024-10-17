@@ -38,12 +38,20 @@ public class SecurityConfig {
     }
 
     // CustomMemberDetailsService를 호출하는 부분
+    // 사용자 인증을 위한 부분
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = 
-            http.getSharedObject(AuthenticationManagerBuilder.class);
+    	// AuthenticationManager : 사용자 인증을 처리하는 역할
+    	// authManager(HttpSecurity http) : HttpSecurity 객체를 인자로 받아서 HTTP요청에 대한 보안 설정을 다루는 역할
+    	// throws Exception : 이 메소드가 실행되는 동안 발생할 수 있는 예외를 처리하기 위함
+    	
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        // 앞부분 (AuthenticationManagerBuilder) : 사용자 인증을 구성하는 데 사용됨. (사용자 인증에 대한 세부 설정을 만들기 위한 빌더)
+        // 뒷부분 (http.get ~ class)) : HttpSecurity 객체에서 AuthenticationManagerBuilder를 가져옴
+        
         authenticationManagerBuilder.userDetailsService(memberDetailsService).passwordEncoder(passwordEncoder());
-        							// userDetailsService는 시큐리티에서 제공하는 서비스
+        // 52 줄 전체가 인증을 어디에서 처리할 지 정하는 줄 (여기서는 memberDetailsService로 정함)
+        // userDetailsService는 시큐리티에서 제공하는 서비스
         return authenticationManagerBuilder.build();
     }
 
@@ -53,7 +61,7 @@ public class SecurityConfig {
     }
 }
 /*
-	SecurityFilterChain가 사실 가로채는 역할 (모든 요청을 가로챔)
+	SecurityFilterChain이 사실 가로채는 역할 (모든 요청을 가로챔)
 	원래는 LoginController의 "/"로 가야 하는데 로그인이 안 되어있으니깐 /login으로 이동시켜줌
 	그 후 로그인 버튼을 누르면 CustomMemberDetailsService에서 loadUserByUsername 메소드가 사용자 정보를 가져옴
 	데이터베이스에서 해당 사용자의 정보를 조회 후 로그인

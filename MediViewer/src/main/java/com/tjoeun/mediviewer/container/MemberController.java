@@ -26,6 +26,15 @@ public class MemberController implements CommandLineRunner {
         			// 로드하는 이유는 기본적인 설정이나 필수 데이터들을 미리 준비해두기 위해서
         			// 예를 들면 db에 admin이라는 유저가 있어야 로그인이 되기 때문에 없다면 생성을 해서 이를 미리 준비하는 것
     }
+    
+    // memberService.loadInitialData();가 2번 쓰인 이유는 각 호출이 서로 다른 상황에서 초기 데이터를 로드할 수 있도록 하기 위함
+    // loadData에 있는 loadInitialData는 클라이언트 요청에 의한 수동 로딩
+    // 지울 경우 데이터가 없는 상태에서 로그인을 시도하면 문제가 발생할 수 있음
+    
+    // run에 있는 loadInitialData는 애플리케이션 실행 시 자동 로딩
+    // 지울 경우 초기 데이터가 없어지므로 로그인을 할 수 없음
+    
+    // 결국은 유연성과 편리성을 위해 두 곳에서 쓰임
 }
 /*
 	1. CommandLineRunner는 스프링에서 제공하는 인터페이스, run 메소드를 실행시킴
