@@ -1,34 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://unpkg.com/cornerstone-core"></script>
-<script src="https://unpkg.com/cornerstone-tools"></script>
-<script src="https://unpkg.com/dicom-parser"></script>
-<script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
-<style>
-	#dicomImage {
-		height:600px;
-	}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack Manipulation Tools</title>
+    <link rel="stylesheet" href="/css/view.css">
 </head>
 <body>
-
-	<div id="dicomImage"
-         style="width:512px;height:512px"
-         oncontextmenu="return false"
-         onmousedown="return false">
-    </div>
-
-    <br>
-
-    <button id="hFlip" type="button" class="btn btn-default">좌우반전</button>
-    <button id="invert" type="button" class="btn btn-default">흑백반전</button>
-    <button id="wwwcButton" type="button" class="btn btn-default">wwwc tool</button>
-    <button id="reset" type="button" class="btn btn-default">Reset</button>
+	
+	<div class="c">
+		<div class="left">
+			<h2>썸네일 자리</h2>
+		</div>	
+		
+		<div class="right">
+				
+			<div class="btns">
+			<button id="hFlip" >좌우반전</button>
+			<button id="invert" >흑백반전</button>
+			<button id="zoom" >줌아웃</button>
+			<button id="" >윈도우 레벨</button>
+			<button id="reset" >초기화</button>
+			</div>
+	
+		    <div id="dicomImage" style="width: 80%; height: 85%; border: 1px solid black;"></div>
+		    
+		</div>
+	</div>
     
-<script src="js/imgLoad.js"></script>
-<script src="js/easyButton.js"></script>
 </body>
+    <script src="https://unpkg.com/cornerstone-core@2.3.0/dist/cornerstone.min.js"></script>
+    <script src="https://unpkg.com/cornerstone-tools@6.0.10/dist/cornerstoneTools.min.js"></script>
+    <script src="https://unpkg.com/cornerstone-wado-image-loader@3.0.0/dist/cornerstoneWADOImageLoader.min.js"></script>
+    <script src="https://unpkg.com/dicom-parser@1.8.5/dist/dicomParser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/stackImgLoad.js"></script>
+    <script src="js/easyButton.js"></script>
+    <script src="js/zoomButton.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // studyKey가 16인 데이터 가져오기
+            axios.get('/api/studykey/16/serieskey/2')
+                .then(response => {				
+					// 데이터 형식 추가
+                    const imagePaths = response.data;
+                    console.log("Image paths:", imagePaths);
+
+                    // 필요한 추가 로직 구현 (예: 이미지 배열에 추가)
+                })
+                .catch(error => {
+                    console.error("Error fetching image data:", error);
+                });
+        });
+    </script>
+   
+ 	
 </html>

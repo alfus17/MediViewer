@@ -16,7 +16,9 @@
 	<link rel="stylesheet" href="/css/modal.css">
 </head>
 
+
 <body class="body">
+	<p><a href="#" id="studyKeyLink">ㅇㅇㅇ</a></p>
 
 	<!-- list aside 영역 -->
 	<aside class="aside_control_panel">
@@ -60,7 +62,7 @@
 				<div class="div_list_control_panel">
 					<div class="div_list_query_panel">
 						<section>
-							<select name="queryType" id="queryType"> <!-- onchange="setQueryStringContainer()" -->
+							<select name="queryType" id="queryType" onclick=""> <!-- onchange="setQueryStringContainer()" -->
 								<option value="pID">환자아이디</option>
 								<option value="pName">환자명</option>
 								<option value="modality">장비명</option>
@@ -120,6 +122,15 @@
 	<script src="/js/setHistListContent.js"></script>
 	<script src="/js/listSort.js"></script>
 	<script src="/js/calendar.js"></script>
+
+<script>
+    const studyKey = 2; // 여기에서 studyKey를 설정하세요.
+
+    document.getElementById('studyKeyLink').addEventListener('click', function() {
+        window.location.href = `/view?studykey=${studyKey}`; // 이동할 URL 설정
+    });
+</script>
+
 	<script>
 		let isCalendarOpen = false;
 		let isPreviewOpen = false;
