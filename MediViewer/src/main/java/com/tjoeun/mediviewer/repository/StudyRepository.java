@@ -1,5 +1,7 @@
 package com.tjoeun.mediviewer.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,5 +38,12 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
             @Param("sDate") String sDate,
             @Param("eDate") String eDate,
             Pageable pageable);
+	
+	@Query(value ="SELECT DISTINCT st.MODALITY FROM StudyTab st" ,  nativeQuery = true)
+	List<String> findModality();
+	
+	@Query(value ="SELECT DISTINCT st.REPORTSTATUS FROM StudyTab st" ,  nativeQuery = true)
+	List<Integer> findReportStatus();
+
 
 }
