@@ -1,6 +1,6 @@
 package com.tjoeun.mediviewer.service;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.mediviewer.domain.ReqParams;
-import com.tjoeun.mediviewer.domain.StudyTab;
 import com.tjoeun.mediviewer.domain.WorkList;
 import com.tjoeun.mediviewer.repository.StudyRepository;
 
@@ -36,7 +35,7 @@ public class StudyService {
 			return pageable; 			
 		}
 		
-		Sort sort = Sort.by(Sort.Order.desc("inserted"));
+		Sort sort = Sort.by(Sort.Order.desc("studyDate"));
 		Pageable pageable = PageRequest.of(DEF_NOW_PAGE, DEF_SLICE, sort);
 		return pageable;
 	}
@@ -46,7 +45,6 @@ public class StudyService {
 		return studyRepo.findAll().size();
 	}
 	
-	// 전부 쿼리 페이징으로 
 	public HashMap<String, Object> getAllStudyTab(Integer nowPage, Integer slice) {
 		HashMap<String, Object> result = new HashMap<>();
 		
@@ -70,59 +68,23 @@ public class StudyService {
 		return result;
 	}
 	
-	
-	
-	
-//	// 전부 쿼리 파라미터로 검색데이터 가져오기 
-//	public HashMap<String, Object> findAllByParams(ReqParams params)  {
-//		// 결과값 리턴 데이터 
-//		HashMap<String, Object> result = new HashMap<>();
-//		StringBuilder sql  = new StringBuilder();
-//		
-//		// 필드 목록 가져오기 리플렉터 사용
-//		Field[] fields = params.getClass().getDeclaredFields();
-//		
-//		// sql문 만들기
-//		for(Field field : fields) {
-//			field.setAccessible(true);// 필드 접근권한 허용
-////			System.out.println("service_findAllByParams : " + field.getName());
-////			System.out.println("service_findAllByParams_val: " + field.get(params));
-//			
-//			try {
-//				if(field.get(params) != null && !(field.getName().equals("eDate"))  && !(field.getName().equals("sDate"))) {
-//					if(!(field.getName().equals("nowPage")) && !(field.getName().equals("slice"))) {
-//						sql.append(field.getName()).append(" = ").append( field.get(params)).append(SQL_CONNECTOR);
-//					}
-//				}
-//				
-//			} catch (Exception e) {
-//				System.out.println("error : " + e);
-//			}
-//		}
-//		sql.append(" 1 = 1");
-//		System.out.println("Service_findAllByParams_sql : " + sql);
-//	
-//		// 기본 페이징 처리 세팅 
-//		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
-//		System.out.println(pageable);
-//		
-//		
-//		// 쿼리 
-//		Page<WorkList> items = studyRepo.findAllByParams(pageable , sql.toString());
-//		
-//		
-//		result.put("count", items.getTotalElements());
-//		result.put("items", items.getContent());
-//		return result;
-//	}
-	
-	public HashMap<String, Object> findAllByParams(ReqParams params)  {
-		// 결과값 리턴 데이터 
+	public HashMap<String, Object> getQueryStudyTab(ReqParams params) {
 		HashMap<String, Object> result = new HashMap<>();
-		StringBuilder sql  = new StringBuilder();
 		
-		return null;
+		System.out.println(params);
+		
+		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
+		Page<WorkList> items = studyRepo.findByDynamicQuery(
+				params.getPid(),
+				params.getPname(),
+				params.getModality(),
+				params.getStatus(),
+				params.getSdate(),
+				params.getEdate(),
+				pageable);
+		
+		result.put("count", items.getTotalElements());
+		result.put("items", items.getContent());
+		return result;
 	}
-	
-	
 }
