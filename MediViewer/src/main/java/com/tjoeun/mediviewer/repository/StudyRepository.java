@@ -35,11 +35,18 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
             @Param("eDate") String eDate,
             Pageable pageable);
 	
+	// 검사장비 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.MODALITY FROM StudyTab st" ,  nativeQuery = true)
 	List<String> findModality();
-	
+
+	// 검사결과 상태 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.REPORTSTATUS FROM StudyTab st" ,  nativeQuery = true)
 	List<Integer> findReportStatus();
 
+	//pid와 PName으로 과거이력 리스트 반환
+	@Query(value ="SELECT * FROM StudyTab st where st.PID = :pID and  st.PNAME = :pName" ,  nativeQuery = true)
+	List<WorkList> findByPidAndPName(@Param("pID") String pID,@Param("pName") String pName);
 
+	
+	
 }
