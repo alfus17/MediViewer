@@ -1,6 +1,7 @@
-package com.tjoeun.mediviewer.container;
+package com.tjoeun.mediviewer.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tjoeun.mediviewer.domain.DcmList;
 import com.tjoeun.mediviewer.domain.ReqParams;
+import com.tjoeun.mediviewer.domain.WorkList;
 import com.tjoeun.mediviewer.service.CommentService;
 import com.tjoeun.mediviewer.service.ImageTabService;
 import com.tjoeun.mediviewer.service.MemberService;
@@ -49,8 +52,23 @@ public class ListController {
 	
 	@PostMapping("/query")
 	public ResponseEntity<HashMap<String, Object>> getQueryWorkList(@RequestBody ReqParams params) {
-		System.out.println(params);
+		System.out.println("ListController_getQueryWorkList_params : "+params);
 		return ResponseEntity.ok().body(studyService.getQueryStudyTab(params)); 
+	}
+	
+	@PostMapping("/histories")
+	public ResponseEntity<Object> getQueryhistories(@RequestBody ReqParams params) {
+		System.out.println("ListController_getQueryhistories_params : "+params);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		
+		List<WorkList> historyWorkList = studyService.getHistoryList(params);
+		List<DcmList> dcmList = imgTabService.getDcmByStudyKey(params);
+		
+		result.put("WorkList", historyWorkList);
+		result.put("preview", dcmList);
+		
+		return ResponseEntity.ok().body(result); 
 	}	
 	
 }

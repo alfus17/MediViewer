@@ -68,6 +68,7 @@ public class StudyService {
 		return result;
 	}
 	
+
 	public HashMap<String, Object> getQueryStudyTab(ReqParams params) {
 		HashMap<String, Object> result = new HashMap<>();
 		
@@ -86,5 +87,13 @@ public class StudyService {
 		result.put("count", items.getTotalElements());
 		result.put("items", items.getContent());
 		return result;
+	}
+	
+	// pid와 pname으로 과거 검사 이력 검색 하기 
+	public List<WorkList> getHistoryList(ReqParams params){
+		List<WorkList> historyWorkList = studyRepo.findByPidAndPName(params.getPid(), params.getPname());
+		System.out.println("StudyService_getHistoryList_historyWorkList : "+ historyWorkList);
+		
+		return historyWorkList;
 	}
 }
