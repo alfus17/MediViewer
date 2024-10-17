@@ -14,8 +14,19 @@ import com.tjoeun.mediviewer.domain.StudyTab;
 @Repository
 public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 
-	// studyKey를 통해서 dcm path 와 fname 쿼리 
+	/*
+	 * 
+	 * @param studyKey
+	 * @param seriesKey
+	 * @param imageKey
+	 * @return
+	 */
 	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey and  it.IMAGEKEY = :imageKey" ,  nativeQuery = true)
 	List<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey , @Param("imageKey")Long imageKey);
+	
+
+	// studyKey를 통해서 dcm path 와 fname 쿼리 
+	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey " ,  nativeQuery = true)
+	List<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey );
 
 }
