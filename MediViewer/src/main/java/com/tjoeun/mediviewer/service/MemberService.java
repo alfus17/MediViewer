@@ -17,7 +17,7 @@ public class MemberService {
 
     @Autowired
     private PasswordEncoder passwordEncoder; // db에서 비밀번호 암호화
-
+    /**/
     public void loadInitialData() {
         List<Member> members = memberRepository.findAll(); // DB에서 모든 사용자 조회
         String newMemberId = "admin"; // 새로 생성하려는 사용자 이름
@@ -39,6 +39,7 @@ public class MemberService {
             System.out.println();
         }
     }
+    /**/
 }
 /*
 	1. MemberController에서 MemberService로 이동
