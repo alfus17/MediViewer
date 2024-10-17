@@ -24,5 +24,7 @@ public class CustomMemberDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
         }
         return new org.springframework.security.core.userdetails.User(member.getMemberId(), member.getMemberPwd(), new ArrayList<>());
+        // org.springframework.security.core.userdetails.User 는 시큐리티에서 제공하는 User 클래스의 완전한 패키지 경로
+        // ArrayList는 현재 권한 리스트가 비어있지만 사용자의 권한을 담을 수 있게 하기 위해서 쓰임
     }
 }

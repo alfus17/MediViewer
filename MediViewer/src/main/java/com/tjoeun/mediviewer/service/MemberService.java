@@ -13,10 +13,10 @@ import com.tjoeun.mediviewer.repository.MemberRepository;
 public class MemberService {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberRepository memberRepository; // Repository를 이용해 CRUD
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder; // db에서 비밀번호 암호화
 
     public void loadInitialData() {
         List<Member> members = memberRepository.findAll(); // DB에서 모든 사용자 조회
@@ -40,3 +40,8 @@ public class MemberService {
         }
     }
 }
+/*
+	1. MemberController에서 MemberService로 이동
+	2. loadInitialData에서 멤버 생성
+		사용자 조회, 사용자 이름 생성 준비, 중복검사, 유저 생성 후 저장
+*/

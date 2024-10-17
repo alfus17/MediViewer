@@ -22,31 +22,40 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
-            .requestMatchers("/login", "/css/**", "/js/**", "/img/**").permitAll()
-            .anyRequest().authenticated()
+        http.csrf().disable() // csrf 설정을 끈다 (현재 단계에서는 필요하지 않기 때문)
+            .authorizeRequests() // 요청에 대한 인가를 설정한다 -> 각 요청이 어떤 권한을 필요로 하는지 정의
+            .requestMatchers("/login", "/css/**", "/js/**", "/img/**").permitAll() // 경로에는 누구나 접근 가능하게 함
+            .anyRequest().authenticated() // 인증 필요 여부를 확인, 위에서 명시적으로 허용한 경로들을 제외하고는 전부 인증을 필요로 하게 함
+            .and() // 위의 설정을 마친 후 새로운 설정을 이어나가게 하는 연결자
+            .formLogin() // 30, 31 줄 : 시큐리티가 기본적으로 제공하는, 보호된 경로에 접근하려고 할 때 인증되어있지 않으면 /login 으로 가게 함
+            .loginPage("/login") // 여기 주소를 /asd로 하면 거기로 감
+            .permitAll() // 로그인 페이지에 접근하는 건 누구나 가능하게 함
             .and()
-            .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-            .logout()
-            .permitAll();
+            .logout() // 로그아웃 기능 활성화
+            .permitAll(); // 로그아웃 페이지에 접근하는 건 누구나 가능하게 함
         
         return http.build();
     }
 
+    // CustomMemberDetailsService를 호출하는 부분
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 
             http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(memberDetailsService).passwordEncoder(passwordEncoder());
+        							// userDetailsService는 시큐리티에서 제공하는 서비스
         return authenticationManagerBuilder.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // 비밀번호 인코딩을 위해 BCryptPasswordEncoder 사용
+        return new BCryptPasswordEncoder(); // 비밀번호 암호화를 위해 BCryptPasswordEncoder 사용
     }
 }
+/*
+	SecurityFilterChain가 사실 가로채는 역할 (모든 요청을 가로챔)
+	원래는 LoginController의 "/"로 가야 하는데 로그인이 안 되어있으니깐 /login으로 이동시켜줌
+	그 후 로그인 버튼을 누르면 CustomMemberDetailsService에서 loadUserByUsername 메소드가 사용자 정보를 가져옴
+	데이터베이스에서 해당 사용자의 정보를 조회 후 로그인
+	로그인을 하면 LoginController에 있는 "/" 페이지로 이동
+*/
