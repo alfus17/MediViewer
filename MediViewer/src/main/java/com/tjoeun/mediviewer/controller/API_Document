@@ -1,0 +1,30 @@
+get- 최초 로딩
+/api/lists
+   return ResponseEntity.ok().body(<WorkList>);
+
+post - 데이터 쿼리
+/api/lists/query
+   return ResponseEntity.ok().body(<WorkList>);
+
+post - 선택한 이력 데이터
+/api/lists/histories
+   return ResponseEntity.ok().body({
+   WorkList:<WorkList>,
+   preview:<path, fname>
+   });
+
+get
+ - 선택한 프리뷰 데이터
+/api/lists/preview?studykey=2
+   return ResponseEntity.ok().body(<preview>)
+  
+get - 프리뷰 상세페이지 코멘트 
+/api/lists/comment?studykey=
+   return ResponseEntity.ok().body(<preview>)
+   
+-------------------------------------------------------------------
+
+ - 상세 페이지 이동
+/api/lists/detail?studykey=2
+	데이터 model
+   return "/view/{}"
