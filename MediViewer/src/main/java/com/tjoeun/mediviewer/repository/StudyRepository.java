@@ -14,12 +14,14 @@ import com.tjoeun.mediviewer.domain.WorkList;
 
 @Repository
 public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
-
+	
+	// studytab 데이터 전부 쿼리
 	@Query(value = "select st.PID as pid, st.PNAME as pname, st.STUDYKEY as studykey, st.MODALITY as modality, st.STUDYKEY as studyKey, "
 					+ "st.STUDYDESC as studyDesc, st.STUDYDATE as studyDate, st.REPORTSTATUS as reportStatus, "
 					+ "st.SERIESCNT as seriesCnt, st.IMAGECNT as imageCnt from STUDYTAB st", nativeQuery = true)
 	Page<WorkList> findBy(Pageable pageable);
 	
+	// 검색 파라미터에 따른 동적 쿼리 
 	@Query(value = "select st.PID as pid, st.PNAME as pname, st.STUDYKEY as studykey, st.MODALITY as modality, st.STUDYKEY as studyKey, "
 			+ "st.STUDYDESC as studyDesc, st.STUDYDATE as studyDate, st.REPORTSTATUS as reportStatus, "
 			+ "st.SERIESCNT as seriesCnt, st.IMAGECNT as imageCnt from STUDYTAB st "
@@ -39,11 +41,18 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
             @Param("eDate") String eDate,
             Pageable pageable);
 	
+	// 검사장비 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.MODALITY FROM StudyTab st" ,  nativeQuery = true)
 	List<String> findModality();
-	
+
+	// 검사결과 상태 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.REPORTSTATUS FROM StudyTab st" ,  nativeQuery = true)
 	List<Integer> findReportStatus();
 
+	//pid와 PName으로 과거이력 리스트 반환
+	@Query(value ="SELECT * FROM StudyTab st where st.PID = :pID and  st.PNAME = :pName" ,  nativeQuery = true)
+	List<WorkList> findByPidAndPName(@Param("pID") String pID,@Param("pName") String pName);
 
+	
+	
 }
