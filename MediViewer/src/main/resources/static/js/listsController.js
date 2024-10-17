@@ -6,8 +6,8 @@ function resetSelectors(e) {
 	
 	
 	if($(e.target).is("#resetQuery")){
-		resetItems(items);
-		resetItems(histItems);
+		resetContentItems();
+		resetHistItems();
 		getDefList();
 	};
 	
@@ -18,14 +18,14 @@ $("#doSelectedDurationQuery").click(() => {
 	const date = setStartToEndDate();
 	const slice = $("#listPageSize").val();
 	
-	const param = {
+	const params = {
 		...setParams(),
 		slice,
 		sDate: date[0],
 		eDate: date[1]
 	}
 	
-	getQueryList(param);
+	getQueryList(params);
 })
 
 // 검색 버튼에 이벤트 부여
@@ -47,7 +47,7 @@ $("button[name=btnDateDur]").click((e) => {
 		eDate: date[1]
 	}
 	
-	console.log(params);
+	getQueryList(params);
 })
 
 // 초기화 버튼에 이벤트 부여
@@ -63,5 +63,25 @@ $("#listPageSize").change(() => {
 		slice
 	}
 	
-	console.log(params);
+	getQueryList(params);
 })
+
+$(document).on('click', 'li[name=listItem]', (e) => {
+    const value = $(e.target).closest('li[name=listItem]').attr('value');
+    const pID = $(e.target).closest('li[name=listItem]').find('span[name=pID]').text();
+    const pName = $(e.target).closest('li[name=listItem]').find('span[name=pName]').text();
+    console.log('클릭: ',value, ', ', pID, ', ', pName);
+    
+    const params = {
+		studyKey: value,
+		pID,
+		pName
+	}
+    console.log(params);
+    getHistoryList(params);
+});
+
+$(document).on('dblclick', 'li[name=listItem]', (e) => {
+    const value = $(e.target).closest('li[name=listItem]').attr('value');
+    console.log('더블클릭: ',value);
+});
