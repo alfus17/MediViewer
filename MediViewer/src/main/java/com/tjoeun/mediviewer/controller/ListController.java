@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tjoeun.mediviewer.domain.ImageTab;
 import com.tjoeun.mediviewer.domain.req.ReqParams;
 import com.tjoeun.mediviewer.domain.res.DcmList;
 import com.tjoeun.mediviewer.domain.res.WorkList;
@@ -114,6 +115,33 @@ public class ListController {
 		
 		return ResponseEntity.ok().body(imgTabService.getPreviewByStudyKey(params));
 	}
+	
+	/**
+	 * @return ArrayList<DcmList>
+	 */
+	@GetMapping("/comment/{studykey}")
+	public ResponseEntity< ArrayList<DcmList>> getComment(@PathVariable("studykey") Integer studyKey){
+		// 로직 통일
+		ReqParams params = new ReqParams();
+		params.setStudyKey(studyKey);
+		System.out.println("getComment_params : " + params);
+		
+		return null;
+	}
+	
+	/**
+	 * @return ArrayList<DcmList>
+	 */
+	@GetMapping("/allimage/{studykey}")
+	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
+		// 로직 통일
+		ReqParams params = new ReqParams();
+		params.setStudyKey(studyKey);
+		System.out.println("getAllImage_params : " + params);
+		
+		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
+	}
+	
 	
 	
 }
