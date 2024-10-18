@@ -1,4 +1,4 @@
-package com.tjoeun.mediviewer.domain;
+package com.tjoeun.mediviewer.domain.res;
 
 public interface DcmList {
 	
