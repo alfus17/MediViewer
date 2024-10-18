@@ -1,5 +1,6 @@
 package com.tjoeun.mediviewer.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -10,21 +11,23 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.tjoeun.mediviewer.domain.StudyTab;
-import com.tjoeun.mediviewer.domain.WorkList;
+import com.tjoeun.mediviewer.domain.res.WorkList;
 
 @Repository
 public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
-
+	
+	// studytab 데이터 전부 쿼리
 	@Query(value = "select * from STUDYTAB st", nativeQuery = true)
 	Page<WorkList> findBy(Pageable pageable);
 	
+	// 검색 파라미터에 따른 동적 쿼리 
 	@Query(value = "select * from STUDYTAB st "
-			+ "where (:pID IS NULL OR :pID = '' OR st.PID = :pID) "
-	        + "and (:pName IS NULL OR :pName = '' OR st.PNAME = :pName) "
-	        + "and (:modality IS NULL OR :modality = '' OR st.MODALITY = :modality) "
-	        + "and (:reportStatus IS NULL OR st.REPORTSTATUS = :reportStatus) "
-	        + "and (:sDate IS NULL OR st.STUDYDATE between :sDate and :eDate) "
-	        + "and 1=1",
+			+ "where (:pID IS NULL OR st.PID = :pID) "
+			+ "and (:pName IS NULL OR st.PNAME = :pName) "
+			+ "and (:modality IS NULL OR st.MODALITY = :modality) "
+			+ "and (:reportStatus IS NULL OR st.REPORTSTATUS = :reportStatus) "
+			+ "and (:sDate IS NULL OR st.STUDYDATE between :sDate and :eDate) "
+			+ "and 1=1",
 		nativeQuery = true)
 	Page<WorkList> findByDynamicQuery(
 			@Param("pID") String pID,
@@ -37,15 +40,15 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 	
 	// 검사장비 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.MODALITY FROM StudyTab st" ,  nativeQuery = true)
-	List<String> findModality();
+	ArrayList<String> findModality();
 
 	// 검사결과 상태 목록 쿼리 
 	@Query(value ="SELECT DISTINCT st.REPORTSTATUS FROM StudyTab st" ,  nativeQuery = true)
-	List<Integer> findReportStatus();
+	ArrayList<Integer> findReportStatus();
 
 	//pid와 PName으로 과거이력 리스트 반환
 	@Query(value ="SELECT * FROM StudyTab st where st.PID = :pID and  st.PNAME = :pName" ,  nativeQuery = true)
-	List<WorkList> findByPidAndPName(@Param("pID") String pID,@Param("pName") String pName);
+	ArrayList<WorkList> findByPidAndPName(@Param("pID") String pID,@Param("pName") String pName);
 
 	
 	
