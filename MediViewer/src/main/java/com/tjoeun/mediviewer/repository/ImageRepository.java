@@ -3,6 +3,7 @@ package com.tjoeun.mediviewer.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,6 +33,6 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 
 	// studyKey를 통해서 dcm 전부 쿼리 
 	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
-	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey );
+	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey ,  );
 	
 }
