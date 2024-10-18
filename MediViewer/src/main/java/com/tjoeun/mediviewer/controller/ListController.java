@@ -1,5 +1,6 @@
 package com.tjoeun.mediviewer.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,10 +49,10 @@ public class ListController {
 	
 	/**
 	 * @return { 
-	 * 				"reportStatus" : [판독상태 <Integer>],
-	 * 				"modalities"   : [검사장비 종류 <String>],
-	 * 				"count" 	   : 총 쿼리 갯수 <Integer>,
-	 * 				"items"		   : <WorkList>
+	 * 				"reportStatus" : [ 판독상태 	<Integer>],
+	 * 				"modalities"   : [ 검사장비 종류 <String>],
+	 * 				"count" 	   : 총 쿼리 갯수 	<Integer>,
+	 * 				"items"		   : WorkList	<WorkList>
 	 * 			}
 	 */
 	@GetMapping
@@ -60,7 +61,15 @@ public class ListController {
 	}
 	
 	/**
-	 * @param <ReqParams> = { "pid" : <String>  ,"pname" : <String>  ,"modality" : <String>  ,"status" : <String>  ,"sdate" : <String>  ,"edate" : <String>  }
+	 * @param <ReqParams> = { 	"pid" 		: 환자아이디	<String>,
+	 * 							"pname" 	: 환자이름		<String>, 
+	 * 							"modality" 	: 검사장비		<String>,
+	 * 							"status" 	: 판독상태		<Integer>,
+	 * 							"sdate" 	: 시작일자		<String>,
+	 * 							"edate" 	: 종료일자		<String>,
+	 * 							"slice" 	: 검색갯수		<Integer>,
+	 * 							"nowPage" 	: 현재페이지	<Integer>	  }
+	 * 
 	 * @return HashMap<String, Object> = { "count" : <Integer>  , "items" : <WorkList> }
 	 */
 	@PostMapping("/query")
@@ -70,8 +79,12 @@ public class ListController {
 	}
 	
 	/**
-	 * @param <ReqParams> = { "pid" : <String>  , "pname" : <String> , "studyKey" : <Integer>  } 
-	 * @return HashMap<String, Object> = { "WorkList" : <WorkList>  , "preview" : <dcmList> }
+	 * @param <ReqParams> = { 	"pid" 		: 환자id		<String>,
+	 * 						 	"pname" 	: 환자이름		<String>,
+	 * 							"studyKey" 	: 검사Id		<Integer>  }
+	 *  
+	 * @return HashMap<String, Object> = { 	"WorkList" 		: WorkList 	<WorkList>,
+	 * 										 "preview" 		: dcmList 	<dcmList> }
 	 */
 	@PostMapping("/histories")
 	public ResponseEntity<HashMap<String, Object>> getQueryhistories(@RequestBody ReqParams params) {
@@ -93,7 +106,7 @@ public class ListController {
 	 * @return ArrayList<DcmList>
 	 */
 	@GetMapping("/preview/{studykey}")
-	public ResponseEntity< List<DcmList>> getPrivew(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity< ArrayList<DcmList>> getPrivew(@PathVariable("studykey") Integer studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
