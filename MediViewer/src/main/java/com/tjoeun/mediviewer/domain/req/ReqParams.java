@@ -1,4 +1,4 @@
-package com.tjoeun.mediviewer.domain;
+package com.tjoeun.mediviewer.domain.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

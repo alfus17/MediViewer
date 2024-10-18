@@ -11,8 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.tjoeun.mediviewer.domain.ReqParams;
-import com.tjoeun.mediviewer.domain.WorkList;
+import com.tjoeun.mediviewer.domain.req.ReqParams;
+import com.tjoeun.mediviewer.domain.res.WorkList;
 import com.tjoeun.mediviewer.repository.StudyRepository;
 
 import aj.org.objectweb.asm.commons.Method;
