@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
-  <ul class="ul_studylist_container" name="studyList" th:fragment="patient-list">
+  <ul class="studylist_container" name="studyList" th:fragment="patient-list">
      <li>
         <input class="checkbox" type="checkbox" id="selectAll">
         <span class="w10" name="itemHeader" id="pID">환자 아이디</span>
@@ -15,7 +15,7 @@
         <span class="w5" name="itemHeader" id="imageCnt">이미지</span>
      </li>
      <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
-     <span id="liForEachSpan"></span>
+     <span class="studylist_container" id="liForEachSpan"></span>
   </ul>
   
   <section th:fragment="hist-list" class="section_history_area">
@@ -33,7 +33,7 @@
 			  <label for="pNameLabel" id="histPName"></label>			  
 		  </span>
 	  </div>
-	  <ul class="ul_studylist_container" name="histStudyList">
+	  <ul class="studylist_container" name="histStudyList">
 		<li>
 			<span class="w8" name="itemHeader" id="histModality">검사 장비</span>
 			<span class="span_study_desc" name="itemHeader" id="histStudyDesc">검사 설명</span>
@@ -43,7 +43,7 @@
 			<span class="w5" name="itemHeader" id="histImageCnt">이미지</span>
 		</li>
      	<!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
-     	<span id="histLiForEachSpan"></span>
+     	<span class="studylist_container" id="histLiForEachSpan"></span>
   	</ul>
   </section>
 </html>

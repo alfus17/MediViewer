@@ -83,7 +83,9 @@ public class ListController {
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
 		List<DcmList> dcmList = imgTabService.getPreviewByStudyKey(params);
 		
-		result.put("WorkList", historyWorkList);
+		result.put("pid", params.getPid());
+		result.put("pname", params.getPname());
+		result.put("workList", historyWorkList);
 		result.put("preview", dcmList);
 		
 		return ResponseEntity.ok().body(result); 

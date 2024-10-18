@@ -5,7 +5,11 @@ const getDefList = () => {
 			const rData = response.data;
 			setCount(rData.count);
 			setItems(items, rData.items);
+			setModalities(rData.modalities);
+			setStatus(rData.reportStatus);
 			
+			$("#histPID").text('');
+			$("#histPName").text('');
 			const listContainer = document.querySelector("#liForEachSpan");
 			items.forEach(item => {
 				const li = document.createElement("li");
@@ -38,19 +42,23 @@ const getQueryList = (params) => {
 			setCount(rData.count);
 			setItems(items, rData.items);
 			
+			$("#histPID").text('');
+			$("#histPName").text('');
 			const listContainer = document.querySelector("#liForEachSpan");
 			items.forEach(item => {
 				const li = document.createElement("li");
+				li.setAttribute("name", "listItem");
+				li.setAttribute("value", item.studyKey);
 				li.innerHTML = `
 					<input class="checkbox" type="checkbox" name="selectOne">
-			        <span class="w10">${item.pid}</span>
-			        <span class="w10">${item.pname}</span>
-			        <span class="w8">${item.modality}</span>
-			        <span class="span_study_desc">${item.studyDesc}</span>
-			        <span class="w10">${item.studyDate}</span>
-			        <span class="w5">${item.reportStatus}</span>
-			        <span class="w5">${item.seriesCnt}</span>
-			        <span class="w5">${item.imageCnt}</span>
+			        <span name="pID" class="w10">${item.pid}</span>
+			        <span name="pName" class="w10">${item.pname}</span>
+			        <span name="modality" class="w8">${item.modality}</span>
+			        <span name="studyDesc" class="span_study_desc">${item.studyDesc}</span>
+			        <span name="studyDate" class="w10">${item.studyDate}</span>
+			        <span name="reportStatus" class="w5">${item.reportStatus}</span>
+			        <span name="seriesCnt" class="w5">${item.seriesCnt}</span>
+			        <span name="imageCnt" class="w5">${item.imageCnt}</span>
 				`;
 				listContainer.appendChild(li);
 			})
@@ -61,20 +69,21 @@ const getQueryList = (params) => {
 const getHistoryList = (params) => {
 	axios.post("/api/lists/histories", params)
 		.then(response => {
+			console.log(response);
 			const rData = response.data;
 			resetHistItems();
-			setItems(histItems, rData.items);
+			setItems(histItems, rData.workList);
 			
-			$("#histPID").text(rData.pID);
-			$("#histPName").text(rData.pName);
+			$("#histPID").text(rData.pid);
+			$("#histPName").text(rData.pname);
 			const listContainer = document.querySelector("#histLiForEachSpan");
-				items.forEach(item => {
+				histItems.forEach(item => {
 					const li = document.createElement("li");
 					li.innerHTML = `
 				        <span class="w8">${item.modality}</span>
 				        <span class="span_study_desc">${item.studyDesc}</span>
 				        <span class="w10">${item.studyDate}</span>
-				        <span class="w5">${item.reportStatus}</span>
+				        <span class="w10">${item.reportStatus}</span>
 				        <span class="w5">${item.seriesCnt}</span>
 				        <span class="w5">${item.imageCnt}</span>
 					`;
@@ -86,23 +95,23 @@ const getHistoryList = (params) => {
 
 // axios 공통 로직
 function setParams() {
-	const pID = $("#pid").val();
-	const pName = $("#pname").val();
+	const pid = $("#pid").val();
+	const pname = $("#pname").val();
 	const modality = $("#modality").val();
-	const state = $("#state").val();
-	const slice = $("#slice").val();
+	const state = parseInt($("#status").val(), 10);
+	const slice = parseInt($("#slice").val(), 10);
 	const nowPage = 1;
 	const date = [];
 	
 	const param = {
-		pID,
-		pName,
+		pid,
+		pname,
 		modality,
 		state,
 		slice,
 		nowPage,
-		sDate: date[0],
-		eDate: date[1]
+		sdate: date[0],
+		edate: date[1]
 	}
 	
 	return param;
@@ -133,7 +142,7 @@ function setDate(days) {
 		}		
 	}
 	
-	return null;
+	return ['1990-01-01', `${year}-${month}-${date}`];
 }
 
 function setCount(count) {
@@ -148,6 +157,29 @@ function setItems(dataArray, item) {
 	if(item != null && item.length > 0){
 		dataArray.push(...item)
 	}
+}
+
+function setModalities(modalities) {
+	const modalityList = document.querySelector("#modality");
+	
+	const defOption = document.createElement("option");
+	defOption.setAttribute("value", "");
+	defOption.innerText = '장비 선택';
+	modalityList.appendChild(defOption);
+	
+	modalities.forEach(e => {
+		const option = document.createElement("option");
+		option.setAttribute("value", e);
+		option.innerText = e;
+		modalityList.appendChild(option);
+	})
+}
+
+function setStatus(reportStatus) {
+	const statusList = $("#status");
+	reportStatus.forEach(e => {
+		statusList.find(`option[value=${e}]`).prop("disabled", false);
+	})
 }
 
 function resetContentItems() {

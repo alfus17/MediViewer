@@ -69,19 +69,14 @@
 							</span>
 							
 							<select name="modality" id="modality">
-								<option value="">장비</option>
-								<option value="NR">읽지않음</option>
-								<option value="RD">열람중</option>
-								<option value="PJ">예비 판독</option>
-								<option value="JD">판독</option>
 							</select>
 
-							<select name="state" id="state">
-								<option value="">판독 상태</option>
-								<option value="NR">읽지않음</option>
-								<option value="RD">열람중</option>
-								<option value="PJ">예비 판독</option>
-								<option value="JD">판독</option>
+							<select name="status" id="status">
+								<option value=0 >판독 상태</option>
+								<option value=1 disabled>읽지않음</option>
+								<option value=3 disabled>열람중</option>
+								<option value=5 disabled>예비 판독</option>
+								<option value=6 disabled>판독</option>
 							</select>
 
 							<button type="submit" id="doQuery">검색</button>
@@ -92,9 +87,9 @@
 							<button type="button">o</button>
 							<button type="button">o</button>
 							<select class="select_page_size" name="listPageSize" id="listPageSize" onselect="setListPageSize()">
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="50">50</option>
+								<option value=10 selected>10</option>
+								<option value=20>20</option>
+								<option value=50>50</option>
 							</select>
 							<label for="listPageSize">개 항목으로 보기</label>
 						</section>
