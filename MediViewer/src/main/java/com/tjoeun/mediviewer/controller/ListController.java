@@ -108,7 +108,7 @@ public class ListController {
 	 * @return ArrayList<DcmList>
 	 */
 	@GetMapping("/preview/{studykey}")
-	public ResponseEntity< ArrayList<DcmList>> getPrivew(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity<ArrayList<DcmList>> getPrivew(@PathVariable("studykey") Integer studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);

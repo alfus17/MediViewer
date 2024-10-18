@@ -52,7 +52,7 @@
 	margin-top: 1%;
 	display: flex;
 	flex-direction: row;
-	height: 33%;
+	height: 32%;
 }
 
 .span_prev_img_container {
@@ -61,8 +61,11 @@
 	background-color: aliceblue;
 }
 
-.btn_prev_img_extend {
-	background-image: url('src/img/topleft-bottomright-enlargement.png');
+.btn_prev_extend {
+	position: absolute;
+	bottom: 8vh;
+	right: 3.5vw;
+	background-image: url('/img/icon/zoomin.png');
 	background-size: cover;
 	background-position: center;
 	width: 30px;
