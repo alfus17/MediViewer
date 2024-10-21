@@ -82,8 +82,12 @@ $(document).on('click', 'li[name=listItem]', (e) => {
 		pname: pName
 	}
     console.log(params);
-    showPreviewData(value);
+    
+    console.log('doGetHistoryList');
     getHistoryList(params);
+    
+    console.log('doShowPreviewData');
+    showPreviewData(value);
 });
 
 // 리스트 항목 상세보기
