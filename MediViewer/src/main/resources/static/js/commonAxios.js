@@ -72,7 +72,7 @@ const getHistoryList = (params) => {
 			console.log(response);
 			const rData = response.data;
 			resetHistItems();
-			setItems(histItems, rData.workList);
+			setItems(histItems, rData.worklist);
 			
 			$("#histPID").text(rData.pid);
 			$("#histPName").text(rData.pname);

@@ -56,8 +56,8 @@ public class MemberService implements UserDetailsService, CommandLineRunner
     @Override 
     public void run(String... args) throws Exception 
     {
-        String ID = "aaa"; // 사용할 아이디 입력
-        String PW = "aaa"; // 사용할 비밀번호 입력
+        String ID = "admin"; // 사용할 아이디 입력
+        String PW = "admin"; // 사용할 비밀번호 입력
         
         if (memberRepository.findByMemberId(ID).isEmpty()) 
         {
