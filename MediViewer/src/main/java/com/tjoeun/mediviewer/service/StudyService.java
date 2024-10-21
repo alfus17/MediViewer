@@ -53,11 +53,11 @@ public class StudyService {
 		Page<WorkList> items = studyRepo.findBy(pageable);
 		
 		// modalities 가져오기
-		List<String> modalityList = studyRepo.findModality();
+		ArrayList<String> modalityList = studyRepo.findModality();
 		System.out.println("Service_modalityList : " + modalityList);
 		
 		// reportStatus 가져오기 
-		List<Integer> reportStatusList = studyRepo.findReportStatus();
+		ArrayList<Integer> reportStatusList = studyRepo.findReportStatus();
 		System.out.println("Service_reportStatusList : " + reportStatusList);
 		
 		result.put("reportStatus", reportStatusList);
@@ -89,8 +89,8 @@ public class StudyService {
 	}
 	
 	// pid와 pname으로 과거 검사 이력 검색 하기 
-	public List<WorkList> getHistoryList(ReqParams params){
-		List<WorkList> historyWorkList = studyRepo.findByPidAndPName(params.getPid(), params.getPname());
+	public ArrayList<WorkList> getHistoryList(ReqParams params){
+		ArrayList<WorkList> historyWorkList = studyRepo.findByPidAndPName(params.getPid(), params.getPname());
 		System.out.println("StudyService_getHistoryList_historyWorkList : "+ historyWorkList);
 		
 		return historyWorkList;
