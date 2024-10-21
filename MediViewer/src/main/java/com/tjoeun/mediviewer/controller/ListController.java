@@ -117,7 +117,7 @@ public class ListController {
 		Optional<DcmList> preview = imgTabService.getPreviewByStudyKey(params);
 		
 		if(preview.isPresent()) {
-			System.out.println("ListController_getPrivew : "+ preview);
+			System.out.println("ListController_getPrivew : "+ preview.get());
 			return ResponseEntity.ok().body(preview.get());
 		}else {
 			System.out.println("ListController_getPrivew : 데이터가 존재하지 않습니다");

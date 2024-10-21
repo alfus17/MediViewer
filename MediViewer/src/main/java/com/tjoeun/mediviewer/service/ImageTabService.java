@@ -26,6 +26,11 @@ public class ImageTabService {
 		return dcmList;
 	}
 	
+	 // studyKey와 seriesKey로 DcmList를 조회
+    public ArrayList<DcmList> getDcmListByStudyKey(Integer studyKey, Long seriesKey) {
+        return imageRepo.findByStudyKey(studyKey, seriesKey);
+    }
+	
 //	public ArrayList<ImageTab> getImageByStudyKey(ReqParams params){
 //		System.out.println("ImageTabService_getImageByStudyKey_params : " + params);
 //		ArrayList<ImageTab> dcmList = imageRepo.findImagesByStudyKey(params.getStudyKey());
