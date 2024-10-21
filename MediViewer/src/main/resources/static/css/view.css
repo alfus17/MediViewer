@@ -1,0 +1,38 @@
+body {
+	margin: 0 auto;
+}
+
+.c {
+	display: flex;
+	margin: auto;
+}
+
+.left {
+	width: 200px;
+	height: 800px;
+	background-color: blueviolet;
+}
+
+.right {
+	width: 800px;
+	height: 800px;
+	background-color: aqua;
+}
+
+.btns {
+	width: 100%;
+	height: 14%;
+	background-color: antiquewhite;
+}
+
+.btns button{
+	width: 10%;
+	height: 50%;
+}
+	
+#dicomImage {
+	width: 600px;
+	height: 600px;
+	
+}
+
