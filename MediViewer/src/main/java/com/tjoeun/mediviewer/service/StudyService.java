@@ -72,8 +72,6 @@ public class StudyService {
 	public HashMap<String, Object> getQueryStudyTab(ReqParams params) {
 		HashMap<String, Object> result = new HashMap<>();
 		
-		System.out.println(params);
-		
 		Pageable pageable = setPageable(params.getNowPage(), params.getSlice());
 		Page<WorkList> items = studyRepo.findByDynamicQuery(
 				params.getPid(),
@@ -84,6 +82,7 @@ public class StudyService {
 				params.getEdate(),
 				pageable);
 		
+		System.out.println(items);
 		result.put("count", items.getTotalElements());
 		result.put("items", items.getContent());
 		return result;
