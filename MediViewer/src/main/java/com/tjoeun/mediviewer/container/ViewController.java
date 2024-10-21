@@ -2,30 +2,30 @@ package com.tjoeun.mediviewer.container;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tjoeun.mediviewer.domain.ImageTab;
+import com.tjoeun.mediviewer.domain.res.DcmList;
 import com.tjoeun.mediviewer.service.ImageTabService;
+import java.util.ArrayList;
 
-import java.util.List;
-import java.util.Map;
-
-@RestController
+@Controller
 public class ViewController {
 
     @Autowired
     private ImageTabService imageTabService;
 
     // studykey와 serieskey를 이용해 FNAME Map과 PATH를 반환하는 API
-    @GetMapping("/api/images")
-    public ResponseEntity<List<ImageTab>> getImageDetails(@RequestParam("studykey") Long studyKey,
-                                                               @RequestParam("serieskey") Long seriesKey) {
-        // 서비스에서 FNAME Map과 PATH를 가져옴
-    	List<ImageTab> result = imageTabService.getFnameMapAndPath(studyKey, seriesKey);
+    @GetMapping("/api/dcmList")
+    public ResponseEntity<ArrayList<DcmList>> getDcmList(@RequestParam("studykey") Integer studyKey,
+                                                         @RequestParam("serieskey") Long seriesKey) {
+        ArrayList<DcmList> dcmList = imageTabService.getDcmListByStudyKey(studyKey, seriesKey);
+        return ResponseEntity.ok(dcmList);
+    }
 
-        // 조회된 데이터를 ResponseEntity로 반환 (JSON 형식)
-        return ResponseEntity.ok(result);
+    // view.html 페이지를 반환하는 메서드
+    @GetMapping("/view")
+    public String showView() {
+        return "view"; // src/main/resources/templates/view.html 파일을 반환
     }
 }

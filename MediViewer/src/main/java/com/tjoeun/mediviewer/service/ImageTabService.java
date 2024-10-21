@@ -23,5 +23,11 @@ public class ImageTabService {
 		System.out.println("ImageTabService_getDcmByStudyKey_dcmList : " + dcmList.toString());
 		return dcmList;
 	}
-
+	
+	@Autowired
+	private ImageRepository imageTabRepository;
+	 // studyKey와 seriesKey로 DcmList를 조회
+    public ArrayList<DcmList> getDcmListByStudyKey(Integer studyKey, Long seriesKey) {
+        return imageTabRepository.findByStudyKey(studyKey, seriesKey);
+    }
 }
