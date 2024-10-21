@@ -3,8 +3,10 @@ package com.tjoeun.mediviewer.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,8 +86,7 @@ public class ListController {
 	 * 						 	"pname" 	: 환자이름		<String>,
 	 * 							"studyKey" 	: 검사Id		<Integer>  }
 	 *  
-	 * @return HashMap<String, Object> = { 	"WorkList" 		: WorkList 	<WorkList>,
-	 * 										 "preview" 		: dcmList 	<dcmList> }
+	 * @return HashMap<String, Object> = { 	"WorkList" 		: WorkList 	<WorkList> }
 	 */
 	@PostMapping("/histories")
 	public ResponseEntity<HashMap<String, Object>> getQueryhistories(@RequestBody ReqParams params) {
@@ -94,12 +95,10 @@ public class ListController {
 		// 결과값 반환 hashmap
 		HashMap<String, Object> result = new HashMap<>();
 		
+		// 기존의 
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
-		DcmList dcmList = imgTabService.getPreviewByStudyKey(params);
-		
 		result.put("WorkList", historyWorkList);
-		result.put("preview", dcmList);
-		
+
 		return ResponseEntity.ok().body(result); 
 	}
 	
@@ -113,7 +112,17 @@ public class ListController {
 		params.setStudyKey(studyKey);
 		System.out.println("getPrivew_params : " + params);
 		
-		return ResponseEntity.ok().body(imgTabService.getPreviewByStudyKey(params));
+		Optional<DcmList> preview = imgTabService.getPreviewByStudyKey(params);
+		
+		if(preview.isPresent()) {
+			System.out.println("ListController_getPrivew : "+ preview);
+			return ResponseEntity.ok().body(preview.get());
+		}else {
+			System.out.println("ListController_getPrivew : 데이터가 존재하지 않습니다");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		
 	}
 	
 	/**

@@ -19,9 +19,9 @@ public class ImageTabService {
 	@Autowired
 	private ImageRepository imageRepo;
 	
-	public DcmList getPreviewByStudyKey(ReqParams params){
+	public Optional<DcmList> getPreviewByStudyKey(ReqParams params){
 		System.out.println("ImageTabService_getDcmByStudyKey_params : " + params);
-		DcmList dcmList = imageRepo.findByStudyKey(params.getStudyKey(), 1l, 1l).get();
+		Optional<DcmList> dcmList = imageRepo.findPreviewByStudyKey(params.getStudyKey());
 		System.out.println("ImageTabService_getDcmByStudyKey_dcmList : " + dcmList.toString());
 		return dcmList;
 	}
