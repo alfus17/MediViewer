@@ -20,15 +20,17 @@ public class MemberService implements UserDetailsService, CommandLineRunner
 
     private final MemberRepository memberRepository; // Repository를 이용해 CRUD
     private final PasswordEncoder passwordEncoder; // db에서 비밀번호 암호화
-
-    @Autowired // 생성자를 통한 의존성 주입으로 리포지토리와 비밀번호 인코더를 주입
+    
+	// 생성자를 통한 의존성 주입으로 리포지토리와 비밀번호 인코더를 주입
+    @Autowired 
     public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) 
     {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    @Override // 사용자 정보를 불러오는 부분
+    
+	// 사용자 정보를 불러오는 부분
+    @Override 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException 
     {
         Member member = memberRepository.findByMemberId(username)
@@ -49,8 +51,9 @@ public class MemberService implements UserDetailsService, CommandLineRunner
         member.setMemberPwd(passwordEncoder.encode(memberPwd));
         return memberRepository.save(member);
     }
-
-    @Override
+    
+    // 실행 시 기본적인 설정이나 필수 데이터들을 세팅하는 부분
+    @Override 
     public void run(String... args) throws Exception 
     {
         String ID = "aaa"; // 사용할 아이디 입력
