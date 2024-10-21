@@ -1,48 +1,69 @@
 package com.tjoeun.mediviewer.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.boot.CommandLineRunner;
 
 import com.tjoeun.mediviewer.domain.Member;
 import com.tjoeun.mediviewer.repository.MemberRepository;
 
+import java.util.Optional;
+
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService, CommandLineRunner 
+{
 
-    @Autowired
-    private MemberRepository memberRepository; // Repository를 이용해 CRUD
+    private final MemberRepository memberRepository; // Repository를 이용해 CRUD
+    private final PasswordEncoder passwordEncoder; // db에서 비밀번호 암호화
 
-    @Autowired
-    private PasswordEncoder passwordEncoder; // db에서 비밀번호 암호화
-    /**/
-    public void loadInitialData() {
-        List<Member> members = memberRepository.findAll(); // DB에서 모든 사용자 조회
-        String newMemberId = "admin"; // 새로 생성하려는 사용자 이름
+    @Autowired // 생성자를 통한 의존성 주입으로 리포지토리와 비밀번호 인코더를 주입
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) 
+    {
+        this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override // 사용자 정보를 불러오는 부분
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException 
+    {
+        Member member = memberRepository.findByMemberId(username)
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다 : " + username));
+
+        return User.withUsername(member.getMemberId())
+            .password(member.getMemberPwd())
+            .roles("USER") // 사용자에게 "USER" 권한 부여
+            .build();
+    }
+
+    // 사용자 생성하는 부분
+    public Member createMember(String memberId, String memberPwd) 
+    {
+    	// 새로운 사용자 생성
+        Member member = new Member();
+        member.setMemberId(memberId);
+        member.setMemberPwd(passwordEncoder.encode(memberPwd));
+        return memberRepository.save(member);
+    }
+
+    @Override
+    public void run(String... args) throws Exception 
+    {
+        String ID = "aaa"; // 사용할 아이디 입력
+        String PW = "aaa"; // 사용할 비밀번호 입력
         
-        // 중복 검사
-        boolean exists = members.stream()
-                                .anyMatch(member -> member.getMemberId().equals(newMemberId));
-
-        if (!exists) { // 만약 존재하지 않는다면 유저 생성
-            // 유저 생성
-            Member admin = new Member();
-            admin.setMemberId(newMemberId); // 아이디
-            admin.setMemberPwd(passwordEncoder.encode("admin")); // 비밀번호
-            memberRepository.save(admin);
-            System.out.println("사용자 생성됨: " + newMemberId);
-        } else {
-            System.out.println();
-            System.out.println("이미 존재하는 사용자 이름입니다: " + newMemberId);
-            System.out.println();
+        if (memberRepository.findByMemberId(ID).isEmpty()) 
+        {
+            createMember(ID, PW);
+            System.out.println("회원이 성공적으로 생성되었습니다.");
+        } 
+        else 
+        {
+            System.out.println(ID + "는 이미 존재하는 아이디입니다.");
         }
     }
-    /**/
 }
-/*
-	1. MemberController에서 MemberService로 이동
-	2. loadInitialData에서 멤버 생성
-		사용자 조회, 사용자 이름 생성 준비, 중복검사, 유저 생성 후 저장
-*/
