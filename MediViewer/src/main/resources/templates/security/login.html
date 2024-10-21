@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body>
+    
+    
+    <form th:action="@{/login}" method="post"> <!-- 로그인 요청을 POST 방식으로 보냄 -->
+        <section>
+	        <span class="login-container">
+	            <img src="/img/icon/SampleLogo.png" alt="LOGO" class="logo">
+	            <h1>Login</h1>
+	            
+	            <!-- 로그인 실패 시 오류 메시지 표시 -->
+   					 <div th:if="${param.error}" style="color: red;">
+     				   로그인에 실패했습니다. <br>
+     				   사용자 이름이나 비밀번호를 확인하세요.
+   					 </div>
+	            
+	            <!-- 로그인 form -->
+	            <span class="input-area">
+	                <form th:action="@{/login}" method="post"> <!-- 로그인 요청을 POST 방식으로 보냄 -->
+				        <div>
+				            <label for="username">사용자 이름:</label>
+				            <input type="text" id="username" name="username" required /> <!-- 사용자 이름 입력 필드 -->
+				        </div>
+				        <div>
+				            <label for="password">비밀번호:</label>
+				            <input type="password" id="password" name="password" required /> <!-- 비밀번호 입력 필드 -->
+				        </div>
+				        <div>
+				            <button type="submit">로그인</button> <!-- 로그인 버튼 -->
+				        </div>
+				    </form>
+	            </span>
+	        </span>
+    	</section>
+    </form>
+</body>
+</html>

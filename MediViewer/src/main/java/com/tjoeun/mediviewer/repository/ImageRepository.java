@@ -36,7 +36,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey );
 
 	// studyKey를 통해서 dcm 전부 쿼리 
-//	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
-//	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
+	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
+	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
 	
 }

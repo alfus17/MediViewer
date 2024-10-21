@@ -98,15 +98,17 @@ public class ListController {
 		// 기존의 
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
 		result.put("WorkList", historyWorkList);
-		
+
 		return ResponseEntity.ok().body(result); 
 	}
 	
 	/**
-	 * @return ArrayList<DcmList>
+	 * @return 	DcmList 
+	 * 				or 
+	 * 			404Error
 	 */
 	@GetMapping("/preview/{studykey}")
-	public ResponseEntity<DcmList> getPrivew(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity< DcmList> getPrivew(@PathVariable("studykey") Integer studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
@@ -141,6 +143,8 @@ public class ListController {
 	/**
 	 * @return ArrayList<DcmList>
 	 */
+	
+//	
 //	@GetMapping("/allimage/{studykey}")
 //	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
 //		// 로직 통일
