@@ -98,7 +98,7 @@ public class ListController {
 		// 기존의 
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
 		result.put("WorkList", historyWorkList);
-
+		
 		return ResponseEntity.ok().body(result); 
 	}
 	

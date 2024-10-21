@@ -68,6 +68,7 @@ $("#listPageSize").change(() => {
 	getQueryList(params);
 })
 
+// 리스트 항목 선택
 $(document).on('click', 'li[name=listItem]', (e) => {
     const value = $(e.target).closest('li[name=listItem]').attr('value');
     const pID = $(e.target).closest('li[name=listItem]').find('span[name=pID]').text();
@@ -81,9 +82,11 @@ $(document).on('click', 'li[name=listItem]', (e) => {
 		pname: pName
 	}
     console.log(params);
+    showPreviewData(value);
     getHistoryList(params);
 });
 
+// 리스트 항목 상세보기
 $(document).on('dblclick', 'li[name=listItem]', (e) => {
     const value = $(e.target).closest('li[name=listItem]').attr('value');
     console.log('더블클릭: ',value);

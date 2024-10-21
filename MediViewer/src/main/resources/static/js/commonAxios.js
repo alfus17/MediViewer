@@ -93,6 +93,28 @@ const getHistoryList = (params) => {
 		.catch(error => console.error(error));
 }
 
+const getImgPreview = (studyKey, element) => {
+	axios.get(`/api/lists/preview/${studyKey}`)
+		.then(response => {
+			cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+			cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
+			
+			const rData = response.data;
+			
+			const dicomPath = rData.path;
+			const dicomFile = rData.fname;
+			
+			const imageId = `wadouri:dcm/${dicomPath.replace(/\\/g, '/')}${dicomFile}`;
+			
+			cornerstone.loadImage(imageId).then(image => {
+	            cornerstone.displayImage(element, image);
+	        }).catch(err => {
+				console.log('이미지 로드 실패 : ', err);
+			});
+		})
+		.catch(error => console.error(error));
+}
+
 // axios 공통 로직
 function setParams() {
 	const pid = $("#pid").val();
