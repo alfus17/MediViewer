@@ -18,14 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="COMMENT")
-public class Comment {
+@Table(name="COMMENTTAB")
+public class CommentTab {
 	
     @Id
     @Column(name = "STUDYKEY")
     private int studyKey;
     
-    @Column(name = "COMMENT")
+    @Column(name = "STUDY_COMMENT")
     private String comment;
     
 	@LastModifiedDate

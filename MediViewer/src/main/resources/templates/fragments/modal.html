@@ -34,8 +34,11 @@
 
 	<span id="calendarSpan"></span>
   
-  <figure th:fragment="preview-modal">
-	  <img />
-	  <span></span>
-  </figure>
+	<figure th:fragment="preview-modal" class="preview_modal_area">
+		<label id="toast"></label>
+		<img />
+		<span style="position: relative">
+			<button id="previewCloseSwitch" class="btn_prev_reduce"></button>
+		</span>
+	</figure>
 </html>

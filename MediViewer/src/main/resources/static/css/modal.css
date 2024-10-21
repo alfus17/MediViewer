@@ -1,6 +1,6 @@
 .aside_modal_area {
 	position: absolute;
-	left: 6vw;
+	left: 8vw;
 	width: 16.1vw;
 	height: 60vh;
 	background-color: tomato;
@@ -37,4 +37,29 @@
     border: solid 1px black;
     padding: 8px;
     width: 80%;
+}
+
+.preview_modal_area {
+	position: absolute;
+	bottom: 7vh;
+	right: 2vw;
+	width: 75vw;
+	height: 70vh;
+	background-color: rgb(128, 128, 255);
+	z-index: 20;
+	display: none;
+}
+
+.btn_prev_reduce {
+    position: absolute;
+    top: 66vh;
+    left: 73vw;
+	background-image: url('/img/icon/zoomout.png');
+	background-size: cover;
+	background-position: center;
+	width: 30px;
+	height: 30px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
 }
