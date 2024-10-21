@@ -28,14 +28,17 @@
         const studyKey = urlParams.get('studykey');
         const seriesKey = urlParams.get('serieskey');
         const apiUrl = `/api/dcmList?studykey=${studyKey}&serieskey=${seriesKey}`;
+        
+        console.log("apiUrl ", apiUrl);
 
         // API 요청
         axios.get(apiUrl)
             .then(response => {
                 const dcmList = response.data;
+                console.log("dcmList ", dcmList);
 
                 // imageIds 배열 초기화
-                imageIds = dcmList.map(dcm => `wadouri:dcm/${dcm.path}/${dcm.fname}`); // path를 사용하여 imageIds 배열 구성
+                imageIds = dcmList.map(dcm => `wadouri:dcm/${dcm.path}${dcm.fname}`); // path를 사용하여 imageIds 배열 구성
 
                 // 초기 이미지 표시
                 displayImage(currentIndex);
