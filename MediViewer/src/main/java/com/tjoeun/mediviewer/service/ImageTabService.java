@@ -1,17 +1,15 @@
 package com.tjoeun.mediviewer.service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tjoeun.mediviewer.domain.ImageTab;
 import com.tjoeun.mediviewer.domain.req.ReqParams;
 import com.tjoeun.mediviewer.domain.res.DcmList;
 import com.tjoeun.mediviewer.repository.ImageRepository;
-import com.tjoeun.mediviewer.repository.StudyRepository;
 
 @Service
 public class ImageTabService {
@@ -37,5 +35,19 @@ public class ImageTabService {
 //		System.out.println("ImageTabService_getImageByStudyKey_dcmList : " + dcmList.toString());
 //		return dcmList;
 //	}
+    
+	public HashMap<String, Object> getSeriesObject(Long no) {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		Long minSeries = imageRepo.findBy(no);
+		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(no);
+		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(no, minSeries);
+		
+		result.put("minSeries", minSeries);
+		result.put("seriesList", seriesList);
+		result.put("imageFileName", imageFileName);
+		
+		return result;
+	}
 
 }
