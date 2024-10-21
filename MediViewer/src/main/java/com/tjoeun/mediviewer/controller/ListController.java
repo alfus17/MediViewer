@@ -95,7 +95,7 @@ public class ListController {
 		HashMap<String, Object> result = new HashMap<>();
 		
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
-		List<DcmList> dcmList = imgTabService.getPreviewByStudyKey(params);
+		DcmList dcmList = imgTabService.getPreviewByStudyKey(params);
 		
 		result.put("WorkList", historyWorkList);
 		result.put("preview", dcmList);
@@ -107,7 +107,7 @@ public class ListController {
 	 * @return ArrayList<DcmList>
 	 */
 	@GetMapping("/preview/{studykey}")
-	public ResponseEntity< ArrayList<DcmList>> getPrivew(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity< DcmList> getPrivew(@PathVariable("studykey") Integer studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
@@ -132,16 +132,16 @@ public class ListController {
 	/**
 	 * @return ArrayList<DcmList>
 	 */
-	@GetMapping("/allimage/{studykey}")
-	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
-		// 로직 통일
-		ReqParams params = new ReqParams();
-		params.setStudyKey(studyKey);
-		System.out.println("getAllImage_params : " + params);
-		
-		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
-	}
-	
+//	@GetMapping("/allimage/{studykey}")
+//	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
+//		// 로직 통일
+//		ReqParams params = new ReqParams();
+//		params.setStudyKey(studyKey);
+//		System.out.println("getAllImage_params : " + params);
+//		
+//		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
+//	}
+//	
 	
 	
 }
