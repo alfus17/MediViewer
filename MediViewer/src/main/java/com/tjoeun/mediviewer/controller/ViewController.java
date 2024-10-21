@@ -26,7 +26,6 @@ public class ViewController {
     // view.html 페이지를 반환하는 메서드
     @GetMapping("/view")
     public String showView() {
-    	
         return "view"; // src/main/resources/templates/view.html 파일을 반환
     }
 }
