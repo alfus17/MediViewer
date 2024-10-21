@@ -24,8 +24,11 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	 * @param imageKey
 	 * @return
 	 */
-	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey and  it.IMAGEKEY = :imageKey" ,  nativeQuery = true)
-	Optional<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey , @Param("imageKey")Long imageKey);
+	
+	
+	
+	@Query(value ="SELECT * FROM ( SELECT * FROM ImageTab it  WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY, IMAGEKEY) WHERE ROWNUM = 1" ,  nativeQuery = true)
+	Optional<DcmList> findPreviewByStudyKey(@Param("studyKey")Integer studyKey);
 	
 
 	// studyKey를 통해서 dcm path 와 fname 쿼리 
