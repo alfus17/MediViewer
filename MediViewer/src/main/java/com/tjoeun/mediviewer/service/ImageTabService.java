@@ -37,19 +37,19 @@ public class ImageTabService {
 		return dcmList;
 	}
     
-	public HashMap<String, Object> getSeriesObject(Long no) {
-		HashMap<String, Object> result = new HashMap<>();
-		
-		Long minSeries = imageRepo.findBy(no);
-		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(no);
-		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(no, minSeries);
-		
-		result.put("minSeries", minSeries);
-		result.put("seriesList", seriesList);
-		result.put("imageFileName", imageFileName);
-		
-		return result;
-	}
+//	public HashMap<String, Object> getSeriesObject(Long no) {
+//		HashMap<String, Object> result = new HashMap<>();
+//		
+//		Long minSeries = imageRepo.findBy(no);
+//		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(no);
+//		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(no, minSeries);
+//		
+//		result.put("minSeries", minSeries);
+//		result.put("seriesList", seriesList);
+//		result.put("imageFileName", imageFileName);
+//		
+//		return result;
+//	}
 
 
 	public HashMap<String, Object> getSeriesObject(Long studyKey) {

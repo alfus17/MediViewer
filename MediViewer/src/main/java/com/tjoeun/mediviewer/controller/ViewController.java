@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class LoginController 
+public class ViewController 
 {
 	@GetMapping("/") // 기본 URL에 대한 GET 요청 처리
 	public String home()
