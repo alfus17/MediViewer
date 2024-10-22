@@ -25,27 +25,24 @@
         cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
         const urlParams = new URLSearchParams(window.location.search);
-        const studyKey = urlParams.get('studykey');
-        const seriesKey = urlParams.get('serieskey');
-        const apiUrl = `/api/dcmList?studykey=${studyKey}&serieskey=${seriesKey}`;
-        
-        console.log("apiUrl ", apiUrl);
+        const studykey = urlParams.get('studykey');
 
         // API 요청
-        axios.get(apiUrl)
+        axios.get(`/api/views/${studykey}`)
             .then(response => {
                 const dcmList = response.data;
                 console.log("dcmList ", dcmList);
 
-                // imageIds 배열 초기화
-                imageIds = dcmList.map(dcm => `wadouri:dcm/${dcm.path}${dcm.fname}`); // path를 사용하여 imageIds 배열 구성
-
+              imageIds.put(...dcmList.fname);
+              
                 // 초기 이미지 표시
                 displayImage(currentIndex);
             })
             .catch(error => {
                 console.error("Error fetching DCM list:", error);
             });
+            
+            
 
         // 마우스 휠 이벤트로 이미지 변경
         element.addEventListener('wheel', (event) => {
