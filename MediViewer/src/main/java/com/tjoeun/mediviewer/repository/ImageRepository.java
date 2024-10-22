@@ -33,7 +33,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 
 	// studyKey를 통해서 dcm path 와 fname 쿼리 
 	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey " ,  nativeQuery = true)
-	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey );
+	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Long studyKey, @Param("seriesKey")Long seriesKey );
 
 	// studyKey를 통해서 dcm 전부 쿼리 
 	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
@@ -42,16 +42,17 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	
 
 	@Query(value = "SELECT min(it.serieskey) FROM ImageTab it WHERE it.STUDYKEY = :studyKey", nativeQuery = true)
-	Long findBy(@Param("studyKey") Long no);
+
+	Long findBy(@Param("studyKey") Long studyKey);
 	
 	@Query(value = "SELECT distinct it.serieskey FROM ImageTab it WHERE it.STUDYKEY = :studyKey order by 1", nativeQuery = true)
-	ArrayList<Long> findAllSeriesByStudyKey(@Param("studyKey") Long no);
+	ArrayList<Long> findAllSeriesByStudyKey(@Param("studyKey") Long studyKey);
 
 	@Query(value = "SELECT distinct it.path FROM ImageTab it WHERE it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey", nativeQuery = true)
-	String findBy(@Param("studyKey") Long no, @Param("seriesKey")Long minSeries);
+	String findBy(@Param("studyKey") Long studyKey, @Param("seriesKey")Long minSeries);
 
-	@Query(value = "select replace('wadouri:dcm/'||it.path||it.fname, '\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
-	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long no, @Param("seriesKey") Long minSeries);
+	@Query(value = "select replace('wadouri:/dcm/'||it.path||it.fname, '\\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
+	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long studyKey, @Param("seriesKey") Long minSeries);
 
 
 	
