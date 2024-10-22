@@ -48,9 +48,9 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	ArrayList<Long> findAllSeriesByStudyKey(@Param("studyKey") Long studyKey);
 
 	@Query(value = "SELECT distinct it.path FROM ImageTab it WHERE it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey", nativeQuery = true)
-	String findBy(@Param("studyKey") Long no, @Param("seriesKey")Long minSeries);
+	String findBy(@Param("studyKey") Long studyKey, @Param("seriesKey")Long minSeries);
 
-	@Query(value = "select replace('wadouri:dcm/'||it.path||it.fname, '\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
+	@Query(value = "select replace('wadouri:/dcm/'||it.path||it.fname, '\\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
 	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long studyKey, @Param("seriesKey") Long minSeries);
 
 
