@@ -60,19 +60,24 @@
 				<div class="div_list_control_panel">
 					<div class="div_list_query_panel">
 						<section>
-							<select name="queryType" id="queryType"> <!-- onchange="setQueryStringContainer()" -->
-								<option value="pID">환자아이디</option>
-								<option value="pName">환자명</option>
-								<option value="modality">장비명</option>
-								<option value="studyDesc">검사설명</option>
-							</select>
-
 							<span id="queryStringContainer">
-								<input type="text" id="queryString" placeholder="환자아이디를 입력하세요...">
+								<input type="text" id="pid" placeholder="환자아이디를 입력하세요...">
 							</span>
 
-							<select name="queryJudgement" id="queryJudgement">
-								<option value="null">판독 상태</option>
+							<span id="queryStringContainer">
+								<input type="text" id="pname" placeholder="환자명을  입력하세요...">
+							</span>
+							
+							<select name="modality" id="modality">
+								<option value="">장비</option>
+								<option value="NR">읽지않음</option>
+								<option value="RD">열람중</option>
+								<option value="PJ">예비 판독</option>
+								<option value="JD">판독</option>
+							</select>
+
+							<select name="state" id="state">
+								<option value="">판독 상태</option>
 								<option value="NR">읽지않음</option>
 								<option value="RD">열람중</option>
 								<option value="PJ">예비 판독</option>
@@ -114,22 +119,21 @@
 	</main>
 
 	<script src="/js/commonAxios.js"></script>
-	<script src="/js/modalControl.js"></script>
+	<script src="/js/listsController.js"></script>
+	<script src="/js/historiesController.js"></script>
+	<script src="/js/modalController.js"></script>
 	<script src="/js/setQueryStringContainer.js"></script>
-	<script src="/js/setStudyListContent.js"></script>
-	<script src="/js/setHistListContent.js"></script>
 	<script src="/js/listSort.js"></script>
 	<script src="/js/calendar.js"></script>
 	<script>
 		let isCalendarOpen = false;
 		let isPreviewOpen = false;
 		let totalCnt;
+		let nowPage;
 		const items = [];
 		const histItems = [];
 		const histPData = [];
 		const sortOrder = [];
-		
-		
 		
 		window.onload = () => {
 			console.log("onLoad")

@@ -35,6 +35,7 @@
 }
 
 .section_history_area {
+	padding: 1%;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
