@@ -36,8 +36,8 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Long studyKey, @Param("seriesKey")Long seriesKey );
 
 	// studyKey를 통해서 dcm 전부 쿼리 
-	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
-	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
+	@Query(value = "SELECT replace('wadouri:dcm/'||it.path||it.fname, '\', '/') as FNAME FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
+	ArrayList<String> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
 
 	
 
