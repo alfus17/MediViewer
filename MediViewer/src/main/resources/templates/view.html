@@ -30,9 +30,34 @@
     <script src="https://unpkg.com/cornerstone-wado-image-loader@3.0.0/dist/cornerstoneWADOImageLoader.min.js"></script>
     <script src="https://unpkg.com/dicom-parser@1.8.5/dist/dicomParser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/stackImgLoad.js"></script>
+<!--    <script src="/js/stackImgLoad.js"></script>-->
    <script src="/js/easyButton.js"></script>
    <script src="/js/zoomButton.js"></script>
+   <script src="/js/test/test.js" ></script>
+   
+
+   <script>
+    const series = [];
+    const dcmPathLists = [];
+
+    window.onload = () => {
+        const urlPath = window.location.pathname; // 현재 경로 가져오기
+        const pathSegments = urlPath.split('/'); // 경로를 '/'로 분리
+        
+        // 'view' 다음의 첫 번째 세그먼트를 studykey로 사용
+        const studyKey = pathSegments[pathSegments.indexOf('view') + 1]; 
+        console.log("studyKey:", studyKey);
+
+        console.log("onLoad");
+
+        testDetailAxios(studyKey); // studyKey로 호출
+
+    }
+</script>
+
+	   
+	   
+   </script>
    
 
 </html>

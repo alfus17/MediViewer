@@ -25,8 +25,8 @@ public class ImageTabService {
 	}
 	
 	// studyKey와 seriesKey로 DcmList를 조회
-    public ArrayList<DcmList> getDcmListByStudyKey(Long studyKey, Long seriesKey) {
-        return imageRepo.findByStudyKey(studyKey, seriesKey);
+    public ArrayList<String> getDcmListByStudyAndSeriesKey(Long studyKey, Long seriesKey) {
+        return imageRepo.findAllByStudyKey(studyKey, seriesKey);
     }
 
 	
@@ -75,8 +75,17 @@ public class ImageTabService {
 		
 		System.out.println("ImageTabService_getDcmListByStudyKey_responseMap : " + responseMap);
 
-		
-		
 		return responseMap;
 	}
+	
+	// 시리즈키 배열만 리턴 
+	public ArrayList<Long> getSeriesKeyList(Long studyKey) {
+		System.out.println("ImageTabService_getSeriesKeyList_studyKey : " + studyKey);
+		
+		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
+		System.out.println("ImageTabService_getSeriesKeyList_seriesList : " + seriesList);
+		return seriesList;
+	}
+	
+	
 }
