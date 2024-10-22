@@ -1,9 +1,7 @@
 package com.tjoeun.mediviewer.domain.res;
 
-public interface DcmList {
-	
+public interface DcmListDTO {
 	String getPath();
 	String getFname();
 	Long getImageKey();
-	Long getSeriesKey();
 }

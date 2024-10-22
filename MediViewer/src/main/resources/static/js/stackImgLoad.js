@@ -6,16 +6,18 @@
     let lastMousePosition = { x: 0, y: 0 }; // 마지막 마우스 위치
 
     // 이미지 표시 함수
-    function displayImage(index) {
-        if (index < 0 || index >= imageIds.length) {
-            return;
-        }
-        cornerstone.loadImage(imageIds[index]).then(image => {
-            cornerstone.displayImage(element, image);
-        }).catch(err => {
-            console.error("Image load error:", err);
-        });
-    }
+   function displayImage(index) {
+	    if (index < 0 || index >= imageIds.length) {
+	        return;
+	    }
+	    console.log("Loading image URL:", imageIds[index]); // 로드할 URL 로그 출력
+	    cornerstone.loadImage(imageIds[index]).then(image => {
+	        cornerstone.displayImage(element, image);
+	    }).catch(err => {
+	        console.error("Image load error:", err);
+	    });
+	}
+
 
     window.onload = function() {
         element = document.getElementById('dicomImage'); // 전역 변수 초기화
@@ -24,28 +26,35 @@
         // cornerstone-wado-image-loader 설정
         cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const studyKey = urlParams.get('studykey');
-        const seriesKey = urlParams.get('serieskey');
-        const apiUrl = `/api/dcmList?studykey=${studyKey}&serieskey=${seriesKey}`;
+        const urlPath = window.location.pathname; // 현재 경로 가져오기
+        const pathSegments = urlPath.split('/'); // 경로를 '/'로 분리
         
-        console.log("apiUrl ", apiUrl);
+        // 'view' 다음의 첫 번째 세그먼트를 studykey로 사용
+    	const studykey = pathSegments[pathSegments.indexOf('view') + 1]; 
+    	
+    	if (!studykey) {
+        console.error("Studykey is not provided in the URL.");
+        return; // studykey가 없으면 함수 종료
+    	}
 
         // API 요청
-        axios.get(apiUrl)
+        axios.get(`/api/views/${studykey}`)
             .then(response => {
                 const dcmList = response.data;
                 console.log("dcmList ", dcmList);
+                
 
-                // imageIds 배열 초기화
-                imageIds = dcmList.map(dcm => `wadouri:dcm/${dcm.path}${dcm.fname}`); // path를 사용하여 imageIds 배열 구성
-
+				imageIds.push(...dcmList.imageFileName);
+				console.log('imageIds test',imageIds);
+              
                 // 초기 이미지 표시
                 displayImage(currentIndex);
             })
             .catch(error => {
                 console.error("Error fetching DCM list:", error);
             });
+            
+            
 
         // 마우스 휠 이벤트로 이미지 변경
         element.addEventListener('wheel', (event) => {

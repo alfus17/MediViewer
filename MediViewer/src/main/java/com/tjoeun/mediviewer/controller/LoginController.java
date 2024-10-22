@@ -2,6 +2,7 @@ package com.tjoeun.mediviewer.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class LoginController 
@@ -29,4 +30,10 @@ public class LoginController
 	{
 		return "/security/test";
 	}
+	
+	// view 페이지
+	@GetMapping("/view/{studykey}")
+    public String showStudyView(@PathVariable("studykey") Long studykey) {      
+        return "view";
+    }
 }
