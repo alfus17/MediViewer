@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjoeun.mediviewer.domain.ImageTab;
 import com.tjoeun.mediviewer.domain.req.ReqParams;
@@ -159,5 +160,8 @@ public class ListController {
 //	}
 //	
 	
-	
+	@GetMapping("/test/{no}")
+	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="no") Long no){
+		return ResponseEntity.ok().body(imgTabService.getSeriesObject(no));
+	}
 }

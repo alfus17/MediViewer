@@ -29,6 +29,29 @@ public class ImageTabService {
         return imageRepo.findByStudyKey(studyKey, seriesKey);
     }
 
+	
+//	public ArrayList<ImageTab> getImageByStudyKey(ReqParams params){
+//		System.out.println("ImageTabService_getImageByStudyKey_params : " + params);
+//		ArrayList<ImageTab> dcmList = imageRepo.findImagesByStudyKey(params.getStudyKey());
+//		System.out.println("ImageTabService_getImageByStudyKey_dcmList : " + dcmList.toString());
+//		return dcmList;
+//	}
+    
+	public HashMap<String, Object> getSeriesObject(Long no) {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		Long minSeries = imageRepo.findBy(no);
+		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(no);
+		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(no, minSeries);
+		
+		result.put("minSeries", minSeries);
+		result.put("seriesList", seriesList);
+		result.put("imageFileName", imageFileName);
+		
+		return result;
+	}
+
+
 	public HashMap<String, Object> getSeriesObject(Long studyKey) {
 		System.out.println("ImageTabService_getDcmListByStudyKey_studyKey : " + studyKey);
 		

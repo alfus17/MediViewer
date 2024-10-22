@@ -42,6 +42,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	
 
 	@Query(value = "SELECT min(it.serieskey) FROM ImageTab it WHERE it.STUDYKEY = :studyKey", nativeQuery = true)
+
 	Long findBy(@Param("studyKey") Long studyKey);
 	
 	@Query(value = "SELECT distinct it.serieskey FROM ImageTab it WHERE it.STUDYKEY = :studyKey order by 1", nativeQuery = true)

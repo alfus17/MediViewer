@@ -115,6 +115,59 @@ const getImgPreview = (studyKey, element) => {
 		.catch(error => console.error(error));
 }
 
+
+const testAxios = () => {
+	axios.get('/api/lists/test/16')
+		.then(response => {
+			let currentIndex = 0;
+			
+			cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+			cornerstoneWADOImageLoader.external.cornerstoneTools = cornerstoneTools;
+			
+			const rData = response.data;
+			testImgItems.splice(0, testImgItems.length);
+			testImgItems.push(...rData.imageFileName);
+			
+			const e = document.getElementById('testImageArea');
+			cornerstone.enable(e);
+			
+			displayImage(currentIndex);
+			
+			
+			function displayImage(index) {
+		        if (index < 0 || index >= testImgItems.length) {
+		            return;
+		        }
+		        cornerstone.loadImage(testImgItems[index]).then(image => {
+		            cornerstone.displayImage(e, image);
+		        }).catch(err => {
+		            console.error("Image load error:", err);
+		        });
+		    }
+		    
+		    e.addEventListener('wheel', (event) => {
+				event.preventDefault();
+				
+				if (event.deltaY > 0) { // 휠을 아래로 스크롤
+	                if (currentIndex < testImgItems.length - 1) {
+	                    currentIndex++;
+	                    displayImage(currentIndex);
+	                }
+	            } else if (event.deltaY < 0) { // 휠을 위로 스크롤
+	                if (currentIndex > 0) {
+	                    currentIndex--;
+	                    displayImage(currentIndex);
+	                }
+	            }
+			})
+		});
+}
+
+
+
+
+
+
 // axios 공통 로직
 function setParams() {
 	const pid = $("#pid").val();
