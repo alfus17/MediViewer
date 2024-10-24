@@ -161,8 +161,8 @@ public class ListController {
 	}
 	
 	
-	@GetMapping("/test/{no}")
-	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="no") Long no){
-		return ResponseEntity.ok().body(imgTabService.getSeriesObject(no));
+	@GetMapping("/preview/{studykey}/series")
+	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="studykey") Long studykey){
+		return ResponseEntity.ok().body(imgTabService.getSeriesObject(studykey));
 	}
 }

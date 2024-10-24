@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
-  <ul class="studylist_container" name="studyList" th:fragment="patient-list">
+  <ul class="studylist_container" id="studyList" name="studyList" th:fragment="patient-list">
      <li>
         <input class="checkbox" type="checkbox" id="selectAll">
         <span class="w10" name="itemHeader" id="pID">환자 아이디</span>
@@ -16,6 +16,7 @@
      </li>
      <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
      <span class="studylist_container" id="liForEachSpan"></span>
+     <button class="btn_get_more" id="getMoreList" style="display: none;"> 더보기 </button>
   </ul>
   
   <section th:fragment="hist-list" class="section_history_area">

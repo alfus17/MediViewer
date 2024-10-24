@@ -1,8 +1,9 @@
 // 초기화 공통 로직
-function resetSelectors(e) {
+function resetSelectors() {
+	resetQueryStrings();
 	resetContentItems();
 	resetHistItems();
-	getDefList();
+	getQueryList(setDefParams());
 }
 
 // 기간 선택 후 쿼리 로직
@@ -58,8 +59,8 @@ $("#resetQuery").click((e) => {
 })
 
 // 페이지 개수 리사이징
-$("#listPageSize").change(() => {
-	const slice = $("#listPageSize").val();
+$("#slice").change(() => {
+	const slice = $("#slice").val();
 	const params = {
 		...setParams(),
 		slice
@@ -70,14 +71,14 @@ $("#listPageSize").change(() => {
 
 // 리스트 항목 선택
 $(document).on('click', 'li[name=listItem]', (e) => {
-    const value = $(e.target).closest('li[name=listItem]').attr('value');
+    prevStudyKey = $(e.target).closest('li[name=listItem]').attr('value');
     const pID = $(e.target).closest('li[name=listItem]').find('span[name=pID]').text();
     const pName = $(e.target).closest('li[name=listItem]').find('span[name=pName]').text();
     console.log($(e.target).closest('li[name=listItem]'));
-    console.log('클릭: ',value, ', ', pID, ', ', pName);
+    console.log('클릭: ',prevStudyKey, ', ', pID, ', ', pName);
     
     const params = {
-		studyKey: value,
+		studyKey: prevStudyKey,
 		pid: pID,
 		pname: pName
 	}
@@ -87,11 +88,12 @@ $(document).on('click', 'li[name=listItem]', (e) => {
     getHistoryList(params);
     
     console.log('doShowPreviewData');
-    showPreviewData(value);
+    showPreviewData(prevStudyKey);
 });
 
 // 리스트 항목 상세보기
 $(document).on('dblclick', 'li[name=listItem]', (e) => {
     const value = $(e.target).closest('li[name=listItem]').attr('value');
     console.log('더블클릭: ',value);
+    window.location.href = `/view/${value}`;
 });
