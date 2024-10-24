@@ -42,6 +42,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	
 
 	@Query(value = "SELECT min(it.serieskey) FROM ImageTab it WHERE it.STUDYKEY = :studyKey", nativeQuery = true)
+
 	Long findBy(@Param("studyKey") Long studyKey);
 	
 	// studyKey를 통해 전체 시리즈 조회

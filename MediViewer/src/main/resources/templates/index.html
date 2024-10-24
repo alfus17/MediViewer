@@ -113,7 +113,7 @@
 				<!-- 확대 버튼 누르면 모달창 나오게 만들기 모달은 이미지영역 / 코멘트 영역 포함 -->
 				<span class="span_prev_img_container" id="previewImageContainer">
 					<div class="div_prev_img" id="previewImage"></div>
-					<button id="previewOpenSwitch" class="btn_prev_extend"></button>
+					<button id="previewOpenSwitch" class="btn_prev_extend" onclick="testAxios()"></button>
 				</span>
 			</div>
 		</div>
@@ -134,6 +134,7 @@
 		let nowPage;
 		const items = [];
 		const histItems = [];
+		const testImgItems = [];
 		const histPData = [];
 		const sortOrder = [];
 		
