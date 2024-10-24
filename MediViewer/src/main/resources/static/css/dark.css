@@ -1,0 +1,33 @@
+.flatpickr {
+    display: flex;
+    justify-content: center;
+}
+
+.flatpickr-calendar {
+	width: 16vw;
+	font-size: 14px;
+    line-height: 24px;
+}
+
+.flatpickr-rContainer {
+	width: 100%;
+}
+
+.flatpickr-weekdays {
+	width: 100%;
+}
+
+.flatpickr-days {
+	width: 100%;
+}
+
+.flatpickr-day {
+	height: 4vh;
+    line-height: 4vh;
+}
+
+.dayContainer {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}

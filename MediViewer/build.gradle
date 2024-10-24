@@ -45,8 +45,15 @@ dependencies {
 	// Password Crypto
 	implementation 'org.springframework.security:spring-security-crypto:6.3.1'
 	
-	// 시큐리티
+	// QueryDsl
+	implementation 'com.querydsl:querydsl-jpa'
+
+	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
+		// Password Crypto
+	implementation 'org.springframework.security:spring-security-crypto:6.3.1'
 	
 }
 

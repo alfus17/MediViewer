@@ -1,3 +1,13 @@
+const toastMessage = '이미지 영역 혹은 우측 하단 버튼을 클릭하면 창이 닫힙니다.';
+
+function showToast(target) {
+	target.addClass("active");
+	target.text(toastMessage);
+	setTimeout(() => {
+		target.removeClass("active");
+	}, 4000)
+}
+
 // 모달 활성화 여부 스위치 로직
 function switchCalendarStatus() {
 	isCalendarOpen = !isCalendarOpen;
@@ -16,4 +26,13 @@ function setView(target, b) {
 $("#calendarOpenSwitch, #doSelectedDurationQuery").click(() => {
 	switchCalendarStatus();
 	setView($(".aside_modal_area"),isCalendarOpen);
+})
+
+$("#previewOpenSwitch, #previewCloseSwitch").click(() => {
+	switchPreviewStatus();
+	setView($(".preview_modal_area"),isPreviewOpen);
+	if(isPreviewOpen){
+		const toast = $("#toast");
+		showToast(toast);
+	}
 })
