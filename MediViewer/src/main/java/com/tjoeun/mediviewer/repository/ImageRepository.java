@@ -44,6 +44,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	@Query(value = "SELECT min(it.serieskey) FROM ImageTab it WHERE it.STUDYKEY = :studyKey", nativeQuery = true)
 	Long findBy(@Param("studyKey") Long studyKey);
 	
+	// studyKey를 통해 전체 시리즈 조회
 	@Query(value = "SELECT distinct it.serieskey FROM ImageTab it WHERE it.STUDYKEY = :studyKey order by 1", nativeQuery = true)
 	ArrayList<Long> findAllSeriesByStudyKey(@Param("studyKey") Long studyKey);
 
@@ -52,7 +53,11 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 
 	@Query(value = "select replace('wadouri:/dcm/'||it.path||it.fname, '\\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
 	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long studyKey, @Param("seriesKey") Long minSeries);
-
+	
+	@Query(value = "select replace('wadouri:/dcm/'||it.path||it.fname, '\\', '/') as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by 1", nativeQuery = true)
+	ArrayList<String> findAllByStudyKeySeriesKey(@Param("studyKey") Long studyKey, @Param("seriesKey") Long seriesKey);
 
 	
+	
+		
 }
