@@ -10,8 +10,6 @@
     <div class="c">
         <div class="left">
             <h2>썸네일 자리</h2>
-            <div id="thumbnailContainer" style="display: flex; flex-wrap: wrap;"></div>
-
         </div>   
 
         <div class="right">
@@ -32,27 +30,30 @@
     <script src="https://unpkg.com/cornerstone-wado-image-loader@3.0.0/dist/cornerstoneWADOImageLoader.min.js"></script>
     <script src="https://unpkg.com/dicom-parser@1.8.5/dist/dicomParser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   <script src="/js/stackImgLoad.js"></script>
+<!--    <script src="/js/stackImgLoad.js"></script>-->
    <script src="/js/easyButton.js"></script>
    <script src="/js/zoomButton.js"></script>
+   <script src="/js/test/test.js" ></script>
    
 
    <script>
     const series = [];
     const dcmPathLists = [];
-    const thumbnails = [];
-    let element; // 전역 변수
-	let imageIds = []; // 전역 변수
-	let currentIndex = 0; // 전역 변수
-	let isDragging = false; // 드래그 중인지 여부
-	let lastMousePosition = { x: 0, y: 0 }; // 마지막 마우스 위치
-	let currentImageIndex = 0; // 현재 이미지 인덱스
-	let dcmList = { imageFileNames: [] }; // dcmList 변수 추가
 
-    console.log("ododododod",thumbnails)
+    window.onload = () => {
+        const urlPath = window.location.pathname; // 현재 경로 가져오기
+        const pathSegments = urlPath.split('/'); // 경로를 '/'로 분리
+        
+        // 'view' 다음의 첫 번째 세그먼트를 studykey로 사용
+        const studyKey = pathSegments[pathSegments.indexOf('view') + 1]; 
+        console.log("studyKey:", studyKey);
 
-   
-	</script>
+        console.log("onLoad");
+
+        testDetailAxios(studyKey); // studyKey로 호출
+
+    }
+</script>
 
 	   
 	   
