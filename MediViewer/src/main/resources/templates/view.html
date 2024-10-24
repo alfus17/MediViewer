@@ -6,11 +6,10 @@
     <title>Stack Manipulation Tools</title>
     <link rel="stylesheet" href="/css/view.css">
 </head>
-<body>
-    <div class="c">
+<body class="vbody">
+
         <div class="left">
-            <h2>썸네일 자리</h2>
-            <div id="thumbnailContainer" style="display: flex; flex-wrap: wrap;"></div>
+            <div id="thumbnailContainer"></div>
 
         </div>   
 
@@ -24,7 +23,7 @@
             </div>
             <div id="dicomImage" class="dicomImage"></div>
         </div>
-    </div>
+
 
 </body>
     <script src="https://unpkg.com/cornerstone-core@2.3.0/dist/cornerstone.min.js"></script>
@@ -41,9 +40,9 @@
     const series = [];
     const dcmPathLists = [];
     const thumbnails = [];
-    let element; // 전역 변수
-	let imageIds = []; // 전역 변수
-	let currentIndex = 0; // 전역 변수
+    let element; // 이미지데이터
+	let imageIds = []; // 이미지들의 배열
+	let currentIndex = 0; // 현재 시리즈 인덱스
 	let isDragging = false; // 드래그 중인지 여부
 	let lastMousePosition = { x: 0, y: 0 }; // 마지막 마우스 위치
 	let currentImageIndex = 0; // 현재 이미지 인덱스
@@ -54,9 +53,6 @@
    
 	</script>
 
-	   
-	   
-   </script>
    
 
 </html>

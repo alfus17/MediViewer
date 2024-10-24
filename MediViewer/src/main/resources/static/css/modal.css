@@ -5,7 +5,7 @@
 	height: 60vh;
 	background-color: #FF6347;
 	z-index: 10;
-	display: block;
+	display: none;
 }
 
 .date_area {
