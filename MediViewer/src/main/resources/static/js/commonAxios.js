@@ -10,7 +10,7 @@ const getDefList = () => {
 			
 			$("#histPID").text('');
 			$("#histPName").text('');
-			const listContainer = document.querySelector("#liForEachSpan");
+			const listContentContainer = document.querySelector("#liForEachSpan");
 			items.forEach(item => {
 				const li = document.createElement("li");
 				li.setAttribute("name", "listItem");
@@ -26,8 +26,17 @@ const getDefList = () => {
 			        <span name="seriesCnt" class="w5">${item.seriesCnt}</span>
 			        <span name="imageCnt" class="w5">${item.imageCnt}</span>
 				`;
-				listContainer.appendChild(li);
+				listContentContainer.appendChild(li);
 			})
+			
+			if(totalCnt > 10) {
+				const listContainer = $("#getMoreList");
+				listContainer.show();
+			} else {
+				const listContainer = $("#getMoreList");
+				listContainer.hide();
+			}
+			
 		})
 		.catch(error => console.error(error));
 }
@@ -35,7 +44,7 @@ const getDefList = () => {
 const getQueryList = (params) => {
 	axios.post("/api/lists/query", params)
 		.then(response => {
-			nowPage = null;
+			nowPage = 1;
 			const rData = response.data;
 			resetContentItems();
 			resetHistItems();
@@ -62,6 +71,8 @@ const getQueryList = (params) => {
 				`;
 				listContainer.appendChild(li);
 			})
+			
+			console.log(parseInt($("#slice").val()));
 		})
 		.catch(error => console.error(error));
 }
@@ -104,7 +115,7 @@ const getImgPreview = (studyKey, element) => {
 			const dicomPath = rData.path;
 			const dicomFile = rData.fname;
 			
-			const imageId = `wadouri:dcm/${dicomPath.replace(/\\/g, '/')}${dicomFile}`;
+			const imageId = `wadouri:dcm/${dicomPath.replace(/\\+/g, '/')}${dicomFile}`.replace(/\/+/g, '/');
 			
 			cornerstone.loadImage(imageId).then(image => {
 	            cornerstone.displayImage(element, image);
@@ -116,8 +127,8 @@ const getImgPreview = (studyKey, element) => {
 }
 
 
-const testAxios = () => {
-	axios.get('/api/lists/test/16')
+const getPreviewSeries = (studykey) => {
+	axios.get(`/api/lists/preview/${studykey}/series`)
 		.then(response => {
 			let currentIndex = 0;
 			
@@ -130,6 +141,8 @@ const testAxios = () => {
 			
 			const e = document.getElementById('testImageArea');
 			cornerstone.enable(e);
+			
+			console.log(testImgItems);
 			
 			displayImage(currentIndex);
 			
@@ -164,11 +177,30 @@ const testAxios = () => {
 }
 
 
-
-
-
-
 // axios 공통 로직
+function setDefParams() {
+	const pid = '';
+	const pname = '';
+	const modality = '';
+	const state = null;
+	const slice = parseInt($("#slice").val(), 10);
+	const nowPage = 1;
+	const date = [];
+	
+	const param = {
+		pid,
+		pname,
+		modality,
+		state,
+		slice,
+		nowPage,
+		sdate: date[0],
+		edate: date[1]
+	}
+	
+	return param;
+}
+
 function setParams() {
 	const pid = $("#pid").val();
 	const pname = $("#pname").val();
@@ -255,6 +287,13 @@ function setStatus(reportStatus) {
 	reportStatus.forEach(e => {
 		statusList.find(`option[value=${e}]`).prop("disabled", false);
 	})
+}
+
+function resetQueryStrings() {
+	$("#pid").val("");
+	$("#pname").val("");
+	$("#modality").val("");
+	$("#status").val("");
 }
 
 function resetContentItems() {

@@ -34,6 +34,6 @@ public class ViewController
 	// view 페이지
 	@GetMapping("/view/{studykey}")
     public String showStudyView(@PathVariable("studykey") Long studykey) {      
-        return "view";
+        return "/view";
     }
 }

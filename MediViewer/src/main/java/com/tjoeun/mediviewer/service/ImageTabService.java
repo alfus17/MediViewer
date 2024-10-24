@@ -28,7 +28,13 @@ public class ImageTabService {
     public ArrayList<DcmList> getDcmListByStudyKey(Long studyKey, Long seriesKey) {
         return imageRepo.findByStudyKey(studyKey, seriesKey);
     }
-
+    
+//	public ArrayList<ImageTab> getImageByStudyKey(ReqParams params){
+//		System.out.println("ImageTabService_getImageByStudyKey_params : " + params);
+//		ArrayList<ImageTab> dcmList = imageRepo.findImagesByStudyKey(params.getStudyKey());
+//		System.out.println("ImageTabService_getImageByStudyKey_dcmList : " + dcmList.toString());
+//		return dcmList;
+//	}
 	
 	public ArrayList<String> getImageByStudyKey(ReqParams params){
 		System.out.println("ImageTabService_getImageByStudyKey_params : " + params);
@@ -64,7 +70,7 @@ public class ImageTabService {
 		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
 		System.out.println("ImageTabService_getDcmListByStudyKey_seriesList : " + seriesList);
 
-		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(studyKey, minSeries);
+		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(studyKey);
 		System.out.println("ImageTabService_getDcmListByStudyKey_imageFileName : " + imageFileName);
 
 		
