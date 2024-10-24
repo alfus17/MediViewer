@@ -9,9 +9,25 @@ function displayImage(index) {
     cornerstone.loadImage(imageIds[index]).then(image => {
         cornerstone.displayImage(element, image);
         
-        // 동적으로 스타일 적용
-        element.style.width = '100%';  // 이미지의 너비를 100%로 설정
-        element.style.height = '100%';  // 높이는 비율에 맞게 자동 조정
+        const viewport = cornerstone.getDefaultViewportForImage(element, image);
+
+        // 이미지가 캔버스에 꽉 차게 설정
+        const canvasWidth = element.clientWidth;
+        const canvasHeight = element.clientHeight;
+        const imageWidth = image.width;
+        const imageHeight = image.height;
+
+        // 캔버스 크기와 이미지 크기를 비교해 스케일 설정
+        /*const scaleX = canvasWidth / imageWidth;
+        const scaleY = canvasHeight / imageHeight;
+        const scale = Math.max(scaleX, scaleY); // 가로세로 중 더 큰 비율을 선택 (꽉 차게 하기 위함)
+*/
+
+		const scaleX = canvasWidth / imageWidth;
+        const scaleY = canvasHeight / imageHeight;
+        const scale = Math.min(scaleX, scaleY);
+        viewport.scale = scale;
+        cornerstone.setViewport(element, viewport);
         
     }).catch(err => {
         console.error("Image load error:", err);
@@ -42,9 +58,9 @@ function loadSeriesThumbnails(seriesList) {
     seriesList.forEach((imageArray, i) => {
         const dicomDiv = document.createElement('div');
         dicomDiv.id = `dicomImage_${i}`;
-        dicomDiv.style.width = '100px';
-        dicomDiv.style.height = '100px';
-        dicomDiv.style.margin = '10px';
+        dicomDiv.style.width = '150px';
+        dicomDiv.style.height = '150px';
+        dicomDiv.style.margin = '6px';
         dicomDiv.style.cursor = 'pointer';
         container.appendChild(dicomDiv); // 컨테이너에 추가
 
@@ -113,11 +129,11 @@ window.onload = function() {
 
     if (imageIds.length === 0) return; // 이미지가 없으면 아무것도 하지 않음
 
-    if (event.deltaY > 0) { // 휠을 아래로 스크롤
+    if (event.deltaY < 0) { // 휠을 아래로 스크롤
         if (currentImageIndex < imageIds.length - 1) {
             currentImageIndex++; // 현재 시리즈의 다음 이미지로 이동
         }
-    } else if (event.deltaY < 0) { // 휠을 위로 스크롤
+    } else if (event.deltaY > 0) { // 휠을 위로 스크롤
         if (currentImageIndex > 0) {
             currentImageIndex--; // 현재 시리즈의 이전 이미지로 이동
         }
