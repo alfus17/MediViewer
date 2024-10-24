@@ -11,3 +11,6 @@ function resetHistData() {
 	resetItems(histItems);
 }
 
+$("#previewOpenSwitch").on('click', () => {
+	getPreviewSeries(prevStudyKey)
+})

@@ -148,20 +148,20 @@ public class ListController {
 	 * @return ArrayList<DcmList>
 	 */
 	
-//	
-//	@GetMapping("/allimage/{studykey}")
-//	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
-//		// 로직 통일
-//		ReqParams params = new ReqParams();
-//		params.setStudyKey(studyKey);
-//		System.out.println("getAllImage_params : " + params);
-//		
-//		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
-//	}
-//	
 	
-	@GetMapping("/test/{no}")
-	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="no") Long no){
-		return ResponseEntity.ok().body(imgTabService.getSeriesObject(no));
+	@GetMapping("/allimage/{studykey}")
+	public ResponseEntity< ArrayList<String>> getAllImage(@PathVariable("studykey") Integer studyKey){
+		// 로직 통일
+		ReqParams params = new ReqParams();
+		params.setStudyKey(studyKey);
+		System.out.println("getAllImage_params : " + params);
+		
+		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
+	}
+	
+	
+	@GetMapping("/preview/{studykey}/series")
+	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="studykey") Long studykey){
+		return ResponseEntity.ok().body(imgTabService.getSeriesObject(studykey));
 	}
 }

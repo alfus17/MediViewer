@@ -5,6 +5,7 @@
 	margin: 4% 2% 2%;
 	border: 0;
 	padding: 0;
+	background-color: #212121;
 }
 
 .aside_control_panel {
@@ -13,7 +14,9 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: beige;
+	/*background-color: beige;*/
+	background-color: #505050;
+	color: #fff;
 	height: 85vh;
 	margin-right: 2%
 }
