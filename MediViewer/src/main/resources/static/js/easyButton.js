@@ -20,4 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('reset').addEventListener('click', function () {
         cornerstone.reset(dicomImageElement);
     });
+    
+    
 });

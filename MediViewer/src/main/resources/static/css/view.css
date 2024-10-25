@@ -1,51 +1,98 @@
+* {
+	color: #fff;
+	font-size: 13px;
+}
+
 .vbody {
 	display: flex;
-	margin: 0 auto;
-	justify-content:center;
-	margin-top: 50px;
-	
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin: 4% 2% 2%;
+	border: 0;
+	padding: 0;
+	background-color: #212121;
 }
 
 
 
 .left {
-	width: 300px;
-	height: 800px;
-	background-color: blueviolet;
-	display: flex;
-}
-
-.right {
-	width: 1300px;
-	height: 800px;
-	background-color: aqua;
-}
-
-.btns {
-	width: 100%;
-	height: 14%;
-	background-color: antiquewhite;
-}
-
-.btns button{
 	width: 10%;
-	height: 50%;
+	background-color:#505050;
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.left img {
+	width: 100%;
+	height: 10%;
+	display: flex;
+	object-fit: cover;	
 }
 
 #thumbnailContainer {
-	max-height: 800px; /* 최대 높이를 설정하여 썸네일이 이 높이를 넘으면 스크롤 */
+	max-height: 700px; /* 최대 높이를 설정하여 썸네일이 이 높이를 넘으면 스크롤 */
     overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;
 }
 
-.dicomImage {
-	width: 100%;
-	height: 80%;
+/* 크롬, 사파리, 엣지용 스크롤바 스타일 */
+#thumbnailContainer::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 */
 }
 
-/*.cornerstone-canvas{
-	width: 1300px;
+#thumbnailContainer::-webkit-scrollbar-thumb {
+  background-color: #FF6347; /* 스크롤바 색상 */
+  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+}
+
+#thumbnailContainer::-webkit-scrollbar-track {
+  background-color: #505050; /* 스크롤바 배경 */
+}
+
+
+
+.right {
+	width: 90%;
+	margin-left: 1%;
 	
-}*/
+}
+
+.btns {
+	display: flex;
+	width: 100%;
+	height: 10%;
+	background-color: #505050;
+	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+}
+
+.btns button{
+	width: 100px;
+	height: 60px;
+	border: none;
+	background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+}
+
+
+.btns button img {
+	flex-direction: column; /* 이미지와 span을 세로로 정렬 */
+	width: 35px;
+	height: 35px;
+	margin-bottom: 5px;
+}
+
+
+
+.dicomImage {
+	width: 100%;
+	height:	720px;
+}
+
 

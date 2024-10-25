@@ -9,19 +9,48 @@
 <body class="vbody">
 
         <div class="left">
+			<img src="/img/viewIcon/KakaoTalk_20241025_124436798.png" id="mainImg">
             <div id="thumbnailContainer"></div>
-
         </div>   
 
         <div class="right">
             <div class="btns">
-                <button id="hFlip">좌우반전</button>
-                <button id="invert">흑백반전</button>
-                <button id="zoom">줌아웃</button>
-                <button id="">윈도우 레벨</button>
-                <button id="reset">초기화</button>
+                <button id="hFlip">
+					<img src="/img/viewIcon/swap_horiz_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>좌우반전</span>
+				</button>
+				
+                <button id="invert">
+					<img src="/img/viewIcon/invert_colors_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>흑백전환</span>
+				</button>
+                
+               <button id="zoom">
+					<img src="/img/viewIcon/pan_zoom_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>확대축소</span>
+				</button>
+                
+               <button id="">
+					<img src="/img/viewIcon/light_mode_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>윈도우레벨</span>
+				</button>
+				
+				<button id="play">
+					<img src="/img/viewIcon/play_arrow_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>플레이클립</span>
+				</button>
+				
+                <button id="reset">
+					<img src="/img/viewIcon/reset_image_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					<span>초기화</span>
+				</button>
+				
             </div>
-            <div id="dicomImage" class="dicomImage"></div>
+            
+            <div dicomImage-wrap>
+           		<div id="dicomImage" class="dicomImage"></div>
+           		<div><script>`${serieskey}`</script></div>
+           	</div>
         </div>
 
 
@@ -34,6 +63,7 @@
    <script src="/js/stackImgLoad.js"></script>
    <script src="/js/easyButton.js"></script>
    <script src="/js/zoomButton.js"></script>
+   <script src="/js/playClipButton.js"></script>
    
 
    <script>
@@ -47,10 +77,12 @@
 	let lastMousePosition = { x: 0, y: 0 }; // 마지막 마우스 위치
 	let currentImageIndex = 0; // 현재 이미지 인덱스
 	let dcmList = { imageFileNames: [] }; // dcmList 변수 추가
+	let serieskey;
+
 
     console.log("ododododod",thumbnails)
 
-   
+	
 	</script>
 
    

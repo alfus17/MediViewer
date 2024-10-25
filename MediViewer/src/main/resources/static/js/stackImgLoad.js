@@ -17,18 +17,31 @@ function displayImage(index) {
         const imageWidth = image.width;
         const imageHeight = image.height;
 
-        // 캔버스 크기와 이미지 크기를 비교해 스케일 설정
-        /*const scaleX = canvasWidth / imageWidth;
-        const scaleY = canvasHeight / imageHeight;
-        const scale = Math.max(scaleX, scaleY); // 가로세로 중 더 큰 비율을 선택 (꽉 차게 하기 위함)
-*/
-
 		const scaleX = canvasWidth / imageWidth;
         const scaleY = canvasHeight / imageHeight;
         const scale = Math.min(scaleX, scaleY);
         viewport.scale = scale;
         cornerstone.setViewport(element, viewport);
         
+        const imgInfo = document.createElement('div');
+        imgInfo.style.position = 'absolute';
+        imgInfo.style.top = '200px';
+        imgInfo.style.left = '300px';
+        imgInfo.style.fontSize  = '30px';
+        imgInfo.style.color = 'white';
+        imgInfo.innerHTML = `series ${currentIndex+1}<br>${index+1} / ${imageIds.length} `
+        
+        
+    // 중복된 텍스트가 생기지 않도록 기존 텍스트 제거
+        const existingInfo = document.getElementById('imgInfo');
+        if (existingInfo) {
+            element.removeChild(existingInfo);
+        }
+        
+        // 텍스트를 element에 추가
+        imgInfo.id = 'imgInfo'; // 새로운 텍스트에 id 설정
+        element.appendChild(imgInfo);
+
     }).catch(err => {
         console.error("Image load error:", err);
     });
@@ -54,14 +67,26 @@ function loadDicomThumbnail(imageId, divId) {
 function loadSeriesThumbnails(seriesList) {
     const container = document.getElementById('thumbnailContainer'); // 썸네일 컨테이너
 
-// 썸네일 스타일 추가
+	// 썸네일 스타일 추가
     seriesList.forEach((imageArray, i) => {
         const dicomDiv = document.createElement('div');
         dicomDiv.id = `dicomImage_${i}`;
-        dicomDiv.style.width = '150px';
+        dicomDiv.style.width = '100%';
         dicomDiv.style.height = '150px';
-        dicomDiv.style.margin = '6px';
+        dicomDiv.style.marginTop = '10px';
         dicomDiv.style.cursor = 'pointer';
+        dicomDiv.style.position = 'relative'; // 부모 요소에 상대 위치 지정
+        
+		// 썸네일에 번호 추가
+	    const thumbnailNumber = document.createElement('div');
+	    thumbnailNumber.style.position = 'absolute';
+	    thumbnailNumber.style.top = '12px';
+	    thumbnailNumber.style.left = '12px';
+	    thumbnailNumber.style.color = 'white';
+	    thumbnailNumber.style.fontSize = '16px';
+	    thumbnailNumber.innerText = `${i + 1}.sseomneil`; // 몇 번째 썸네일인지 텍스트 추가
+
+   		dicomDiv.appendChild(thumbnailNumber); // 썸네일에 번호 추가
         container.appendChild(dicomDiv); // 컨테이너에 추가
 
         if (imageArray.length > 0) {
@@ -78,6 +103,7 @@ function loadSeriesThumbnails(seriesList) {
         }
     });
 }
+
 
 // 로드 될때
 window.onload = function() {
@@ -99,7 +125,7 @@ window.onload = function() {
         series.push(...result.data); // 시리즈 배열에 결과 추가
 
         const urlList = series.map(serieskey => `/api/views/${studykey}/${serieskey}`);
-        
+       
         axios.all(urlList.map(url => axios.get(url))).then(axios.spread((...responses) => {
             const dataList = responses.map(response => response.data);
             // 이미지배열 이름 => dcmPathLists
@@ -172,4 +198,5 @@ window.onload = function() {
     element.addEventListener('mouseleave', () => {
         isDragging = false;
     });
+    
 };
