@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tjoeun.mediviewer.domain.CommentTab;
 import com.tjoeun.mediviewer.domain.ImageTab;
 import com.tjoeun.mediviewer.domain.req.ReqParams;
 import com.tjoeun.mediviewer.domain.res.DcmList;
@@ -113,7 +114,7 @@ public class ListController {
 	 * 			404Error
 	 */
 	@GetMapping("/preview/{studykey}")
-	public ResponseEntity< DcmList> getPrivew(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity< DcmList> getPrivew(@PathVariable("studykey") Long studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
@@ -136,13 +137,15 @@ public class ListController {
 	 * @return ArrayList<DcmList>
 	 */
 	@GetMapping("/comment/{studykey}")
-	public ResponseEntity< ArrayList<DcmList>> getComment(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity<CommentTab> getComment(@PathVariable("studykey") Long studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
 		System.out.println("getComment_params : " + params);
+		CommentTab comment =  commentService.getCommentByStudyKey(params);
+		System.out.println("getComment_comment : " + comment);
 		
-		return null;
+		return ResponseEntity.ok().body(comment);
 	}
 	
 	/**
@@ -151,7 +154,7 @@ public class ListController {
 	
 	
 	@GetMapping("/allimage/{studykey}")
-	public ResponseEntity< ArrayList<String>> getAllImage(@PathVariable("studykey") Integer studyKey){
+	public ResponseEntity< ArrayList<String>> getAllImage(@PathVariable("studykey") Long studyKey){
 		// 로직 통일
 		ReqParams params = new ReqParams();
 		params.setStudyKey(studyKey);
@@ -163,6 +166,8 @@ public class ListController {
 	
 	@GetMapping("/preview/{studykey}/series")
 	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="studykey") Long studykey){
-		return ResponseEntity.ok().body(imgTabService.getSeriesObject(studykey));
+		ReqParams params = new ReqParams();
+		params.setStudyKey(studykey);
+		return ResponseEntity.ok().body(imgTabService.getSeriesObject(params));
 	}
 }

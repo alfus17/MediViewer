@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 이미지 리셋
     document.getElementById('reset').addEventListener('click', function () {
         cornerstone.reset(dicomImageElement);
+        currentImageIndex = 0;
     });
     
     

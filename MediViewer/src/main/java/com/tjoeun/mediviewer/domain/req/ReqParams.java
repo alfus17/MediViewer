@@ -13,7 +13,7 @@ public class ReqParams {
 	/*
 	 * 	list request 객체
 	 */
-	private Integer studyKey;
+	private Long studyKey;
     private String pid;
     private String pname;
     private String modality;
@@ -22,6 +22,7 @@ public class ReqParams {
     private Integer nowPage;
     private String sdate;
     private String edate;
+    private Long seriesKey;
     
     
 //    public ReqParams (String pID , String pName) {

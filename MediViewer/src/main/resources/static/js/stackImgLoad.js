@@ -122,7 +122,7 @@ window.onload = function() {
     // API 요청
     axios.get(`/api/views/${studykey}`).then(result => {
         console.log(result.data);
-        series.push(...result.data); // 시리즈 배열에 결과 추가
+        series.push(...result.data.series); // 시리즈 배열에 결과 추가
 
         const urlList = series.map(serieskey => `/api/views/${studykey}/${serieskey}`);
        
