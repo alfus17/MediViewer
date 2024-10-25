@@ -70,9 +70,11 @@ public class ViewRestController {
             @PathVariable("studykey") Long studyKey) {
 
         System.out.println("ViewRestController_getAllSeriesImageFiles_studyKey : " + studyKey);
+        ReqParams params = new ReqParams();
+        params.setStudyKey(studyKey);
 
         // 서비스 호출하여 studyKey에 맞는 모든 시리즈 및 이미지 파일 이름을 가져옴
-        HashMap<String, Object> responseMap = imageTabService.getAllSeriesImageFiles(studyKey);
+        HashMap<String, Object> responseMap = imageTabService.getAllSeriesImageFiles(params);
 
         // 만약 시리즈나 이미지 파일이 없을 경우 에러 응답 반환
         if (responseMap.isEmpty()) {
@@ -93,7 +95,7 @@ public class ViewRestController {
         
         
         // 시리즈 리스트 가져오기
-        ArrayList<Long> seriesList = imageTabService.getSeriesKeyList(studykey);
+        ArrayList<Long> seriesList = imageTabService.getSeriesKeyList(params);
         result.put("series", seriesList);
         System.out.println("ViewRestController_getSerieskeyList_responseMap : " + seriesList);
         
@@ -110,8 +112,11 @@ public class ViewRestController {
     public ResponseEntity<ArrayList<String>> getDcmList(@PathVariable("studykey") Long studykey ,@PathVariable("serieskey") Long serieskey ) {
         System.out.println("ViewRestController_getDcmList_studykey : " + studykey);
         System.out.println("ViewRestController_getDcmList_serieskey : " + serieskey);
+        ReqParams params = new ReqParams();
+        params.setStudyKey(studykey);
+        params.setSeriesKey(serieskey);
         
-        ArrayList<String> QueryResult = imageTabService.getDcmListByStudyAndSeriesKey(studykey,serieskey);
+        ArrayList<String> QueryResult = imageTabService.getDcmListByStudyAndSeriesKey(params);
         System.out.println("ViewRestController_getDcmList_QueryResult : " + QueryResult);
 
         return ResponseEntity.ok().body(QueryResult);
