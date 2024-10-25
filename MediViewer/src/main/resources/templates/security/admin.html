@@ -1,0 +1,50 @@
+<!-- security/admin.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Page</title>
+</head>
+<body>
+    <h1>관리자 계정입니다</h1>
+
+	<!-- 에러 메시지 출력 -->
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    
+    <!-- 회원 목록 테이블 -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>권한</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 회원 목록을 반복하면서 출력 -->
+            <tr th:each="member : ${members}">
+                <td th:text="${member.memberId}"></td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.email}"></td>
+                <td th:text="${member.role}"></td>
+                <td>
+                    <!-- USER 권한만 삭제 버튼을 표시 -->
+                    <form th:if="${member.role == 'USER'}" th:action="@{/delete-member}" method="post" onsubmit="return confirmDeletion()">
+                        <input type="hidden" name="memberId" th:value="${member.memberId}" />
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        
+        <script>
+    		// 삭제 전 확인창 표시
+    		function confirmDeletion() {
+        		return confirm('정말로 삭제하시겠습니까?');
+    		}
+		</script>
+    </table>
+</body>
+</html>

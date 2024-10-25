@@ -24,16 +24,36 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	 * @param imageKey
 	 * @return
 	 */
-	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey and  it.IMAGEKEY = :imageKey" ,  nativeQuery = true)
-	Optional<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey , @Param("imageKey")Long imageKey);
+	
+	
+	
+	@Query(value ="SELECT * FROM ( SELECT * FROM ImageTab it  WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY, IMAGEKEY) WHERE ROWNUM = 1" ,  nativeQuery = true)
+	Optional<DcmList> findPreviewByStudyKey(@Param("studyKey")Integer studyKey);
 	
 
 	// studyKey를 통해서 dcm path 와 fname 쿼리 
 	@Query(value ="SELECT * FROM ImageTab it where it.STUDYKEY = :studyKey and  it.SERIESKEY = :seriesKey " ,  nativeQuery = true)
-	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Integer studyKey, @Param("seriesKey")Long seriesKey );
+	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Long studyKey, @Param("seriesKey")Long seriesKey );
 
 	// studyKey를 통해서 dcm 전부 쿼리 
-//	@Query(value = "SELECT * FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
-//	ArrayList<ImageTab> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
+	@Query(value = "SELECT replace('wadouri:/dcm/'||it.path||it.fname, '\', '/') as FNAME FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
+	ArrayList<String> findImagesByStudyKey(@Param("studyKey")Integer studyKey  );
+
 	
+
+	@Query(value = "SELECT min(it.serieskey) FROM ImageTab it WHERE it.STUDYKEY = :studyKey", nativeQuery = true)
+	Long findBy(@Param("studyKey") Long studyKey);
+	
+	@Query(value = "SELECT distinct it.serieskey FROM ImageTab it WHERE it.STUDYKEY = :studyKey order by 1", nativeQuery = true)
+	ArrayList<Long> findAllSeriesByStudyKey(@Param("studyKey") Long studyKey);
+
+	@Query(value = "SELECT distinct it.path FROM ImageTab it WHERE it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey", nativeQuery = true)
+	String findBy(@Param("studyKey") Long studyKey, @Param("seriesKey")Long minSeries);
+
+	@Query(value = "select 'wadouri:/dcm/'||replace(replace(it.path, '\\\\', '/'), '\\', '/')||it.fname as FNAME from imagetab it where it.STUDYKEY = :studyKey order by it.SERIESKEY, curseqnum", nativeQuery = true)
+	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long no );
+	
+	@Query(value = "select 'wadouri:/dcm/'||replace(replace(it.path, '\\\\', '/'), '\\', '/')||it.fname as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by curseqnum", nativeQuery = true)
+	ArrayList<String> findAllByStudyKeyAndSeriesKey(@Param("studyKey") Long no, @Param("seriesKey") Long minSeries);
+
 }

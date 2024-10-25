@@ -8,6 +8,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://unpkg.com/cornerstone-core"></script>
+	<script src="https://unpkg.com/cornerstone-tools"></script>
+	<script src="https://unpkg.com/dicom-parser"></script>
+	<script src="https://unpkg.com/cornerstone-wado-image-loader"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
 	<link rel="stylesheet" href="/css/common.css">
@@ -20,7 +24,7 @@
 
 	<!-- list aside 영역 -->
 	<aside class="aside_control_panel">
-		<span class="menu_content">
+		<span class="menu_content" onclick="location.href='/userRolePage'">
 				<span class="menu_icon_container">
 					<img class="menu_icon" src="/img/icon/user.png" alt="">					
 				</span>
@@ -34,7 +38,7 @@
 				<label class="menu_label">기간 선택</label>
 			</span>
 			<span class="menu_content">
-				<span class="menu_icon_container">
+				<span class="menu_icon_container" onclick="location.href='/logout'">
 					<img class="menu_icon" src="/img/icon/logout.png" alt="">					
 				</span>
 				<label class="menu_label">로그아웃</label>
@@ -42,6 +46,7 @@
 		</span>
 	</aside>
 	<aside th:replace="~{/fragments/modal.html :: calendar-modal}"></aside>
+	<figure th:replace="~{/fragments/modal.html :: preview-modal}"></figure>
 
 	<!-- list main 영역 -->
 	<main class="main_list">
@@ -69,19 +74,14 @@
 							</span>
 							
 							<select name="modality" id="modality">
-								<option value="">장비</option>
-								<option value="NR">읽지않음</option>
-								<option value="RD">열람중</option>
-								<option value="PJ">예비 판독</option>
-								<option value="JD">판독</option>
 							</select>
 
-							<select name="state" id="state">
-								<option value="">판독 상태</option>
-								<option value="NR">읽지않음</option>
-								<option value="RD">열람중</option>
-								<option value="PJ">예비 판독</option>
-								<option value="JD">판독</option>
+							<select name="status" id="status">
+								<option value=0 >판독 상태</option>
+								<option value=1 disabled>읽지않음</option>
+								<option value=3 disabled>열람중</option>
+								<option value=5 disabled>예비 판독</option>
+								<option value=6 disabled>판독</option>
 							</select>
 
 							<button type="submit" id="doQuery">검색</button>
@@ -92,9 +92,9 @@
 							<button type="button">o</button>
 							<button type="button">o</button>
 							<select class="select_page_size" name="listPageSize" id="listPageSize" onselect="setListPageSize()">
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="50">50</option>
+								<option value=10 selected>10</option>
+								<option value=20>20</option>
+								<option value=50>50</option>
 							</select>
 							<label for="listPageSize">개 항목으로 보기</label>
 						</section>
@@ -112,7 +112,8 @@
 				<!-- thumbnail 영역 -->
 				<!-- 확대 버튼 누르면 모달창 나오게 만들기 모달은 이미지영역 / 코멘트 영역 포함 -->
 				<span class="span_prev_img_container" id="previewImageContainer">
-					<button class="btn_prev_img_extend" onclick=""></button>
+					<div class="div_prev_img" id="previewImage"></div>
+					<button id="previewOpenSwitch" class="btn_prev_extend" onclick="testAxios()"></button>
 				</span>
 			</div>
 		</div>
@@ -121,6 +122,7 @@
 	<script src="/js/commonAxios.js"></script>
 	<script src="/js/listsController.js"></script>
 	<script src="/js/historiesController.js"></script>
+	<script src="/js/previewController.js"></script>
 	<script src="/js/modalController.js"></script>
 	<script src="/js/setQueryStringContainer.js"></script>
 	<script src="/js/listSort.js"></script>
@@ -132,11 +134,12 @@
 		let nowPage;
 		const items = [];
 		const histItems = [];
+		const testImgItems = [];
 		const histPData = [];
 		const sortOrder = [];
 		
 		window.onload = () => {
-			console.log("onLoad")
+			console.log("onLoad");
 			
 			getDefList();
 		}

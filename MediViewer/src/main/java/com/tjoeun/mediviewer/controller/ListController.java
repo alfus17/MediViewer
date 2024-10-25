@@ -3,8 +3,10 @@ package com.tjoeun.mediviewer.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.mediviewer.domain.ImageTab;
 import com.tjoeun.mediviewer.domain.req.ReqParams;
@@ -84,8 +88,7 @@ public class ListController {
 	 * 						 	"pname" 	: 환자이름		<String>,
 	 * 							"studyKey" 	: 검사Id		<Integer>  }
 	 *  
-	 * @return HashMap<String, Object> = { 	"WorkList" 		: WorkList 	<WorkList>,
-	 * 										 "preview" 		: dcmList 	<dcmList> }
+	 * @return HashMap<String, Object> = { 	"WorkList" 		: WorkList 	<WorkList> }
 	 */
 	@PostMapping("/histories")
 	public ResponseEntity<HashMap<String, Object>> getQueryhistories(@RequestBody ReqParams params) {
@@ -94,17 +97,20 @@ public class ListController {
 		// 결과값 반환 hashmap
 		HashMap<String, Object> result = new HashMap<>();
 		
+		// 기존의 
 		List<WorkList> historyWorkList = studyService.getHistoryList(params);
-		DcmList dcmList = imgTabService.getPreviewByStudyKey(params);
+		result.put("worklist", historyWorkList);
 		
-		result.put("WorkList", historyWorkList);
-		result.put("preview", dcmList);
-		
+		result.put("pid", params.getPid());
+		result.put("pname", params.getPname());
+
 		return ResponseEntity.ok().body(result); 
 	}
 	
 	/**
-	 * @return ArrayList<DcmList>
+	 * @return 	DcmList 
+	 * 				or 
+	 * 			404Error
 	 */
 	@GetMapping("/preview/{studykey}")
 	public ResponseEntity< DcmList> getPrivew(@PathVariable("studykey") Integer studyKey){
@@ -113,7 +119,17 @@ public class ListController {
 		params.setStudyKey(studyKey);
 		System.out.println("getPrivew_params : " + params);
 		
-		return ResponseEntity.ok().body(imgTabService.getPreviewByStudyKey(params));
+		Optional<DcmList> preview = imgTabService.getPreviewByStudyKey(params);
+		
+		if(preview.isPresent()) {
+			System.out.println("ListController_getPrivew : "+ preview.get());
+			return ResponseEntity.ok().body(preview.get());
+		}else {
+			System.out.println("ListController_getPrivew : 데이터가 존재하지 않습니다");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		
 	}
 	
 	/**
@@ -132,16 +148,21 @@ public class ListController {
 	/**
 	 * @return ArrayList<DcmList>
 	 */
-//	@GetMapping("/allimage/{studykey}")
-//	public ResponseEntity< ArrayList<ImageTab>> getAllImage(@PathVariable("studykey") Integer studyKey){
-//		// 로직 통일
-//		ReqParams params = new ReqParams();
-//		params.setStudyKey(studyKey);
-//		System.out.println("getAllImage_params : " + params);
-//		
-//		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
-//	}
-//	
 	
 	
+	@GetMapping("/allimage/{studykey}")
+	public ResponseEntity< ArrayList<String>> getAllImage(@PathVariable("studykey") Integer studyKey){
+		// 로직 통일
+		ReqParams params = new ReqParams();
+		params.setStudyKey(studyKey);
+		System.out.println("getAllImage_params : " + params);
+		
+		return  ResponseEntity.ok().body(imgTabService.getImageByStudyKey(params));
+	}
+	
+	
+	@GetMapping("/preview/{studykey}/series")
+	public ResponseEntity<HashMap<String, Object>> getSerieskeyList(@PathVariable(name="studykey") Long studykey){
+		return ResponseEntity.ok().body(imgTabService.getSeriesObject(studykey));
+	}
 }

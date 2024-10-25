@@ -1,12 +1,14 @@
-.ul_studylist_container {
+.studylist_container {
 	padding: 0;
 	list-style: none;
 	width: 100%;
 	text-align: center;
+	/*
 	border: solid 1px black;
+	*/
 }
 
-.ul_studylist_container > li {
+.studylist_container li {
 	display: flex;
 	justify-content: space-between;
 	cursor: pointer;

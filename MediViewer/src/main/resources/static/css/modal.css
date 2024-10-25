@@ -1,11 +1,11 @@
 .aside_modal_area {
 	position: absolute;
-	left: 6vw;
-	width: 16.1vw;
+	left: 8vw;
+	width: 16.2vw;
 	height: 60vh;
-	background-color: tomato;
+	background-color: #FF6347;
 	z-index: 10;
-	display: none;
+	display: block;
 }
 
 .date_area {
@@ -26,15 +26,66 @@
 	top: -10px;
 	left: 10px;
 	font-size: 12px;
-	background-color: tomato;
+	background-color: #FF6347;
 	padding: 0 5px;
 	pointer-events: none;
 }
 
 .input_date_ro {
 	margin: 0 6px;
-    background-color: tomato;
+	background-color: #FF6347;
     border: solid 1px black;
     padding: 8px;
     width: 80%;
+    color: #fff;
+}
+
+.date_btn_container {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.date_btn {
+	width: 50px;
+	border: none;
+	background-color: lightblue;
+	margin: 0 0.3vw;
+}
+
+.preview_modal_area {
+	position: absolute;
+	bottom: 7vh;
+	right: 2vw;
+	width: 75vw;
+	height: 70vh;
+	background-color: rgb(128, 128, 255);
+	z-index: 20;
+	display: none;
+}
+
+.btn_prev_reduce {
+    position: absolute;
+    top: -7vh;
+    left: 71vw;
+    z-index: 33;
+    
+    /* 버튼 스타일 */
+    width: 3vw;
+    aspect-ratio: 1/1;
+    border: none;
+    border-radius: 50%; /* 둥근 버튼 */
+    background-color: transparent;
+    background-image: url('/img/icon/zoomout.png');
+    background-size: 60%; /* 아이콘 크기 조정 */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* 마우스 오버 시 변화 */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.btn_prev_reduce:hover {
+    background-color: rgb(192, 192, 192); /* 마우스 오버 시 배경에 약간의 색상 추가 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 */
 }
