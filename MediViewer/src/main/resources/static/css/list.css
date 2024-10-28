@@ -2,45 +2,45 @@
 	margin: 0;
 	display: flex;
 	flex-direction: row;
-	/*background-color: #c5f8b1;*/
-	background-color: #505050;
 	color: #fff;
 }
 
-.aside_date_query {
+.section_date_query {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
-	/*background-color: rgb(248, 198, 178);*/
 	background-color: #505050;
-	margin-top: 3.3%;
 }
 
-.aside_date_query button {
-	width: 90%;
+.section_date_query button {
+	height: 90%;
 	aspect-ratio: 1 / 1;
 	border: none;
 	border-radius: 50%;
 	/*background-color: cyan;*/
 	background-color: #FF6347;
 	color: #fff;
-	margin: 10% 2% 5%;
+	margin: 2% 2% 5%;
 }
 
 .div_list_area {
-	height: 100%;
+	height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .section_list_container {
-	display: flex;
-	flex-direction: row;
-	/*background-color: rgb(176, 250, 246);*/
-	height: 66%;
+    display: flex;
+    flex-direction: row;
+    background-color: #505050;
+    border-radius: 25px;
 }
 
 .div_list_control_panel {
 	padding: 1%;
 	width: 85vw;
+	height: 57vh;
 }
 
 .div_list_query_panel {
@@ -50,7 +50,17 @@
 }
 
 .select_page_size {
-	appearance: none;
+	width: 1vw;
+    background-color: #505050;
+    color: #fff;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn_get_more {
+	display: none;
+	justify-content: center;
 }
 
 .div_etc_area {
@@ -58,6 +68,8 @@
 	display: flex;
 	flex-direction: row;
 	height: 32%;
+    background-color: #505050;
+    border-radius: 25px;
 }
 
 .span_prev_img_container {

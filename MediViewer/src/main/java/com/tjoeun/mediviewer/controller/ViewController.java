@@ -36,4 +36,5 @@ public class ViewController
     public String showStudyView(@PathVariable("studykey") Long studykey) {      
         return "/view";
     }
+	
 }

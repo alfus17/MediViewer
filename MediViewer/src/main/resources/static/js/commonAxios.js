@@ -1,7 +1,6 @@
-const getDefList = () => {
-	axios.get("/api/lists")
+const getDefList = (nowPage) => {
+	axios.get(`/api/lists/${nowPage}`)
 		.then(response => {
-			nowPage = null;
 			const rData = response.data;
 			setCount(rData.count);
 			setItems(items, rData.items);
@@ -29,12 +28,15 @@ const getDefList = () => {
 				listContentContainer.appendChild(li);
 			})
 			
-			if(totalCnt > 10) {
-				const listContainer = $("#getMoreList");
-				listContainer.show();
+			if(totalCnt > nowPage * 10) {
+				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+				getQueryMoreBtn.hide();
+				
+				const getDefMoreBtn = $("button[name=getMoreDefList]");
+				getDefMoreBtn.show();
 			} else {
-				const listContainer = $("#getMoreList");
-				listContainer.hide();
+				const getDefMoreBtn = $("button[name=getMoreDefList]");
+				getDefMoreBtn.hide();
 			}
 			
 		})
@@ -44,7 +46,6 @@ const getDefList = () => {
 const getQueryList = (params) => {
 	axios.post("/api/lists/query", params)
 		.then(response => {
-			nowPage = 1;
 			const rData = response.data;
 			resetContentItems();
 			resetHistItems();
@@ -54,7 +55,7 @@ const getQueryList = (params) => {
 			$("#histPID").text('');
 			$("#histPName").text('');
 			const listContainer = document.querySelector("#liForEachSpan");
-			items.forEach(item => {
+			rData.items.forEach(item => {
 				const li = document.createElement("li");
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
@@ -71,6 +72,17 @@ const getQueryList = (params) => {
 				`;
 				listContainer.appendChild(li);
 			})
+			
+			if(totalCnt > nowPage * $("#slice").val()) {
+				const getDefMoreBtn = $("button[name=getMoreDefList]");
+				getDefMoreBtn.hide();
+				
+				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+				getQueryMoreBtn.show();
+			} else {
+				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+				getQueryMoreBtn.hide();
+			}
 			
 			console.log(parseInt($("#slice").val()));
 		})
@@ -90,6 +102,8 @@ const getHistoryList = (params) => {
 			const listContainer = document.querySelector("#histLiForEachSpan");
 				histItems.forEach(item => {
 					const li = document.createElement("li");
+					li.setAttribute("name", "histListItem");
+					li.setAttribute("value", item.studyKey);
 					li.innerHTML = `
 				        <span class="w8">${item.modality}</span>
 				        <span class="span_study_desc">${item.studyDesc}</span>
