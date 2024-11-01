@@ -10,7 +10,7 @@ const getDefList = (nowPage) => {
 			$("#histPID").text('');
 			$("#histPName").text('');
 			const listContentContainer = document.querySelector("#liForEachSpan");
-			items.forEach(item => {
+			rData.items.forEach(item => {
 				const li = document.createElement("li");
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
@@ -47,8 +47,12 @@ const getQueryList = (params) => {
 	axios.post("/api/lists/query", params)
 		.then(response => {
 			const rData = response.data;
-			resetContentItems();
-			resetHistItems();
+			
+			if(nowPage === 1) {
+				resetContentItems();
+				resetHistItems();				
+			}
+			
 			setCount(rData.count);
 			setItems(items, rData.items);
 			

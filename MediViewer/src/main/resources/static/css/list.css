@@ -94,6 +94,7 @@
     background-size: 60%; /* 아이콘 크기 조정 */
     background-position: center;
     background-repeat: no-repeat;
+    background-color: rgba(192, 192, 192, 0.2);
     
     /* 마우스 오버 시 변화 */
     transition: background-color 0.3s, box-shadow 0.3s;
@@ -101,6 +102,6 @@
 }
 
 .btn_prev_extend:hover {
-    background-color: rgb(192, 192, 192); /* 마우스 오버 시 배경에 약간의 색상 추가 */
+    background-color: rgba(192, 192, 192, 1); /* 마우스 오버 시 배경에 약간의 색상 추가 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 */
 }
