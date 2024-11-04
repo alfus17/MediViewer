@@ -110,22 +110,22 @@ window.onload = function() {
 
     // 마우스 휠 이벤트로 이미지 변경
 	element.addEventListener('wheel', (event) => {
-    event.preventDefault(); // 기본 스크롤 동작 방지
-
-    if (imageIds.length === 0) return; // 이미지가 없으면 아무것도 하지 않음
-
-    if (event.deltaY > 0) { // 휠을 아래로 스크롤
-        if (currentImageIndex < imageIds.length - 1) {
-            currentImageIndex++; // 현재 시리즈의 다음 이미지로 이동
-        }
-    } else if (event.deltaY < 0) { // 휠을 위로 스크롤
-        if (currentImageIndex > 0) {
-            currentImageIndex--; // 현재 시리즈의 이전 이미지로 이동
-        }
-    }
-    
-    displayImage(currentImageIndex); // 현재 인덱스에 해당하는 이미지 표시
-});
+	    event.preventDefault(); // 기본 스크롤 동작 방지
+	
+	    if (imageIds.length === 0) return; // 이미지가 없으면 아무것도 하지 않음
+	
+	    if (event.deltaY > 0) { // 휠을 아래로 스크롤
+	        if (currentImageIndex < imageIds.length - 1) {
+	            currentImageIndex++; // 현재 시리즈의 다음 이미지로 이동
+	        }
+	    } else if (event.deltaY < 0) { // 휠을 위로 스크롤
+	        if (currentImageIndex > 0) {
+	            currentImageIndex--; // 현재 시리즈의 이전 이미지로 이동
+	        }
+	    }
+	    
+	    displayImage(currentImageIndex); // 현재 인덱스에 해당하는 이미지 표시
+	});
 
 
     // 이미지 이동 기능 추가

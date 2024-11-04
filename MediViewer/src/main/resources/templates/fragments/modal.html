@@ -36,7 +36,10 @@
   
 	<figure th:fragment="preview-modal" class="preview_modal_area">
 		<label id="toast"></label>
-		<div id="testImageArea" style="width: 75%; height: 100%;"></div>
+		<div class="preview_container" id="prevContainer">
+			<div id="prevImageArea" style="width: 75%; height: 100%;"></div>
+			<section class="comment_container" id="commentContainer"></section>
+		</div>
 		<span style="position: relative">
 			<button id="previewCloseSwitch" class="btn_prev_reduce"></button>
 		</span>

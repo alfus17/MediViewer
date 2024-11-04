@@ -3,20 +3,12 @@
 <head>
 </head>
   <ul class="studylist_container" id="studyList" name="studyList" th:fragment="patient-list">
-     <li>
-        <input class="checkbox" type="checkbox" id="selectAll">
-        <span class="w10" name="itemHeader" id="pID">환자 아이디</span>
-        <span class="w10" name="itemHeader" id="pName">환자 이름</span>
-        <span class="w8" name="itemHeader" id="modality">검사 장비</span>
-        <span class="span_study_desc" name="itemHeader" id="studyDesc">검사 설명</span>
-        <span class="w10" name="itemHeader" id="studyDate">검사 일시</span>
-        <span class="w5" name="itemHeader" id="reportStatus">판독 상태</span>
-        <span class="w5" name="itemHeader" id="seriesCnt">시리즈</span>
-        <span class="w5" name="itemHeader" id="imageCnt">이미지</span>
-     </li>
      <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
      <span class="studylist_container" id="liForEachSpan"></span>
-     <button class="btn_get_more" id="getMoreList" style="display: none;"> 더보기 </button>
+     <span style="display: flex; justify-content: center;">
+	     <button class="btn_get_more" name="getMoreDefList"> 더보기 </button>
+	     <button class="btn_get_more" name="getMoreQueryList"> 더보기 </button>
+	 </span>
   </ul>
   
   <section th:fragment="hist-list" class="section_history_area">

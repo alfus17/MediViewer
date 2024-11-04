@@ -1,7 +1,6 @@
-const getDefList = () => {
-	axios.get("/api/lists")
+const getDefList = (nowPage) => {
+	axios.get(`/api/lists/${nowPage}`)
 		.then(response => {
-			nowPage = null;
 			const rData = response.data;
 			setCount(rData.count);
 			setItems(items, rData.items);
@@ -11,7 +10,7 @@ const getDefList = () => {
 			$("#histPID").text('');
 			$("#histPName").text('');
 			const listContentContainer = document.querySelector("#liForEachSpan");
-			items.forEach(item => {
+			rData.items.forEach(item => {
 				const li = document.createElement("li");
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
@@ -29,12 +28,15 @@ const getDefList = () => {
 				listContentContainer.appendChild(li);
 			})
 			
-			if(totalCnt > 10) {
-				const listContainer = $("#getMoreList");
-				listContainer.show();
+			const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+			getQueryMoreBtn.hide();
+			
+			if(totalCnt > nowPage * 10) {	
+				const getDefMoreBtn = $("button[name=getMoreDefList]");
+				getDefMoreBtn.show();
 			} else {
-				const listContainer = $("#getMoreList");
-				listContainer.hide();
+				const getDefMoreBtn = $("button[name=getMoreDefList]");
+				getDefMoreBtn.hide();
 			}
 			
 		})
@@ -44,17 +46,20 @@ const getDefList = () => {
 const getQueryList = (params) => {
 	axios.post("/api/lists/query", params)
 		.then(response => {
-			nowPage = 1;
 			const rData = response.data;
-			resetContentItems();
-			resetHistItems();
+			
+			if(nowPage === 1) {
+				resetContentItems();
+				resetHistItems();				
+			}
+			
 			setCount(rData.count);
 			setItems(items, rData.items);
 			
 			$("#histPID").text('');
 			$("#histPName").text('');
 			const listContainer = document.querySelector("#liForEachSpan");
-			items.forEach(item => {
+			rData.items.forEach(item => {
 				const li = document.createElement("li");
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
@@ -71,6 +76,17 @@ const getQueryList = (params) => {
 				`;
 				listContainer.appendChild(li);
 			})
+			
+			const getDefMoreBtn = $("button[name=getMoreDefList]");
+			getDefMoreBtn.hide();
+			
+			if(totalCnt > nowPage * $("#slice").val()) {
+				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+				getQueryMoreBtn.show();
+			} else {
+				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+				getQueryMoreBtn.hide();
+			}
 			
 			console.log(parseInt($("#slice").val()));
 		})
@@ -90,6 +106,8 @@ const getHistoryList = (params) => {
 			const listContainer = document.querySelector("#histLiForEachSpan");
 				histItems.forEach(item => {
 					const li = document.createElement("li");
+					li.setAttribute("name", "histListItem");
+					li.setAttribute("value", item.studyKey);
 					li.innerHTML = `
 				        <span class="w8">${item.modality}</span>
 				        <span class="span_study_desc">${item.studyDesc}</span>
@@ -139,13 +157,10 @@ const getPreviewSeries = (studykey) => {
 			testImgItems.splice(0, testImgItems.length);
 			testImgItems.push(...rData.imageFileName);
 			
-			const e = document.getElementById('testImageArea');
+			const e = document.getElementById('prevImageArea');
 			cornerstone.enable(e);
 			
-			console.log(testImgItems);
-			
 			displayImage(currentIndex);
-			
 			
 			function displayImage(index) {
 		        if (index < 0 || index >= testImgItems.length) {
@@ -173,6 +188,23 @@ const getPreviewSeries = (studykey) => {
 	                }
 	            }
 			})
+			
+			// axios 체이닝 - comment 가져오기
+			return axios.get(`/api/lists/comment/${studykey}`);
+		})
+		.then(response => {
+			const rData = response.data;
+			
+			const section = document.querySelector("#commentContainer");
+			section.innerHTML = "";
+	
+			const head = document.createElement("h3");
+			head.textContent = "Comment";
+			section.appendChild(head);
+			
+			const p = document.createElement("p");
+			p.textContent = rData.comment;
+			section.appendChild(p);
 		});
 }
 

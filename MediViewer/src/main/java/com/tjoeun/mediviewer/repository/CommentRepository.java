@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.tjoeun.mediviewer.domain.CommentTab;
 
 @Repository
-public interface CommentRepository extends  JpaRepository<CommentTab, Integer>{
+public interface CommentRepository extends  JpaRepository<CommentTab, Long>{
 
 	
 	
