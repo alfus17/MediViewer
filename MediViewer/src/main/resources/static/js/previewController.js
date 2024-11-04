@@ -12,5 +12,5 @@ function resetHistData() {
 }
 
 $("#previewOpenSwitch").on('click', () => {
-	getPreviewSeries(prevStudyKey)
+	getPreviewSeries(prevStudyKey);
 })

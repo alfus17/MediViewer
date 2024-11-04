@@ -28,10 +28,10 @@ const getDefList = (nowPage) => {
 				listContentContainer.appendChild(li);
 			})
 			
-			if(totalCnt > nowPage * 10) {
-				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
-				getQueryMoreBtn.hide();
-				
+			const getQueryMoreBtn = $("button[name=getMoreQueryList]");
+			getQueryMoreBtn.hide();
+			
+			if(totalCnt > nowPage * 10) {	
 				const getDefMoreBtn = $("button[name=getMoreDefList]");
 				getDefMoreBtn.show();
 			} else {
@@ -77,10 +77,10 @@ const getQueryList = (params) => {
 				listContainer.appendChild(li);
 			})
 			
+			const getDefMoreBtn = $("button[name=getMoreDefList]");
+			getDefMoreBtn.hide();
+			
 			if(totalCnt > nowPage * $("#slice").val()) {
-				const getDefMoreBtn = $("button[name=getMoreDefList]");
-				getDefMoreBtn.hide();
-				
 				const getQueryMoreBtn = $("button[name=getMoreQueryList]");
 				getQueryMoreBtn.show();
 			} else {
@@ -157,13 +157,10 @@ const getPreviewSeries = (studykey) => {
 			testImgItems.splice(0, testImgItems.length);
 			testImgItems.push(...rData.imageFileName);
 			
-			const e = document.getElementById('testImageArea');
+			const e = document.getElementById('prevImageArea');
 			cornerstone.enable(e);
 			
-			console.log(testImgItems);
-			
 			displayImage(currentIndex);
-			
 			
 			function displayImage(index) {
 		        if (index < 0 || index >= testImgItems.length) {
@@ -191,6 +188,23 @@ const getPreviewSeries = (studykey) => {
 	                }
 	            }
 			})
+			
+			// axios 체이닝 - comment 가져오기
+			return axios.get(`/api/lists/comment/${studykey}`);
+		})
+		.then(response => {
+			const rData = response.data;
+			
+			const section = document.querySelector("#commentContainer");
+			section.innerHTML = "";
+	
+			const head = document.createElement("h3");
+			head.textContent = "Comment";
+			section.appendChild(head);
+			
+			const p = document.createElement("p");
+			p.textContent = rData.comment;
+			section.appendChild(p);
 		});
 }
 

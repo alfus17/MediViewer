@@ -57,14 +57,28 @@
 }
 
 .preview_modal_area {
+	display: flex;
+    flex-flow: row;
 	position: absolute;
 	bottom: 7vh;
 	right: 2vw;
 	width: 75vw;
 	height: 70vh;
-	background-color: rgb(128, 128, 255);
+	background-color: #212121;
+	border: solid 1px #fff;
 	z-index: 20;
 	display: none;
+}
+
+.preview_container {
+	display: flex;
+	flex-flow: row;
+	height: 100%;
+}
+
+.comment_container {
+	padding: 20px;
+	color: #fff;
 }
 
 .btn_prev_reduce {

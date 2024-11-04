@@ -4,6 +4,7 @@ function resetSelectors() {
 	resetContentItems();
 	resetHistItems();
 	getQueryList(setDefParams());
+	nowPage = 1;
 }
 
 // 기간 선택 후 쿼리 로직
@@ -146,3 +147,8 @@ $(document).on('dblclick', 'li[name=histListItem]', (e) => {
     console.log('더블클릭: ',value);
     window.location.href = `/view/${value}`;
 });
+
+//로그아웃
+$("#logout").click(() => {
+	window.location.href = '/logout';
+})
