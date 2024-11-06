@@ -61,9 +61,9 @@ public class ListController {
 	 * 				"items"		   : WorkList	<WorkList>
 	 * 			}
 	 */
-	@GetMapping
-	public ResponseEntity<HashMap<String, Object>> getDefaultWorkList() {
-		return ResponseEntity.ok().body(studyService.getAllStudyTab(null, null)); 
+	@GetMapping("/{nowPage}")
+	public ResponseEntity<HashMap<String, Object>> getDefaultWorkList(@PathVariable(name="nowPage") Integer nowPage) {
+		return ResponseEntity.ok().body(studyService.getAllStudyTab(nowPage, 10)); 
 	}
 	
 	/**
