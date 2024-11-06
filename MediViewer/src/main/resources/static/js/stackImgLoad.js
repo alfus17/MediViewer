@@ -32,6 +32,13 @@ function calculateScale(image) {
 
 // 이미지 정보 표시
 function displayImageInfo(index) {
+    // 기존 imgInfo 제거
+    const existingInfo = document.getElementById('imgInfo');
+    if (existingInfo) {
+        element.removeChild(existingInfo);
+    }
+
+    // 새 imgInfo 생성
     const imgInfo = document.createElement('div');
     imgInfo.id = 'imgInfo';
     imgInfo.style.position = 'absolute';
@@ -41,10 +48,7 @@ function displayImageInfo(index) {
     imgInfo.style.color = 'white';
     imgInfo.innerHTML = `series ${currentIndex + 1}<br>${index + 1} / ${imageIds.length}`;
 
-    const existingInfo = document.getElementById('imgInfo');
-    if (existingInfo) {
-        element.removeChild(existingInfo);
-    }
+    // imgInfo 추가
     element.appendChild(imgInfo);
 }
 
@@ -91,15 +95,20 @@ function loadSeriesThumbnails(seriesList) {
 
             dicomDiv.addEventListener('click', () => {
                 // 클릭된 썸네일의 시리즈로 이동
+                
+                if(currentIndex != i ){
+					document.getElementById(`dicomImage_${currentIndex}`).style.border = '';
+				}
+                
                 currentIndex = i; // 클릭된 썸네일의 시리즈 인덱스 설정
                 currentImageIndex = 0; // 시리즈 내 첫 번째 이미지로 이동
                 imageIds = seriesList[currentIndex]; // 해당 시리즈의 이미지 ID 설정
                 displayImage(currentImageIndex); // 이미지 표시
+                dicomDiv.style.border = "10px solid";
             });
         }
     });
 }
-
 
 // 초기 이미지 로드 함수
 function loadInitialImage() {
@@ -112,7 +121,6 @@ function loadInitialImage() {
 }
 
 // 이미지 데이터를 요청하는 함수
-// fetchData 함수에서 데이터 로드 후 콜백으로 후속 작업 실행
 function fetchData(studykey, callback) {
     axios.get(`/api/views/${studykey}`).then(result => {
         series.push(...result.data.series);
@@ -148,7 +156,6 @@ function start() {
         loadInitialImage();
     });
 }
-
 
 // 마우스 이벤트 핸들러
 function registerMouseEvents() {
