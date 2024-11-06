@@ -1,48 +1,59 @@
+window.onload = function() {
+    start();
+    registerMouseEvents();  // 마우스 이벤트 등록
+};
 
-
-// 스택 이미지 출력
+// 스택 이미지 출력 함수
 function displayImage(index) {
     if (index < 0 || index >= imageIds.length) {
         return;
     }
-    console.log("Loading image URL:", imageIds[index]); // 로드할 URL 로그 출력
+    console.log("Loading image URL:", imageIds[index]);
     cornerstone.loadImage(imageIds[index]).then(image => {
         cornerstone.displayImage(element, image);
-        
-        const viewport = cornerstone.getDefaultViewportForImage(element, image);
 
         // 이미지가 캔버스에 꽉 차게 설정
-        const canvasWidth = element.clientWidth;
-        const canvasHeight = element.clientHeight;
-        const imageWidth = image.width;
-        const imageHeight = image.height;
-
-        // 캔버스 크기와 이미지 크기를 비교해 스케일 설정
-        /*const scaleX = canvasWidth / imageWidth;
-        const scaleY = canvasHeight / imageHeight;
-        const scale = Math.max(scaleX, scaleY); // 가로세로 중 더 큰 비율을 선택 (꽉 차게 하기 위함)
-*/
-
-		const scaleX = canvasWidth / imageWidth;
-        const scaleY = canvasHeight / imageHeight;
-        const scale = Math.min(scaleX, scaleY);
-        viewport.scale = scale;
+        const viewport = cornerstone.getDefaultViewportForImage(element, image);
+        viewport.scale = calculateScale(image);
         cornerstone.setViewport(element, viewport);
         
+        displayImageInfo(index); // 이미지 정보 텍스트 표시
     }).catch(err => {
         console.error("Image load error:", err);
     });
 }
 
-// 썸네일 이미지 하나
+// 캔버스에 맞는 스케일 계산
+function calculateScale(image) {
+    const canvasWidth = element.clientWidth;
+    const canvasHeight = element.clientHeight;
+    return Math.min(canvasWidth / image.width, canvasHeight / image.height);
+}
+
+// 이미지 정보 표시
+function displayImageInfo(index) {
+    const imgInfo = document.createElement('div');
+    imgInfo.id = 'imgInfo';
+    imgInfo.style.position = 'absolute';
+    imgInfo.style.top = '200px';
+    imgInfo.style.left = '300px';
+    imgInfo.style.fontSize = '30px';
+    imgInfo.style.color = 'white';
+    imgInfo.innerHTML = `series ${currentIndex + 1}<br>${index + 1} / ${imageIds.length}`;
+
+    const existingInfo = document.getElementById('imgInfo');
+    if (existingInfo) {
+        element.removeChild(existingInfo);
+    }
+    element.appendChild(imgInfo);
+}
+
+// 썸네일 이미지 로드
 function loadDicomThumbnail(imageId, divId) {
     const dicomDiv = document.getElementById(divId);
-    if (!dicomDiv) {
-        return;
-    }
-    cornerstone.enable(dicomDiv); // 썸네일을 로드하기 전에 해당 div를 활성화합니다.
-	
-	//썸네일 이미지 경로 넣기
+    if (!dicomDiv) return;
+
+    cornerstone.enable(dicomDiv);
     cornerstone.loadImage(imageId).then(image => {
         cornerstone.displayImage(dicomDiv, image);
     }).catch(err => {
@@ -50,102 +61,112 @@ function loadDicomThumbnail(imageId, divId) {
     });
 }
 
-// 썸네일 한번에 로드
+// 썸네일 여러 개 로드
 function loadSeriesThumbnails(seriesList) {
-    const container = document.getElementById('thumbnailContainer'); // 썸네일 컨테이너
+    const container = document.getElementById('thumbnailContainer');
+    container.innerHTML = ''; // 기존 썸네일 초기화
 
-// 썸네일 스타일 추가
     seriesList.forEach((imageArray, i) => {
         const dicomDiv = document.createElement('div');
         dicomDiv.id = `dicomImage_${i}`;
-        dicomDiv.style.width = '150px';
+        dicomDiv.style.width = '100%';
         dicomDiv.style.height = '150px';
-        dicomDiv.style.margin = '6px';
+        dicomDiv.style.marginTop = '10px';
         dicomDiv.style.cursor = 'pointer';
-        container.appendChild(dicomDiv); // 컨테이너에 추가
+        dicomDiv.style.position = 'relative';
+
+        const thumbnailNumber = document.createElement('div');
+        thumbnailNumber.style.position = 'absolute';
+        thumbnailNumber.style.top = '12px';
+        thumbnailNumber.style.left = '12px';
+        thumbnailNumber.style.color = 'white';
+        thumbnailNumber.style.fontSize = '16px';
+        thumbnailNumber.innerText = `${i + 1}. 썸네일`;
+
+        dicomDiv.appendChild(thumbnailNumber);
+        container.appendChild(dicomDiv);
 
         if (imageArray.length > 0) {
-            const imageId = imageArray[0]; // 각 시리즈의 첫 번째 이미지
-            loadDicomThumbnail(imageId, dicomDiv.id); // 이미지를 해당 div에 로드
-            
-            // 썸네일 클릭 이벤트 추가
+            loadDicomThumbnail(imageArray[0], dicomDiv.id); // 썸네일 로드
+
             dicomDiv.addEventListener('click', () => {
-                currentIndex = i; // 현재 인덱스를 클릭한 썸네일의 인덱스로 설정
-                currentImageIndex = 0; // 첫 번째 이미지로 초기화
-                imageIds = seriesList[currentIndex]; // 선택한 시리즈의 이미지 ID로 업데이트
+                // 클릭된 썸네일의 시리즈로 이동
+                currentIndex = i; // 클릭된 썸네일의 시리즈 인덱스 설정
+                currentImageIndex = 0; // 시리즈 내 첫 번째 이미지로 이동
+                imageIds = seriesList[currentIndex]; // 해당 시리즈의 이미지 ID 설정
                 displayImage(currentImageIndex); // 이미지 표시
             });
         }
     });
 }
 
-// 로드 될때
-window.onload = function() {
-	// 스택이미지 id
-    element = document.getElementById('dicomImage'); // 전역 변수 초기화
-    cornerstone.enable(element); // 요소를 활성화
 
-    // cornerstone-wado-image-loader 설정
-    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+// 초기 이미지 로드 함수
+function loadInitialImage() {
+    if (dcmList.imageFileNames.length > 0) {
+        currentIndex = 0;
+        currentImageIndex = 0;
+        imageIds = dcmList.imageFileNames[currentIndex];
+        displayImage(currentImageIndex);
+    }
+}
 
-    const urlPath = window.location.pathname; // 현재 경로 가져오기
-    const pathSegments = urlPath.split('/'); // 경로를 '/'로 분리
-    const studykey = pathSegments[pathSegments.indexOf('view') + 1]; 
-    console.log("studyKey:", studykey);
-
-    // API 요청
+// 이미지 데이터를 요청하는 함수
+// fetchData 함수에서 데이터 로드 후 콜백으로 후속 작업 실행
+function fetchData(studykey, callback) {
     axios.get(`/api/views/${studykey}`).then(result => {
-        console.log(result.data);
-        series.push(...result.data.series); // 시리즈 배열에 결과 추가
-
+        series.push(...result.data.series);
         const urlList = series.map(serieskey => `/api/views/${studykey}/${serieskey}`);
-        
+       
         axios.all(urlList.map(url => axios.get(url))).then(axios.spread((...responses) => {
             const dataList = responses.map(response => response.data);
-            // 이미지배열 이름 => dcmPathLists
-            dcmPathLists.push(...dataList);
-            console.log('dcmPathLists',dcmPathLists);
+            dcmList.imageFileNames = dataList;
             
-            // dcmList에 응답 데이터 할당
-            dcmList.imageFileNames = dcmPathLists; 
-			// 썸네일 로드 함수 호출
-            loadSeriesThumbnails(dcmList.imageFileNames); 
-
-        	// 초기 이미지 로드
-            if (dcmList.imageFileNames.length > 0) {
-                currentIndex = 0; // 첫 번째 시리즈 선택
-                imageIds = dcmList.imageFileNames[currentIndex]; // 첫 번째 시리즈의 이미지 ID로 업데이트
-                displayImage(currentImageIndex); // 첫 번째 이미지 표시
-            }
-
+            // 데이터 로드 완료 후 콜백 호출
+            if (callback) callback();
+            
         })).catch(errors => {
             console.error("Error in axios.all: ", errors);
         });
     });
+}
 
-    // 마우스 휠 이벤트로 이미지 변경
-	element.addEventListener('wheel', (event) => {
-    event.preventDefault(); // 기본 스크롤 동작 방지
+// start 함수에서 fetchData 호출 후 콜백으로 후속 작업 연결
+function start() {
+    element = document.getElementById('dicomImage');
+    cornerstone.enable(element);
 
-    if (imageIds.length === 0) return; // 이미지가 없으면 아무것도 하지 않음
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
-    if (event.deltaY < 0) { // 휠을 아래로 스크롤
-        if (currentImageIndex < imageIds.length - 1) {
-            currentImageIndex++; // 현재 시리즈의 다음 이미지로 이동
+    const urlPath = window.location.pathname;
+    const studykey = urlPath.split('/').slice(-1)[0];
+    console.log("studyKey:", studykey);
+
+    // 데이터 로드 후 썸네일과 초기 이미지를 로드하도록 fetchData에 콜백 추가
+    fetchData(studykey, () => {
+        loadSeriesThumbnails(dcmList.imageFileNames);
+        loadInitialImage();
+    });
+}
+
+
+// 마우스 이벤트 핸들러
+function registerMouseEvents() {
+    element.addEventListener('wheel', (event) => {
+        event.preventDefault();
+        if (imageIds.length === 0) return;
+
+        if (event.deltaY < 0 && currentImageIndex < imageIds.length - 1) {
+            currentImageIndex++;
+        } else if (event.deltaY > 0 && currentImageIndex > 0) {
+            currentImageIndex--;
         }
-    } else if (event.deltaY > 0) { // 휠을 위로 스크롤
-        if (currentImageIndex > 0) {
-            currentImageIndex--; // 현재 시리즈의 이전 이미지로 이동
-        }
-    }
-    
-    displayImage(currentImageIndex); // 현재 인덱스에 해당하는 이미지 표시
-});
+        
+        displayImage(currentImageIndex);
+    });
 
-
-    // 이미지 이동 기능 추가
     element.addEventListener('mousedown', (event) => {
-        if (event.button === 0) { // 왼쪽 버튼만 작동
+        if (event.button === 0) {
             isDragging = true;
             lastMousePosition = { x: event.clientX, y: event.clientY };
         }
@@ -161,7 +182,7 @@ window.onload = function() {
             viewport.translation.y += deltaY;
             cornerstone.setViewport(element, viewport);
 
-            lastMousePosition = { x: event.clientX, y: event.clientY }; // 현재 위치 업데이트
+            lastMousePosition = { x: event.clientX, y: event.clientY };
         }
     });
 
@@ -172,4 +193,4 @@ window.onload = function() {
     element.addEventListener('mouseleave', () => {
         isDragging = false;
     });
-};
+}
