@@ -96,3 +96,14 @@
 }
 
 
+#window-level {
+	position: relative;
+}
+
+#renderBarContainer {
+	position: fixed;
+	display: none;
+	top: 150px;
+	right: 700px;
+}
+
