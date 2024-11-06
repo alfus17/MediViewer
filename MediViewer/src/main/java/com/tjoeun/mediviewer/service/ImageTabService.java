@@ -26,8 +26,10 @@ public class ImageTabService {
 	}
 	
 	// studyKey와 seriesKey로 DcmList를 조회
-    public ArrayList<String> getDcmListByStudyAndSeriesKey(Long studyKey, Long seriesKey) {
-        return imageRepo.findAllByStudyKeyAndSeriesKey(studyKey, seriesKey);
+    public ArrayList<String> getDcmListByStudyAndSeriesKey(ReqParams params) {
+    	System.out.println("getDcmListByStudyAndSeriesKey_params : "+ params);
+    	System.out.println("getDcmListByStudyAndSeriesKey_params : "+ params.getSeriesKey());
+        return imageRepo.findAllByStudyKeyAndSeriesKey(params.getStudyKey(), params.getSeriesKey());
     }
     
 //	public ArrayList<ImageTab> getImageByStudyKey(ReqParams params){
@@ -59,19 +61,19 @@ public class ImageTabService {
 //	}
 
 
-	public HashMap<String, Object> getSeriesObject(Long studyKey) {
-		System.out.println("ImageTabService_getDcmListByStudyKey_studyKey : " + studyKey);
+	public HashMap<String, Object> getSeriesObject(ReqParams params) {
+		System.out.println("ImageTabService_getDcmListByStudyKey_studyKey : " + params.getStudyKey());
 		
 		
 		HashMap<String, Object> responseMap = new HashMap<>();
 		
-		Long minSeries = imageRepo.findBy(studyKey);
+		Long minSeries = imageRepo.findBy(params.getStudyKey());
 		System.out.println("ImageTabService_getDcmListByStudyKey_minSeries : " + minSeries);
 		
-		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
+		ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(params.getStudyKey());
 		System.out.println("ImageTabService_getDcmListByStudyKey_seriesList : " + seriesList);
 
-		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(studyKey);
+		ArrayList<String> imageFileName = imageRepo.findAllByStudyKey(params.getStudyKey());
 		System.out.println("ImageTabService_getDcmListByStudyKey_imageFileName : " + imageFileName);
 
 		
@@ -85,15 +87,15 @@ public class ImageTabService {
 		return responseMap;
 	}
 	
-		public HashMap<String, Object> getSeries(Long studyKey,Long seriesKey) {
-			System.out.println("ImageTabService_getDcmListByStudyKey_studyKey : " + studyKey);				
+		public HashMap<String, Object> getSeries(ReqParams params) {
+			System.out.println("ImageTabService_getDcmListByStudyKey_studyKey : " + params.getStudyKey());				
 			HashMap<String, Object> responseMap = new HashMap<>();
 			
 			
-			ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
+			ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(params.getStudyKey());
 			System.out.println("ImageTabService_getDcmListByStudyKey_seriesList : " + seriesList);
 
-			ArrayList<String> imageFileName = imageRepo.findAllByStudyKeyAndSeriesKey(studyKey,seriesKey);
+			ArrayList<String> imageFileName = imageRepo.findAllByStudyKeyAndSeriesKey(params.getStudyKey(),params.getSeriesKey());
 			System.out.println("ImageTabService_getDcmListByStudyKey_imageFileName : " + imageFileName);
 
 			
@@ -109,14 +111,14 @@ public class ImageTabService {
 		}
 		
 		
-		public HashMap<String, Object> getAllSeriesImageFiles(Long studyKey) {
-		    System.out.println("ImageTabService_getAllSeriesImageFiles_studyKey : " + studyKey);
+		public HashMap<String, Object> getAllSeriesImageFiles(ReqParams params) {
+		    System.out.println("ImageTabService_getAllSeriesImageFiles_studyKey : " + params.getStudyKey());
 
 		    // 반환할 결과 맵 생성
 		    HashMap<String, Object> responseMap = new HashMap<>();
 
 		    // 해당 studyKey에 포함된 모든 시리즈 리스트 조회
-		    ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
+		    ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(params.getStudyKey());
 		    System.out.println("ImageTabService_getAllSeriesImageFiles_seriesList : " + seriesList);
 
 		    // 시리즈별 이미지 파일 리스트를 담을 리스트
@@ -124,7 +126,7 @@ public class ImageTabService {
 
 		    // 각 시리즈에 대해 이미지 파일 리스트 조회
 		    for (Long seriesKey : seriesList) {
-		        ArrayList<String> imageFileName = imageRepo.findAllByStudyKeyAndSeriesKey(studyKey, seriesKey);
+		        ArrayList<String> imageFileName = imageRepo.findAllByStudyKeyAndSeriesKey(params.getStudyKey(), seriesKey);
 		        allImageFileNames.add(imageFileName);
 		    }
 
@@ -137,10 +139,10 @@ public class ImageTabService {
 		}
 
 		// 시리즈키 배열만 리턴 
-		public ArrayList<Long> getSeriesKeyList(Long studyKey) {
-			System.out.println("ImageTabService_getSeriesKeyList_studyKey : " + studyKey);
+		public ArrayList<Long> getSeriesKeyList(ReqParams params) {
+			System.out.println("ImageTabService_getSeriesKeyList_studyKey : " + params.getStudyKey());
 			
-			ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(studyKey);
+			ArrayList<Long> seriesList = imageRepo.findAllSeriesByStudyKey(params.getStudyKey());
 			System.out.println("ImageTabService_getSeriesKeyList_seriesList : " + seriesList);
 			return seriesList;
 		}

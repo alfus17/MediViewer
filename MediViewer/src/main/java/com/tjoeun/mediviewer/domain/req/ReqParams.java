@@ -22,6 +22,7 @@ public class ReqParams {
     private Integer nowPage;
     private String sdate;
     private String edate;
+    private Long seriesKey;
     
     
 //    public ReqParams (String pID , String pName) {
