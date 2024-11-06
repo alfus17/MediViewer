@@ -1,7 +1,8 @@
 let isSeriesViewActive = false;
 let currentPage = 0; // 현재 페이지를 저장할 변수
 const itemsPerPage = 16; // 페이지당 최대 이미지 수
-const container = document.getElementById('dicomImage');
+const container = document.getElementById('seriesImage');
+const dicomImageContainer = document.getElementById('dicomImage');
 const originalContent = container.innerHTML; // 초기 상태 저장
 
 // 다중 뷰포트를 생성하고 초기화하는 함수
@@ -10,6 +11,8 @@ function initializeViewports(rows, cols, seriesList) {
     container.style.display = 'grid';
     container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+    
+    container.style.gap = '10px'; // 이미지들 사이에 10px 간격 추가
 
     // 현재 페이지에 해당하는 seriesList 항목만 slice로 가져오기
     const start = currentPage * itemsPerPage;
@@ -17,7 +20,7 @@ function initializeViewports(rows, cols, seriesList) {
     const pagedSeriesList = seriesList.slice(start, end);
 
     pagedSeriesList.forEach((series, index) => {
-        const dicomDiv = document.createElement('div');
+        const dicomDiv = document.createElement('div');  // dicomDiv를 새로 생성
         dicomDiv.id = `dicomImage_${index}`;
         dicomDiv.className = 'dicomImage';
         dicomDiv.style.width = '100%';
@@ -31,28 +34,28 @@ function initializeViewports(rows, cols, seriesList) {
         cornerstone.enable(dicomDiv); // cornerstone 활성화
     });
 
-    addNavigationButtons(container, seriesList, rows, cols); // 네비게이션 버튼 다시 추가
+    addNavigationButtons(seriesList, rows, cols); // 네비게이션 버튼 다시 추가
 }
 
 // 각 시리즈의 첫 번째 이미지를 로드하는 함수
 function loadSeriesImage(series, dicomDiv) {
     const imageId = series[0]; // 첫 번째 이미지를 로드 (시리즈의 첫 번째 이미지)
     
-    cornerstone.loadImage(imageId).then(image => {
-        cornerstone.displayImage(dicomDiv, image); // 이미지 표시
+   cornerstone.loadImage(imageId).then(image => {
+    cornerstone.displayImage(dicomDiv, image); // 이미지 표시
 
-        const viewport = cornerstone.getDefaultViewportForImage(dicomDiv, image);
-        viewport.scale = calculateScale(image); // 이미지 크기 조정
-        cornerstone.setViewport(dicomDiv, viewport);
-    }).catch(err => {
-        console.error("Error loading series image:", err);
-    });
+    const viewport = cornerstone.getDefaultViewportForImage(dicomDiv, image);
+    viewport.scale = calculateSeriesScale(image, dicomDiv); // 새로 변경된 함수 이름 사용
+    cornerstone.setViewport(dicomDiv, viewport);
+}).catch(err => {
+    console.error("Error loading series image:", err);
+});
 }
 
-// 캔버스에 맞는 스케일 계산
-function calculateScale(image) {
-    const canvasWidth = container.clientWidth;
-    const canvasHeight = container.clientHeight;
+// 시리즈용 스케일 계산
+function calculateSeriesScale(image, div) {
+    const canvasWidth = div.clientWidth;
+    const canvasHeight = div.clientHeight;
     return Math.min(canvasWidth / image.width, canvasHeight / image.height);
 }
 
@@ -74,7 +77,7 @@ function nextPage(seriesList, rows, cols) {
 }
 
 // 네비게이션 버튼 추가 함수
-function addNavigationButtons(container, seriesList, rows, cols) {
+function addNavigationButtons(seriesList, rows, cols) {
     const prevButton = document.createElement('button');
     prevButton.innerText = '◀';
     prevButton.style.position = 'absolute';
@@ -94,19 +97,21 @@ function addNavigationButtons(container, seriesList, rows, cols) {
 
 // 시리즈 버튼 클릭 시 다중 뷰포트 초기화 및 초기 화면 복원
 document.getElementById('series').addEventListener('click', () => {
-    const rows = 4;
-    const cols = 4;
-    const seriesList = dcmList.imageFileNames; // 시리즈 이미지 ID 리스트
-
     if (isSeriesViewActive) {
-        // 시리즈 뷰 비활성화: 초기 상태로 복원
-        container.innerHTML = originalContent; // 초기 HTML 콘텐츠로 복원
-        container.style.display = ''; // grid 스타일 해제
-        displayImage(currentIndex);
+        // 시리즈 뷰 비활성화: dicomImage 보이게, seriesImage 숨기기
+        dicomImageContainer.style.display = 'block'; // dicomImage 보이기
+        container.style.display = 'none'; // seriesImage 숨기기
+
+        // 기존 이미지 다시 로드
+        cornerstone.enable(dicomImageContainer); // cornerstone 활성화
+        loadInitialImage(); // 초기 이미지 로드
     } else {
-        currentPage = 0; // 초기 페이지로 설정
-        initializeViewports(rows, cols, seriesList);
-         // 다중 뷰포트 초기화
+        // 시리즈 뷰 활성화: seriesImage 보이게, dicomImage 숨기기
+        dicomImageContainer.style.display = 'none'; // dicomImage 숨기기
+        container.style.display = 'block'; // seriesImage 보이기
+
+        // 다중 뷰포트로 초기화
+        initializeViewports(4, 4, dcmList.imageFileNames); // 다중 뷰포트 초기화
     }
 
     isSeriesViewActive = !isSeriesViewActive; // 상태 반전
