@@ -2,8 +2,8 @@
 
 /*기본 백그라운드 설정*/
 body {
-    background-color: lightgrey;
-    color: white;
+    background-color: #212121;
+    color: lightgrey;
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,16 +21,33 @@ section {
 	width: 90%;
 }
 
+/* 큰 바운더리 */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    height: 85%;
+    padding: 20px;
+    border: 3px solid #FF6347; 
+    border-radius: 10px;
+}
+
 /* 로그인 컨테이너 */
 .login-container {
 	width: 500px;
-	height: 400px;
+	height: 380px;
     padding: 20px;
-    background-color: white;
-    border: 1px solid lightgrey;
+    background-color: #505050;
+    border:3px solid rgba(217, 217, 217, 0.3);
     border-radius: 10px;
     box-shadow: 0 4px 8px black;
     text-align: center;
+}
+
+/* 로그인 오류가 생겼을 때 로그인 container 높이 증가 */
+.login-container.error {
+    height: 430px; 
 }
 
 /* 로그인 페이지 상단 로고 */
@@ -47,35 +64,55 @@ section {
 .input-area input {
 	width: 95%;
 	padding: 10px;
-	margin: 10px 0;
-	border: 1px solid lightgrey;
+	margin: 8px 0;
+	border: 1px solid rgba(217, 217, 217, 1);
 	border-radius: 5px;
 	box-sizing: border-box;
+    background-color: rgba(217, 217, 217, 1);
 }
 
 /* 로그인 버튼 */
 .login-button {
-	background-color: lightgrey;
-	width: 75px;
+	font-size: 15px;
+	background-color: #FF6347;
+	color:white;
+	width: 85px;
 	height: 35px;
 	text-align: center;
 	border-radius: 5px;
-	margin-top: 30px;
+	margin-top: 13px;
 }
 
 
 .login-button:hover {
-	background-color: orangered;
+	background-color:  rgba(217, 217, 217, 1);
+}
+
+
+/* 회원가입 버튼*/
+.signup-button {
+	font-size: 15px;
+	background-color: rgba(169, 169, 169, 1);
+	color: white;
+	width: 80px;
+	height: 35px;
+	text-align: center;
+	border-radius: 5px;
+	margin-top: 3px;
+}
+
+.signup-button:hover {
+	background-color:  rgba(217, 217, 217, 1);
 }
 
 h1 {
-	color: black;
+	color: rgba(169, 169, 169, 1);
 	text-align: left;
 	padding-left: 20px;
 }
 
 div {
-	margin-bottom: 7px;
+	margin-bottom: 5px;
 }
 
 
