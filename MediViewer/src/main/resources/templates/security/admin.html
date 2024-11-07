@@ -8,7 +8,7 @@
 <body>
 	<span class="container">
     <h1>회원 관리</h1>
-
+ 
 	<!-- 에러 메시지 출력 -->
     <div th:if="${errorMessage}" style="color: red;">
         <p th:text="${errorMessage}"></p>
@@ -50,13 +50,23 @@
         </tbody>
     </span>
 	</span>
-    
+	 </table>
         <script>
     		// 삭제 전 확인창 표시
     		function confirmDeletion() {
         		return confirm('정말로 삭제하시겠습니까?');
     		}
 		</script>
-    </table>
+   
+    
+    <!--메인 페이지로 돌아가기-->
+				<div class="button-container">
+				    <button onclick="location.href='http://localhost:8080/'">메인 페이지로 돌아가기</button>
+				</div>
+				    
+    
 </body>
+
+
+
 </html>

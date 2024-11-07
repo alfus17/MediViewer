@@ -3,6 +3,7 @@
 	<head>
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	    <title>Stack Manipulation Tools</title>
 	    <link rel="stylesheet" href="/css/view.css">
 	</head>
@@ -57,11 +58,11 @@
 					
 	            </div>
 	            
-	            <div dicomImage-wrap>
-	           		<div id="dicomImage" class="dicomImage" style="display: grid; gap: 10px; margin-top: 20px;">
-	           	</div>
-	
-	        </div>
+	            <div class="dicomImage-wrap">
+				    <div id="dicomImage" class="dicomImage" style="display: block; margin-top: 20px;"></div> <!-- 초기 display: block 설정 -->
+				    <div id="seriesImage" class="seriesImage" style="display: none; margin-top: 20px;"></div> <!-- 초기 display: none 설정 -->
+				</div>
+
 	
 	
 	</body>
@@ -91,6 +92,13 @@
 		let serieskey;
 		let viewports = []; // 뷰포트를 저장할 배열
 		
+		
+		window.onload = () => {
+			start();
+			$("#mainImg").click(() => {window.location.href = '/';});
+    		registerMouseEvents();  // 마우스 이벤트 등록
+			
+		}
 	</script>
 	
 	   

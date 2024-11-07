@@ -21,11 +21,12 @@ body {
     padding: 20px;
     border: 3px solid #FF6347; 
     border-radius: 10px;
+    position: relative; /* button-container의 위치를 기준으로 설정 */
 }
 
 /* 상단 타이틀 (회원관리) */
 h1 {
-    color: rgba(169, 169, 169, 1); 
+    color: rgba(217, 217, 217, 1);
     font-size: 35px;
     text-align: left;
     margin-bottom: 850px;
@@ -35,10 +36,10 @@ h1 {
 /* 테이블 컨테이너 */
 .admin-container {
     width: 1400px;
-    height: 500px;
+    height: 600px;
     padding: 20px;
     margin-left: 20px;
-    margin-bottom: 200px;
+    margin-bottom: 120px;
     background-color: #505050; 
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -56,7 +57,7 @@ table {
     border-collapse: collapse;
     border-color:  #505050;
     border-style: hidden;
-    color: rgba(169, 169, 169, 1); 
+    color: rgba(217, 217, 217, 1);
 }
 
 th, td {
@@ -82,12 +83,34 @@ button {
 }
 
 button:hover {
-    color: #FFA07A;
+    color:  rgba(169, 169, 169, 1);;
 }
 
 /* 에러 메시지 스타일 */
 .error-message {
-    color: red;
+    color: #FF6347;
     margin-bottom: 10px;
     text-align: center;
+}
+
+
+/* 메인으로 돌아가기 버튼 컨테이너 */
+.button-container {
+    padding: 20px;
+    margin-top: 200px;
+    text-align: right;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #FF6347; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: rgba(169, 169, 169, 1);;
 }

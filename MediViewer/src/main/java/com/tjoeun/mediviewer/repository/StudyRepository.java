@@ -14,7 +14,7 @@ import com.tjoeun.mediviewer.domain.StudyTab;
 import com.tjoeun.mediviewer.domain.res.WorkList;
 
 @Repository
-public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
+public interface StudyRepository extends JpaRepository<StudyTab, Long> {
 	
 	// studytab 데이터 전부 쿼리
 	@Query(value = "select * from STUDYTAB st", nativeQuery = true)
@@ -26,7 +26,7 @@ public interface StudyRepository extends JpaRepository<StudyTab, Integer> {
 			+ "and (:pName IS NULL OR st.PNAME = :pName) "
 			+ "and (:modality IS NULL OR st.MODALITY = :modality) "
 			+ "and (:reportStatus IS NULL OR st.REPORTSTATUS = :reportStatus) "
-			+ "and (:sDate IS NULL OR st.STUDYDATE between :sDate and :eDate) "
+			+ "and (:sDate IS NULL OR TO_DATE(st.STUDYDATE, 'YYYYMMDD') BETWEEN TO_DATE(:sDate, 'YYYY-MM-DD') AND TO_DATE(:eDate, 'YYYY-MM-DD'))  "
 			+ "and 1=1",
 		nativeQuery = true)
 	Page<WorkList> findByDynamicQuery(

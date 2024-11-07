@@ -65,14 +65,15 @@ section {
     border: 1px solid rgba(217, 217, 217, 1);
     border-radius: 5px;
     box-sizing: border-box;
-    color: rgba(169, 169, 169, 1);
+    color:#505050;
     background-color: rgba(217, 217, 217, 1);
 }
 
 /* 회원가입 버튼 */
 .signup-button {
 	font-size: 15px;
-    background-color: rgba(169, 169, 169, 1);
+    background-color: #FF6347;
+    color: white;
     width: 85px;
     height: 35px;
     text-align: center;
@@ -89,6 +90,7 @@ section {
 .lp-button {
 	font-size: 15px;
     background-color: rgba(169, 169, 169, 1);
+    color: white;
     width: 100px;
     height: 35px;
     text-align: center;

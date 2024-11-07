@@ -33,13 +33,23 @@ public class LoginController
         @RequestParam("memberId") String memberId,
         @RequestParam("memberPwd") String memberPwd,
         @RequestParam("name") String name,
-        @RequestParam("email") String email
+        @RequestParam("email") String email,
+        Model model
     ) 
-    {
-    	String role = "USER"; // 일반 회원은 "USER" 역할로 생성
-        memberService.createMember(memberId, memberPwd, name, email, role);
-        return "redirect:/login"; // 회원가입 후 로그인 페이지로 이동
-    }
+	{
+	    if (!memberService.isMemberIdAvailable(memberId)) 
+	    {
+	        // 아이디가 중복되면 회원가입 실패
+	        model.addAttribute("signupMessage", "회원가입이 실패했습니다. 이미 사용 중인 아이디입니다.");
+	        return "signup"; // 회원가입 페이지로 이동
+	    }
+	    
+	    // 아이디가 중복되지 않으면 회원가입 성공
+	    String role = "USER";
+	    memberService.createMember(memberId, memberPwd, name, email, role);
+	    model.addAttribute("signupMessage", "회원가입이 완료되었습니다.");
+	    return "login"; // 로그인 페이지로 이동
+	}
     
     // 아이디 중복 확인을 위한 엔드포인트
     @GetMapping("/check-id")

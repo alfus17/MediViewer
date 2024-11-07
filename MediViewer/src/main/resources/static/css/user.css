@@ -6,15 +6,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
 }
 
 /* 상단 타이틀 */
 h1 {
-    color: rgba(169, 169, 169, 1); 
+    color:  rgba(217, 217, 217, 1); 
     font-size: 40px;
     text-align: left;
-    margin-bottom: 850px;
+    margin-bottom: 800px;
     margin-left: 30px;
 }
 
@@ -28,7 +28,7 @@ h1 {
 .message img {
     width: 70px;
     height: 70px;
-    margin-bottom: 820px;
+    margin-bottom: 765px;
     margin-left: 30px;
 }
 

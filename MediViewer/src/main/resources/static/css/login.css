@@ -74,8 +74,8 @@ section {
 /* 로그인 버튼 */
 .login-button {
 	font-size: 15px;
-	background-color: rgba(169, 169, 169, 1);
-	color: #505050;
+	background-color: #FF6347;
+	color:white;
 	width: 85px;
 	height: 35px;
 	text-align: center;
@@ -93,7 +93,7 @@ section {
 .signup-button {
 	font-size: 15px;
 	background-color: rgba(169, 169, 169, 1);
-	color: #505050;
+	color: white;
 	width: 80px;
 	height: 35px;
 	text-align: center;
