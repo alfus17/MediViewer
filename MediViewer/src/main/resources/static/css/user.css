@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/* 기본 백그라운드 설정 */
+body {
+    background-color: #212121;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+/* 상단 타이틀 */
+h1 {
+    color:  rgba(217, 217, 217, 1); 
+    font-size: 40px;
+    text-align: left;
+    margin-bottom: 800px;
+    margin-left: 30px;
+}
+
+/* 메시지 컨테이너 */
+.message {
+    display: flex;
+    align-items: center; 
+    gap: 1px; 
+}
+
+.message img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 765px;
+    margin-left: 30px;
+}
+
+/* 버튼 컨테이너 */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #FF6347; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: #FF4500;
+}

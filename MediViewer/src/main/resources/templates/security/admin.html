@@ -1,0 +1,72 @@
+<!-- security/admin.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
+</head>
+<body>
+	<span class="container">
+    <h1>회원 관리</h1>
+ 
+	<!-- 에러 메시지 출력 -->
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    
+    <!-- 회원 목록 테이블 -->
+    <span class="admin-container">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>권한</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 회원 목록을 반복하면서 출력 -->
+            <tr th:each="member : ${members}">
+                <td th:text="${member.memberId}"></td>
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.email}"></td>
+                <td th:text="${member.role}"></td>
+                <td>
+					<!-- admin 계정 이름 앞 권한 표시 -->
+                  <span th:text="${member.name}"></span>
+                  <img th:if="${member.role == 'ADMIN'}" src="/img/icon/admincircle.png" alt="admin" width="10" height="10">
+                </td>
+                <td>				
+                    <!-- USER 권한만 삭제 버튼을 표시 -->
+                    <form th:if="${member.role == 'USER'}" th:action="@{/delete-member}" method="post" onsubmit="return confirmDeletion()">
+                        <input type="hidden" name="memberId" th:value="${member.memberId}" />
+                        <button type="submit">
+							<img src="/img/icon/delete.png" alt="delete" width="25" height="30">
+						</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </span>
+	</span>
+	 </table>
+        <script>
+    		// 삭제 전 확인창 표시
+    		function confirmDeletion() {
+        		return confirm('정말로 삭제하시겠습니까?');
+    		}
+		</script>
+   
+    
+    <!--메인 페이지로 돌아가기-->
+				<div class="button-container">
+				    <button onclick="location.href='http://localhost:8080/'">메인 페이지로 돌아가기</button>
+				</div>
+				    
+    
+</body>
+
+
+
+</html>
