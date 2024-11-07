@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tjoeun.mediviewer.domain.Member;
 import com.tjoeun.mediviewer.service.MemberService;
@@ -29,7 +27,7 @@ public class ViewController
 	@GetMapping("/") // 기본 URL에 대한 GET 요청 처리
 	public String home()
 	{
-		return "/index"; // index.html 페이지 반환
+		return "/index"; // home.html 페이지 반환
 	}
 	
 	@GetMapping("/login") // 로그인 URL에 대한 GET 요청 처리
@@ -73,4 +71,5 @@ public class ViewController
     public String showStudyView(@PathVariable("studykey") Long studykey) {      
         return "/view";
     }
+	
 }

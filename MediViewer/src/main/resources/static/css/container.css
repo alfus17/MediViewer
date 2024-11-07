@@ -1,21 +1,30 @@
+.studylist_header {
+	display: flex;
+    width: 100%;
+    justify-content: space-between;
+    text-align: center;
+    color: #afafaf;
+    font-weight: bold;
+}
+
 .studylist_container {
 	padding: 0;
 	list-style: none;
 	width: 100%;
 	text-align: center;
-	/*
-	border: solid 1px black;
-	*/
+    height: 45vh;
+    overflow: scroll;
 }
 
 .studylist_container li {
+	margin-bottom: 1.2vh;
 	display: flex;
 	justify-content: space-between;
 	cursor: pointer;
 }
 
-.checkbox {
-	width: 3%;
+.studylist_container span li:hover {
+	background-color: rgb(128, 0, 64);
 }
 
 .w5 {
@@ -31,7 +40,7 @@
 }
 
 .span_study_desc {
-	min-width: 40%;
+	min-width: 35%;
 	width: auto;
 	max-width: 43%;
 }

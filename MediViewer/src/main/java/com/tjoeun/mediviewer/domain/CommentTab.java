@@ -23,7 +23,7 @@ public class CommentTab {
 	
     @Id
     @Column(name = "STUDYKEY")
-    private int studyKey;
+    private Long studyKey;
     
     @Column(name = "STUDY_COMMENT")
     private String comment;

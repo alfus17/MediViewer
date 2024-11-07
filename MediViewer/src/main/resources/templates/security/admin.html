@@ -3,9 +3,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin.css}">
 </head>
 <body>
-    <h1>관리자 계정입니다</h1>
+	<span class="container">
+    <h1>회원 관리</h1>
 
 	<!-- 에러 메시지 출력 -->
     <div th:if="${errorMessage}" style="color: red;">
@@ -13,6 +15,7 @@
     </div>
     
     <!-- 회원 목록 테이블 -->
+    <span class="admin-container">
     <table border="1">
         <thead>
             <tr>
@@ -30,15 +33,24 @@
                 <td th:text="${member.email}"></td>
                 <td th:text="${member.role}"></td>
                 <td>
+					<!-- admin 계정 이름 앞 권한 표시 -->
+                  <span th:text="${member.name}"></span>
+                  <img th:if="${member.role == 'ADMIN'}" src="/img/icon/admincircle.png" alt="admin" width="10" height="10">
+                </td>
+                <td>				
                     <!-- USER 권한만 삭제 버튼을 표시 -->
                     <form th:if="${member.role == 'USER'}" th:action="@{/delete-member}" method="post" onsubmit="return confirmDeletion()">
                         <input type="hidden" name="memberId" th:value="${member.memberId}" />
-                        <button type="submit">삭제</button>
+                        <button type="submit">
+							<img src="/img/icon/delete.png" alt="delete" width="25" height="30">
+						</button>
                     </form>
                 </td>
             </tr>
         </tbody>
-        
+    </span>
+	</span>
+    
         <script>
     		// 삭제 전 확인창 표시
     		function confirmDeletion() {

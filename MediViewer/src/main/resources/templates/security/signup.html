@@ -16,37 +16,40 @@
         }
     </style>
 </head>
+
+<span class="container">
 <body>
     <form th:action="@{/signup}" method="post">
         <section>
+			
             <span class="signup-container">
-                <img src="/img/icon/SampleLogo.png" alt="LOGO" class="logo">
+                <img src="/img/icon/logo.png" alt="LOGO" class="logo">
                 <h1>Signup</h1>
 
                 <!-- 회원가입 form -->
                 <span class="input-area">
                     <div>
-                        <input type="text" id="memberId" name="memberId" placeholder="아이디" required onkeyup="checkId()" />
+                        <input type="text" id="memberId" name="memberId" placeholder="ID" required onkeyup="checkId()" />
                         <br>
                         <div style="text-align: left; margin-left: 15px;">
                             <span id="id-check-message"></span>
                         </div>
                     </div>
                     <div>
-                        <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호" required />
+                        <input type="password" id="memberPwd" name="memberPwd" placeholder="Password" required />
                     </div>
                     <div>
-                        <input type="text" id="name" name="name" placeholder="이름" required />
+                        <input type="text" id="name" name="name" placeholder="Name" required />
                     </div>
                     <div>
-                        <input type="email" id="email" name="email" placeholder="이메일" required />
+                        <input type="email" id="email" name="email" placeholder="Email" required />
                     </div>
                     <div>
-                        <button type="submit">회원가입</button>
+                        <button class="signup-button" type="submit">Sign Up</button>
                     </div>
                     <div>
                         <!-- 로그인 페이지로 이동하는 버튼 -->
-                        <button type="button" onclick="location.href='/login'">로그인하러 가기</button>
+                        <button class="lp-button" type="button" onclick="location.href='/login'">Login Page</button>
                     </div>
                 </span>
             </span>
@@ -81,4 +84,5 @@
         }
     </script>
 </body>
+</span>
 </html>

@@ -1,11 +1,14 @@
 .aside_modal_area {
 	position: absolute;
-	left: 8vw;
+	top: 13vh;
+    left: 10.2vw;
 	width: 16.2vw;
-	height: 60vh;
-	background-color: #FF6347;
+	height: 42vh;
+	background-color: #3F4458;
 	z-index: 10;
-	display: block;
+	display: none;
+	border: solid 1px black;
+	border-radius: 4px;
 }
 
 .date_area {
@@ -26,15 +29,16 @@
 	top: -10px;
 	left: 10px;
 	font-size: 12px;
-	background-color: #FF6347;
+	background-color: #3F4458;
 	padding: 0 5px;
 	pointer-events: none;
+	color: #fff;
 }
 
 .input_date_ro {
 	margin: 0 6px;
-	background-color: #FF6347;
-    border: solid 1px black;
+	background-color: #3F4458;
+    border: solid 1px white;
     padding: 8px;
     width: 80%;
     color: #fff;
@@ -53,14 +57,28 @@
 }
 
 .preview_modal_area {
+	display: flex;
+    flex-flow: row;
 	position: absolute;
 	bottom: 7vh;
 	right: 2vw;
 	width: 75vw;
 	height: 70vh;
-	background-color: rgb(128, 128, 255);
+	background-color: #212121;
+	border: solid 1px #fff;
 	z-index: 20;
 	display: none;
+}
+
+.preview_container {
+	display: flex;
+	flex-flow: row;
+	height: 100%;
+}
+
+.comment_container {
+	padding: 20px;
+	color: #fff;
 }
 
 .btn_prev_reduce {

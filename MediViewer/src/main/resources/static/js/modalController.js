@@ -1,4 +1,4 @@
-const toastMessage = '이미지 영역 혹은 우측 하단 버튼을 클릭하면 창이 닫힙니다.';
+const toastMessage = '이미지 영역 혹은 우측 하단 축소 버튼을 클릭하면 창이 닫힙니다.';
 
 function showToast(target) {
 	target.addClass("active");
@@ -28,7 +28,7 @@ $("#calendarOpenSwitch, #doSelectedDurationQuery").click(() => {
 	setView($(".aside_modal_area"),isCalendarOpen);
 })
 
-$("#previewOpenSwitch, #previewCloseSwitch").click(() => {
+$("#previewOpenSwitch, #previewCloseSwitch, #prevImageArea").click(() => {
 	switchPreviewStatus();
 	setView($(".preview_modal_area"),isPreviewOpen);
 	if(isPreviewOpen){

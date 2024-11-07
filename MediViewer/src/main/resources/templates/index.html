@@ -18,33 +18,38 @@
 	<link rel="stylesheet" href="/css/list.css">
 	<link rel="stylesheet" href="/css/container.css">
 	<link rel="stylesheet" href="/css/modal.css">
+	<link rel="stylesheet" href="/css/dark.css">
 </head>
 
 <body class="body">
 
 	<!-- list aside 영역 -->
-	<aside class="aside_control_panel">
-		<span class="menu_content" onclick="location.href='/userRolePage'">
-				<span class="menu_icon_container">
-					<img class="menu_icon" src="/img/icon/user.png" alt="">					
+	<span class="menu_area">
+		<img src="/img/logo_200.png" alt="">			
+		<aside class="aside_control_panel">
+			<span class="menu_content" onclick="location.href='/userRolePage'">
+					<span class="menu_icon_container">
+						<img class="menu_icon" src="/img/icon/user.png" alt="">					
+					</span>
+					<label class="menu_label">사용자</label>
 				</span>
-				<label class="menu_label">사용자</label>
-			</span>
-		<span class="aside_control_menu_container">
-			<span class="menu_content" id="calendarOpenSwitch">
-				<span class="menu_icon_container">
-					<img class="menu_icon" src="/img/icon/calendar.png" alt="">					
+			<span class="aside_control_menu_container">
+				<span class="menu_content" id="calendarOpenSwitch">
+					<span class="menu_icon_container">
+						<img class="menu_icon" src="/img/icon/calendar.png" alt="">					
+					</span>
+					<label class="menu_label">기간 선택</label>
 				</span>
-				<label class="menu_label">기간 선택</label>
-			</span>
-			<span class="menu_content">
-				<span class="menu_icon_container" onclick="location.href='/logout'">
-					<img class="menu_icon" src="/img/icon/logout.png" alt="">					
+				<span class="menu_content">
+					<span class="menu_icon_container" onclick="location.href='/logout'">
+						<img class="menu_icon" src="/img/icon/logout.png" alt="">					
+					</span>
+					<label class="menu_label">로그아웃</label>
 				</span>
-				<label class="menu_label">로그아웃</label>
 			</span>
-		</span>
-	</aside>
+		</aside>
+	</span>
+	
 	<aside th:replace="~{/fragments/modal.html :: calendar-modal}"></aside>
 	<figure th:replace="~{/fragments/modal.html :: preview-modal}"></figure>
 
@@ -52,14 +57,6 @@
 	<main class="main_list">
 
 		<!-- list 영역 -->
-		<aside class="aside_date_query">
-			<button type="button" name="btnDateDur" value="null">x</button>
-			<button type="button" name="btnDateDur" value="1">1D</button>
-			<button type="button" name="btnDateDur" value="3">3D</button>
-			<button type="button" name="btnDateDur" value="7">7D</button>
-			<button type="button" name="btnDateDur" value="30">30D</button>
-		</aside>
-
 		<div class="div_list_area">
 			<section class="section_list_container">
 				<div class="div_list_control_panel">
@@ -77,7 +74,7 @@
 							</select>
 
 							<select name="status" id="status">
-								<option value=0 >판독 상태</option>
+								<option value="">판독 상태</option>
 								<option value=1 disabled>읽지않음</option>
 								<option value=3 disabled>열람중</option>
 								<option value=5 disabled>예비 판독</option>
@@ -87,11 +84,17 @@
 							<button type="submit" id="doQuery">검색</button>
 							<button type="reset" id="resetQuery">초기화</button>
 						</section>
+						
+						<section class="section_date_query">
+							<button type="button" name="btnDateDur" value="null">x</button>
+							<button type="button" name="btnDateDur" value="1">1D</button>
+							<button type="button" name="btnDateDur" value="3">3D</button>
+							<button type="button" name="btnDateDur" value="7">7D</button>
+							<button type="button" name="btnDateDur" value="30">30D</button>
+						</section>
 
 						<section>
-							<button type="button">o</button>
-							<button type="button">o</button>
-							<select class="select_page_size" name="listPageSize" id="listPageSize" onselect="setListPageSize()">
+							<select class="select_page_size" name="slice" id="slice" onselect="setListPageSize()">
 								<option value=10 selected>10</option>
 								<option value=20>20</option>
 								<option value=50>50</option>
@@ -101,6 +104,18 @@
 					</div>
 
 					<section>
+						<span class="studylist_header">
+					        <input class="checkbox" type="checkbox" id="selectAll">
+					        <span class="w10" name="itemHeader" id="pID">환자 아이디</span>
+					        <span class="w10" name="itemHeader" id="pName">환자 이름</span>
+					        <span class="w8" name="itemHeader" id="modality">검사 장비</span>
+					        <span class="span_study_desc" name="itemHeader" id="studyDesc">검사 설명</span>
+					        <span class="w10" name="itemHeader" id="studyDate">검사 일시</span>
+					        <span class="w5" name="itemHeader" id="reportStatus">판독 상태</span>
+					        <span class="w5" name="itemHeader" id="seriesCnt">시리즈</span>
+					        <span class="w5" name="itemHeader" id="imageCnt">이미지</span>	  
+						</span>
+						<span style="display: block; width: 100%; border: 1px solid #afafaf;"></span>
 						<ul th:replace="~{/fragments/list.html :: patient-list}"></ul>
 					</section>
 				</div>
@@ -113,7 +128,7 @@
 				<!-- 확대 버튼 누르면 모달창 나오게 만들기 모달은 이미지영역 / 코멘트 영역 포함 -->
 				<span class="span_prev_img_container" id="previewImageContainer">
 					<div class="div_prev_img" id="previewImage"></div>
-					<button id="previewOpenSwitch" class="btn_prev_extend" onclick="testAxios()"></button>
+					<button id="previewOpenSwitch" class="btn_prev_extend"></button>
 				</span>
 			</div>
 		</div>
@@ -131,7 +146,8 @@
 		let isCalendarOpen = false;
 		let isPreviewOpen = false;
 		let totalCnt;
-		let nowPage;
+		let nowPage = 1;
+		let prevStudyKey;
 		const items = [];
 		const histItems = [];
 		const testImgItems = [];
@@ -141,7 +157,7 @@
 		window.onload = () => {
 			console.log("onLoad");
 			
-			getDefList();
+			getDefList(nowPage);
 		}
 	</script>
 </body>
