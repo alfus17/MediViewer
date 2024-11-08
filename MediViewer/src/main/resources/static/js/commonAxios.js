@@ -15,8 +15,7 @@ const getDefList = (nowPage) => {
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
 				li.innerHTML = `
-					<input class="checkbox" type="checkbox" name="selectOne">
-			        <span name="pID" class="w10">${item.pid}</span>
+					<span name="pID" class="w10">${item.pid}</span>
 			        <span name="pName" class="w10">${item.pname}</span>
 			        <span name="modality" class="w8">${item.modality}</span>
 			        <span name="studyDesc" class="span_study_desc">${item.studyDesc}</span>
@@ -64,8 +63,7 @@ const getQueryList = (params) => {
 				li.setAttribute("name", "listItem");
 				li.setAttribute("value", item.studyKey);
 				li.innerHTML = `
-					<input class="checkbox" type="checkbox" name="selectOne">
-			        <span name="pID" class="w10">${item.pid}</span>
+					<span name="pID" class="w10">${item.pid}</span>
 			        <span name="pName" class="w10">${item.pname}</span>
 			        <span name="modality" class="w8">${item.modality}</span>
 			        <span name="studyDesc" class="span_study_desc">${item.studyDesc}</span>
