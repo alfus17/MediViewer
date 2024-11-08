@@ -1,7 +1,4 @@
-window.onload = function() {
-    start();
-    registerMouseEvents();  // 마우스 이벤트 등록
-};
+
 
 // 스택 이미지 출력 함수
 function displayImage(index) {
