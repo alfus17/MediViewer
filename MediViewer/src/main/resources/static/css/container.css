@@ -14,6 +14,22 @@
 	text-align: center;
     height: 45vh;
     overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* 크롬, 사파리, 엣지용 스크롤바 스타일 */
+.studylist_container::-webkit-scrollbar {
+  width: 8px; /* 스크롤바 너비 */
+}
+
+.studylist_container::-webkit-scrollbar-thumb {
+  background-color: #FF6347; /* 스크롤바 색상 */
+  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+}
+
+.studylist_container::-webkit-scrollbar-track {
+  background-color: #505050; /* 스크롤바 배경 */
 }
 
 .studylist_container li {
