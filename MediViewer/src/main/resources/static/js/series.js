@@ -97,22 +97,25 @@ function addNavigationButtons(seriesList, rows, cols) {
 
 // 시리즈 버튼 클릭 시 다중 뷰포트 초기화 및 초기 화면 복원
 document.getElementById('series').addEventListener('click', () => {
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    const body = document.body; // body 요소 선택
+
     if (isSeriesViewActive) {
-        // 시리즈 뷰 비활성화: dicomImage 보이게, seriesImage 숨기기
-        dicomImageContainer.style.display = 'block'; // dicomImage 보이기
-        container.style.display = 'none'; // seriesImage 숨기기
-
-        // 기존 이미지 다시 로드
-        cornerstone.enable(dicomImageContainer); // cornerstone 활성화
-        loadInitialImage(); // 초기 이미지 로드
+        // 시리즈 뷰 비활성화: 썸네일 보이기, seriesImage 숨기기
+        dicomImageContainer.style.display = 'block';
+        container.style.display = 'none';
+        thumbnailContainer.style.display = 'block'; // 썸네일 보이기
+        body.classList.remove('series-view-active'); // 클래스 제거
     } else {
-        // 시리즈 뷰 활성화: seriesImage 보이게, dicomImage 숨기기
-        dicomImageContainer.style.display = 'none'; // dicomImage 숨기기
-        container.style.display = 'block'; // seriesImage 보이기
+        // 시리즈 뷰 활성화: 썸네일 숨기기, seriesImage 확장
+        dicomImageContainer.style.display = 'none';
+        container.style.display = 'block';
+        thumbnailContainer.style.display = 'none'; // 썸네일 숨기기
+        body.classList.add('series-view-active'); // 클래스 추가
 
-        // 다중 뷰포트로 초기화
-        initializeViewports(4, 4, dcmList.imageFileNames); // 다중 뷰포트 초기화
+        // 시리즈 뷰포트 초기화
+        initializeViewports(4, 4, dcmList.imageFileNames);
     }
 
-    isSeriesViewActive = !isSeriesViewActive; // 상태 반전
+    isSeriesViewActive = !isSeriesViewActive;
 });

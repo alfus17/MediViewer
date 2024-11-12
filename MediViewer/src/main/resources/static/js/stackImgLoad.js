@@ -92,19 +92,23 @@ function loadSeriesThumbnails(seriesList) {
 
             dicomDiv.addEventListener('click', () => {
                 // 클릭된 썸네일의 시리즈로 이동
-                
-                if(currentIndex != i ){
-					document.getElementById(`dicomImage_${currentIndex}`).style.border = '';
-				}
-                
+                if (currentIndex !== i) {
+                    document.getElementById(`dicomImage_${currentIndex}`).style.border = '';
+                }
+
                 currentIndex = i; // 클릭된 썸네일의 시리즈 인덱스 설정
                 currentImageIndex = 0; // 시리즈 내 첫 번째 이미지로 이동
                 imageIds = seriesList[currentIndex]; // 해당 시리즈의 이미지 ID 설정
                 displayImage(currentImageIndex); // 이미지 표시
-                dicomDiv.style.border = "10px solid";
+                dicomDiv.style.border = '1px solid red';
             });
         }
     });
+
+    // 첫 번째 썸네일 클릭된 상태로 설정
+    if (seriesList.length > 0 && seriesList[0].length > 0) {
+        document.getElementById(`dicomImage_0`).click(); // 첫 번째 썸네일 클릭
+    }
 }
 
 // 초기 이미지 로드 함수
@@ -120,7 +124,10 @@ function loadInitialImage() {
 // 이미지 데이터를 요청하는 함수
 function fetchData(studykey, callback) {
     axios.get(`/api/views/${studykey}`).then(result => {
+		console.log('전체 데이터 확인',result);
         series.push(...result.data.series);
+        comment = result.data.comment;
+		console.log('코멘트 확인' , comment);
         const urlList = series.map(serieskey => `/api/views/${studykey}/${serieskey}`);
        
         axios.all(urlList.map(url => axios.get(url))).then(axios.spread((...responses) => {
@@ -144,7 +151,7 @@ function start() {
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
     const urlPath = window.location.pathname;
-    const studykey = urlPath.split('/').slice(-1)[0];
+    studykey = urlPath.split('/').slice(-1)[0];
     console.log("studyKey:", studykey);
 
     // 데이터 로드 후 썸네일과 초기 이미지를 로드하도록 fetchData에 콜백 추가

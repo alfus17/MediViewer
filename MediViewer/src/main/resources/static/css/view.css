@@ -1,3 +1,4 @@
+/* 기존 스타일 유지 */
 * {
 	color: #fff;
 	font-size: 13px;
@@ -13,50 +14,47 @@
 	background-color: #212121;
 }
 
-
-
 .left {
 	width: 10%;
-	background-color:#505050;
+	background-color: #505050;
 	display: flex;
 	flex-direction: column;
-	
+	transition: width 0.3s ease; /* 전환 효과 추가 */
 }
 
 .left img {
 	width: 100%;
 	height: 10%;
 	display: flex;
-	object-fit: cover;	
+	object-fit: cover;
 }
 
 #thumbnailContainer {
-	max-height: 700px; /* 최대 높이를 설정하여 썸네일이 이 높이를 넘으면 스크롤 */
-    overflow-y: scroll;
-    display: flex;
-    flex-wrap: wrap;
+	max-height: 700px;
+	overflow-y: scroll;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-/* 크롬, 사파리, 엣지용 스크롤바 스타일 */
+/* 스크롤바 스타일 */
 #thumbnailContainer::-webkit-scrollbar {
-  width: 8px; /* 스크롤바 너비 */
+	width: 8px;
 }
 
 #thumbnailContainer::-webkit-scrollbar-thumb {
-  background-color: #FF6347; /* 스크롤바 색상 */
-  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+	background-color: #FF6347;
+	border-radius: 10px;
 }
 
 #thumbnailContainer::-webkit-scrollbar-track {
-  background-color: #505050; /* 스크롤바 배경 */
+	background-color: #505050;
 }
 
-
-
+/* 오른쪽 콘텐츠 영역 */
 .right {
 	width: 90%;
 	margin-left: 1%;
-	
+	transition: width 0.1s ease; /* 전환 효과 추가 */
 }
 
 .btns {
@@ -69,7 +67,7 @@
 	justify-content: center;
 }
 
-.btns button{
+.btns button {
 	width: 100px;
 	height: 60px;
 	border: none;
@@ -77,24 +75,20 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-
 }
 
-
 .btns button img {
-	flex-direction: column; /* 이미지와 span을 세로로 정렬 */
+	flex-direction: column;
 	width: 35px;
 	height: 35px;
 	margin-bottom: 5px;
 }
 
-
-
+/* DICOM 이미지 컨테이너 */
 .dicomImage {
 	width: 100%;
-	height:	720px;
+	height: 720px;
 }
-
 
 #window-level {
 	position: relative;
@@ -107,3 +101,11 @@
 	right: 700px;
 }
 
+/* 시리즈 보기 모드 활성화 시 스타일 */
+.series-view-active .left {
+	display: none; /* 썸네일 영역 숨기기 */
+}
+
+.series-view-active .right {
+	width: 100%; /* 오른쪽 콘텐츠 영역 확장 */
+}

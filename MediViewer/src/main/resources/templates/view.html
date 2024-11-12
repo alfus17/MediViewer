@@ -1,11 +1,13 @@
 	<!DOCTYPE html>
-	<html lang="en">
+	<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	    <title>Stack Manipulation Tools</title>
 	    <link rel="stylesheet" href="/css/view.css">
+	    <link rel="stylesheet" href="/css/viewModal.css">
 	</head>
 	<body class="vbody">
 	
@@ -50,6 +52,27 @@
 						<span>시리즈</span>
 					</button>
 					
+					
+					
+					<!-- 코멘트 버튼 -->
+					<button id="comment">
+					    <img src="/img/viewIcon/quick_reference_all_16dp_ FF6347_FILL0_wght400_GRAD0_opsz20.png">
+					    <span>코멘트</span>
+					</button>
+					
+					<!-- 모달창 -->
+					<div class="modal-overlay" id="commentModal">
+					    <div class="modal-content">
+					        <span class="close-btn" id="closeModal">&times;</span>
+					        <div id="commentModalContent">
+							    <h2>Comment: <span th:text="${studyKey}"></span></h2>
+							    <textarea id="commentText"></textarea>
+							    <button id="saveComment">저장</button>
+							</div>
+					    </div>
+					</div>
+
+					
 	                <button id="reset">
 						<img src="/img/viewIcon/reset_image_16dp_FF6347_FILL0_wght400_GRAD0_opsz20.png">
 						<span>초기화</span>
@@ -77,8 +100,10 @@
 	   <script src="/js/playClipButton.js"></script>
 	   <script src="/js/windowLevelButton.js"></script>
 	   <script src="/js/series.js"></script>
+	   <script src="/js/comment.js"></script>
 	
 	  <script>
+		let studyKey;
 	    const series = [];
 	    const dcmPathLists = [];
 	    const thumbnails = [];
@@ -91,7 +116,7 @@
 		let dcmList = { imageFileNames: [] }; // dcmList 변수 추가
 		let serieskey;
 		let viewports = []; // 뷰포트를 저장할 배열
-		
+		let comment = {};
 		
 		window.onload = () => {
 			start();
@@ -99,6 +124,8 @@
     		registerMouseEvents();  // 마우스 이벤트 등록
 			
 		}
+		
+		console.log('스터디키값 확인',studyKey);
 	</script>
 	
 	   
