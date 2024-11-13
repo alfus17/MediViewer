@@ -36,6 +36,7 @@ function resetCalendar() {
 	$("#startDate").text('');
 	$("#endDate").val('');
 	$("#endDate").text('');
+	resetSelectors();
 }
 
 // 검색 버튼 클릭 시 쿼리 기간 반환

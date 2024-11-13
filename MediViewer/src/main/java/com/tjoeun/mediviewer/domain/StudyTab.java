@@ -22,7 +22,7 @@ public class StudyTab {
 
     @Id
     @Column(name = "STUDYKEY")
-    private Integer studyKey;
+    private Long studyKey;
 
     @Column(name = "STUDYINSUID", nullable = false, length = 255)
     private String studyInsUid;

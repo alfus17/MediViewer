@@ -1,0 +1,31 @@
+/* 모달 기본 스타일 */
+.modal-overlay {
+    display: none; /* 처음에 모달 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:  #3F4458;
+    padding: 20px;
+    width: 60%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    float: right;
+}
