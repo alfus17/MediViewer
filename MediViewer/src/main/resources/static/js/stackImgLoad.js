@@ -1,4 +1,4 @@
-
+let studykey = '';
 
 // 스택 이미지 출력 함수
 function displayImage(index) {
@@ -40,7 +40,7 @@ function displayImageInfo(index) {
     imgInfo.id = 'imgInfo';
     imgInfo.style.position = 'absolute';
     imgInfo.style.top = '200px';
-    imgInfo.style.left = '300px';
+    imgInfo.style.left = '400px';
     imgInfo.style.fontSize = '30px';
     imgInfo.style.color = 'white';
     imgInfo.innerHTML = `series ${currentIndex + 1}<br>${index + 1} / ${imageIds.length}`;
@@ -70,11 +70,14 @@ function loadSeriesThumbnails(seriesList) {
     seriesList.forEach((imageArray, i) => {
         const dicomDiv = document.createElement('div');
         dicomDiv.id = `dicomImage_${i}`;
-        dicomDiv.style.width = '100%';
+        dicomDiv.style.width = '97%';
         dicomDiv.style.height = '150px';
         dicomDiv.style.marginTop = '10px';
         dicomDiv.style.cursor = 'pointer';
         dicomDiv.style.position = 'relative';
+        if(i == 0){
+			 dicomDiv.style.border = "1px solid #FF6347";
+		}
 
         const thumbnailNumber = document.createElement('div');
         thumbnailNumber.style.position = 'absolute';
@@ -92,23 +95,19 @@ function loadSeriesThumbnails(seriesList) {
 
             dicomDiv.addEventListener('click', () => {
                 // 클릭된 썸네일의 시리즈로 이동
-                if (currentIndex !== i) {
-                    document.getElementById(`dicomImage_${currentIndex}`).style.border = '';
-                }
-
+                
+                if(currentIndex != i ){
+					document.getElementById(`dicomImage_${currentIndex}`).style.border = '';
+				}
+                
                 currentIndex = i; // 클릭된 썸네일의 시리즈 인덱스 설정
                 currentImageIndex = 0; // 시리즈 내 첫 번째 이미지로 이동
                 imageIds = seriesList[currentIndex]; // 해당 시리즈의 이미지 ID 설정
                 displayImage(currentImageIndex); // 이미지 표시
-                dicomDiv.style.border = '1px solid red';
+                dicomDiv.style.border = "1px solid #FF6347";
             });
         }
     });
-
-    // 첫 번째 썸네일 클릭된 상태로 설정
-    if (seriesList.length > 0 && seriesList[0].length > 0) {
-        document.getElementById(`dicomImage_0`).click(); // 첫 번째 썸네일 클릭
-    }
 }
 
 // 초기 이미지 로드 함수
@@ -124,10 +123,7 @@ function loadInitialImage() {
 // 이미지 데이터를 요청하는 함수
 function fetchData(studykey, callback) {
     axios.get(`/api/views/${studykey}`).then(result => {
-		console.log('전체 데이터 확인',result);
         series.push(...result.data.series);
-        comment = result.data.comment;
-		console.log('코멘트 확인' , comment);
         const urlList = series.map(serieskey => `/api/views/${studykey}/${serieskey}`);
        
         axios.all(urlList.map(url => axios.get(url))).then(axios.spread((...responses) => {
@@ -152,6 +148,7 @@ function start() {
 
     const urlPath = window.location.pathname;
     studykey = urlPath.split('/').slice(-1)[0];
+    console.log('스터디값 확인2222',studykey);
     console.log("studyKey:", studykey);
 
     // 데이터 로드 후 썸네일과 초기 이미지를 로드하도록 fetchData에 콜백 추가

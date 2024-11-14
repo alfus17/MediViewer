@@ -2,9 +2,20 @@ const commentButton = document.getElementById('comment');
 const commentModal = document.getElementById('commentModal');
 const closeModalButton = document.getElementById('closeModal');
 
-// 코멘트 버튼 클릭 시 모달 표시
 commentButton.addEventListener('click', () => {
     commentModal.style.display = 'block';
+
+    // 기존 코멘트를 서버에서 불러오기
+    axios.get(`/api/views/comment/${studykey}`)  // URL에 studykey 삽입
+        .then(response => {
+            const existingComment = response.data.comment;
+            if (existingComment) {
+                document.getElementById("commentText").value = existingComment;
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 });
 
 // 모달 닫기 버튼 클릭 시 모달 숨기기
@@ -19,25 +30,25 @@ window.addEventListener('click', (event) => {
     }
 });
 
-document.getElementById('saveComment').addEventListener('click', () => {
-    const commentText = document.getElementById('commentText').value;
+// 코멘트 저장
+const saveComment = () => {
+    const commentText = document.getElementById("commentText").value;
 
-    const saveComment = (nowPage) => {
-        axios.post(`/api/views/save`, { comment: commentText, page: nowPage })
-            .then(response => {
-                if (response.data.success) {
-                    alert('코멘트가 성공적으로 저장되었습니다.');
-                    document.getElementById('commentText').value = ''; // 입력 필드 초기화
-                } else {
-                    alert('코멘트 저장에 실패했습니다.');
-                }
-            })
-            .catch(error => {
-                console.error("Error saving comment:", error);
-                alert('저장 중 오류가 발생했습니다.');
-            });
-    };
+    axios.post('/api/views/saveComment', {
+        comment: commentText,
+        studykey: studykey  // ReqParams 형식으로 studyKey와 comment를 전송
+    })
+    .then(response => {
+        if (response.data.success) {
+            alert("저장되었습니다!");
+            document.getElementById("commentText").value = "";  // 저장 후 입력창 초기화
+        } else {
+            alert("저장에 실패했습니다.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
 
-    // 현재 페이지나 관련 정보를 매개변수로 전달하여 saveComment 호출
-    saveComment(1); // 예시: 현재 페이지 번호 1로 설정
-});
+document.getElementById("saveComment").addEventListener("click", saveComment);

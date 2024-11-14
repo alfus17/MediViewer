@@ -12,15 +12,16 @@
 
 .modal-content {
     position: absolute;
-    top: 30%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color:  #3F4458;
+    background-color: #212121;
     padding: 20px;
     width: 60%;
     max-width: 500px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 400px;
 }
 
 .close-btn {
@@ -29,3 +30,45 @@
     cursor: pointer;
     float: right;
 }
+
+#commentText {
+    background-color:  #212121;
+    color: white;            /* 글씨색을 짙은 회색으로 설정 */
+    font-size: 16px;         /* 글자 크기를 16px로 설정 */
+    padding: 10px;           /* 내부 여백을 추가 */
+    border: 1px solid #FF6347; /* 테두리를 연한 회색으로 설정 */
+    border-radius: 5px;     /* 테두리 모서리를 둥글게 설정 */
+    width: 70%;              /* 너비를 70%로 설정 */
+    height: 300px;
+    margin-top: 30px;
+    margin-right: 10px;      /* 버튼과의 간격 추가 */
+    resize: none;           /* 크기 조정 비활성화 */
+}
+
+.comment-container {
+    display: flex;           /* 버튼과 textarea를 한 줄에 배치 */
+   	align-items: end;
+    justify-content: space-between; /* 버튼과 textarea 간격을 조절 */
+}
+
+#saveComment {
+    background-color: #FF6347; /* 버튼 배경색 */
+    color: white;              /* 버튼 글자색 */
+    width: 70px;
+    height: 40px;
+    border: none;              /* 테두리 없애기 */
+    border-radius: 5px;        /* 버튼 테두리 둥글게 */
+    cursor: pointer;           /* 마우스를 올리면 포인터로 바뀌기 */
+    font-size: 16px;           /* 버튼 글자 크기 */
+    text-align: center;
+    display: flex;             /* Flexbox로 중앙 정렬 */
+    justify-content: center;   /* 수평 중앙 정렬 */
+    align-items: center;       /* 수직 중앙 정렬 */
+}
+
+
+
+#saveComment:hover {
+    background-color: #45a049; /* 버튼 hover 시 색상 변경 */
+}
+
