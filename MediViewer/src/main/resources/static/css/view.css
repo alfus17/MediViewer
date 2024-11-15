@@ -1,109 +1,123 @@
+/* 기본 스타일 */
 * {
-	color: #fff;
-	font-size: 13px;
+    color: #fff;
+    font-size: 13px;
 }
 
 .vbody {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	margin: 4% 2% 2%;
-	border: 0;
-	padding: 0;
-	background-color: #212121;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 4% 2%;
+    padding: 0;
+    background-color: #212121;
+    overflow: hidden; /* 전체 스크롤 방지 */
 }
 
+/* 상단 바 스타일 */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #505050;
+    padding: 10px 0;
+}
 
+#mainImg {
+    width: 250px;
+    margin-left: 1%;
+    object-fit: cover;
+}
 
+/* 버튼 스타일 */
+.btns {
+    display: flex;
+    justify-content: center;
+    margin-right: 20%;
+}
+
+.btns button {
+    width: 100px;
+    height: 60px;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.btns button img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+}
+
+.btns button:hover {
+    background-color: rgba(255, 99, 71, 0.2);
+    border: 2px solid #FF6347;
+    box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
+}
+
+/* 메인 콘텐츠 레이아웃 */
+.main-content {
+    display: flex;
+    margin-top: 20px;
+}
+
+/* 썸네일 영역 */
 .left {
-	width: 10%;
-	background-color:#505050;
-	display: flex;
-	flex-direction: column;
-	
-}
-
-.left img {
-	width: 100%;
-	height: 10%;
-	display: flex;
-	object-fit: cover;	
+    width: 15%;
+    background-color: #505050;
+    overflow-y: scroll;
+    max-height: 720px; /* 뷰포트 높이와 맞춤 */
 }
 
 #thumbnailContainer {
-	max-height: 700px; /* 최대 높이를 설정하여 썸네일이 이 높이를 넘으면 스크롤 */
-    overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;
 }
 
-/* 크롬, 사파리, 엣지용 스크롤바 스타일 */
 #thumbnailContainer::-webkit-scrollbar {
-  width: 8px; /* 스크롤바 너비 */
+    width: 8px;
 }
 
 #thumbnailContainer::-webkit-scrollbar-thumb {
-  background-color: #FF6347; /* 스크롤바 색상 */
-  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+    background-color: #FF6347;
+    border-radius: 10px;
 }
 
 #thumbnailContainer::-webkit-scrollbar-track {
-  background-color: #505050; /* 스크롤바 배경 */
+    background-color: #505050;
 }
 
-
-
+/* DICOM 이미지 표시 영역 */
 .right {
-	width: 90%;
-	margin-left: 1%;
-	
+    width: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.3s ease;
 }
-
-.btns {
-	display: flex;
-	width: 100%;
-	height: 10%;
-	background-color: #505050;
-	margin: 0 auto;
-	align-items: center;
-	justify-content: center;
-}
-
-.btns button{
-	width: 100px;
-	height: 60px;
-	border: none;
-	background-color: transparent;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
-}
-
-
-.btns button img {
-	flex-direction: column; /* 이미지와 span을 세로로 정렬 */
-	width: 35px;
-	height: 35px;
-	margin-bottom: 5px;
-}
-
-
 
 .dicomImage {
-	width: 100%;
-	height:	720px;
+    width: 100%;
+    height: 720px;
+    background-color: #333;
 }
 
+/* 시리즈 보기 모드 */
+.series-view-active .left {
+    display: none;
+}
 
-#window-level {
-	position: relative;
+.series-view-active .right {
+    width: 100%;
 }
 
 #renderBarContainer {
-	position: fixed;
-	display: none;
-	top: 150px;
-	right: 700px;
+    position: fixed;
+    display: none;
+    top: 150px;
+    right: 700px;
 }
-

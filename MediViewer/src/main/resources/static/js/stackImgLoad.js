@@ -1,4 +1,4 @@
-
+let studykey = '';
 
 // 스택 이미지 출력 함수
 function displayImage(index) {
@@ -40,7 +40,7 @@ function displayImageInfo(index) {
     imgInfo.id = 'imgInfo';
     imgInfo.style.position = 'absolute';
     imgInfo.style.top = '200px';
-    imgInfo.style.left = '300px';
+    imgInfo.style.left = '400px';
     imgInfo.style.fontSize = '30px';
     imgInfo.style.color = 'white';
     imgInfo.innerHTML = `series ${currentIndex + 1}<br>${index + 1} / ${imageIds.length}`;
@@ -70,13 +70,15 @@ function loadSeriesThumbnails(seriesList) {
     seriesList.forEach((imageArray, i) => {
         const dicomDiv = document.createElement('div');
         dicomDiv.id = `dicomImage_${i}`;
-        dicomDiv.style.width = '100%';
+        dicomDiv.style.width = '97%';
         dicomDiv.style.height = '150px';
         dicomDiv.style.marginTop = '10px';
         dicomDiv.style.cursor = 'pointer';
         dicomDiv.style.position = 'relative';
         if(i == 0){
-			 dicomDiv.style.border = "10px solid";
+
+			 dicomDiv.style.border = "1px solid #FF6347";
+
 		}
 
         const thumbnailNumber = document.createElement('div');
@@ -104,7 +106,7 @@ function loadSeriesThumbnails(seriesList) {
                 currentImageIndex = 0; // 시리즈 내 첫 번째 이미지로 이동
                 imageIds = seriesList[currentIndex]; // 해당 시리즈의 이미지 ID 설정
                 displayImage(currentImageIndex); // 이미지 표시
-                dicomDiv.style.border = "10px solid";
+                dicomDiv.style.border = "1px solid #FF6347";
             });
         }
     });
@@ -147,7 +149,8 @@ function start() {
     cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
 
     const urlPath = window.location.pathname;
-    const studykey = urlPath.split('/').slice(-1)[0];
+    studykey = urlPath.split('/').slice(-1)[0];
+    console.log('스터디값 확인2222',studykey);
     console.log("studyKey:", studykey);
 
     // 데이터 로드 후 썸네일과 초기 이미지를 로드하도록 fetchData에 콜백 추가
