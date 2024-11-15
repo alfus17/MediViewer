@@ -23,15 +23,5 @@ public class Member {
     
     @Column(name = "MEMBER_PWD", length = 64)
     private String memberPwd;
-    
-    @Column(name = "NAME", length = 64)
-    private String name;
-
-    @Column(name = "EMAIL", length = 128)
-    private String email;
-    
-    // 권한 (관리자 : ADMIN / 일반회원 : USER)
-    @Column(name = "ROLE", length = 20)
-    private String role;
 	
 }

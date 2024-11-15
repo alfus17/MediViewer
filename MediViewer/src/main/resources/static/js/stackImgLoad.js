@@ -76,7 +76,9 @@ function loadSeriesThumbnails(seriesList) {
         dicomDiv.style.cursor = 'pointer';
         dicomDiv.style.position = 'relative';
         if(i == 0){
+
 			 dicomDiv.style.border = "1px solid #FF6347";
+
 		}
 
         const thumbnailNumber = document.createElement('div');
