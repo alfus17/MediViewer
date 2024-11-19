@@ -36,7 +36,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	ArrayList<DcmList> findByStudyKey(@Param("studyKey")Long studyKey, @Param("seriesKey")Long seriesKey );
 
 	// studyKey를 통해서 dcm 전부 쿼리 
-	@Query(value = "SELECT replace('wadouri:/dcm/'||it.path||it.fname, '\', '/') as FNAME FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY SERIESKEY ASC, IMAGEKEY ASC", nativeQuery = true)
+	@Query(value = "SELECT replace('wadouri:/dcm/'||it.path||it.fname, '\', '/') as FNAME FROM ImageTab it WHERE it.STUDYKEY = :studyKey ORDER BY it.SERIESKEY, curseqnum", nativeQuery = true)
 	ArrayList<String> findImagesByStudyKey(@Param("studyKey")Long studyKey  );
 
 	
@@ -53,7 +53,7 @@ public interface ImageRepository extends JpaRepository<ImageTab, Long> {
 	@Query(value = "select 'wadouri:/dcm/'||replace(replace(it.path, '\\\\', '/'), '\\', '/')||it.fname as FNAME from imagetab it where it.STUDYKEY = :studyKey order by it.SERIESKEY, curseqnum", nativeQuery = true)
 	ArrayList<String> findAllByStudyKey(@Param("studyKey") Long no );
 	
-	@Query(value = "select 'wadouri:/dcm/'||replace(replace(it.path, '\\\\', '/'), '\\', '/')||it.fname as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by curseqnum", nativeQuery = true)
+	@Query(value = "select 'wadouri:/dcm/'||replace(replace(it.path, '\\\\', '/'), '\\', '/')||it.fname as FNAME from imagetab it where it.STUDYKEY = :studyKey and it.SERIESKEY = :seriesKey order by it.SERIESKEY, curseqnum", nativeQuery = true)
 	ArrayList<String> findAllByStudyKeyAndSeriesKey(@Param("studyKey") Long no, @Param("seriesKey") Long seriesKey);
 
 }
