@@ -23,6 +23,7 @@ public class ReqParams {
     private String sdate;
     private String edate;
     private Long seriesKey;
+    private String comment;
     
     
 //    public ReqParams (String pID , String pName) {

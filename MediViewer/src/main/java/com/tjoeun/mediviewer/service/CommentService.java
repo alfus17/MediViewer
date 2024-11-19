@@ -16,22 +16,28 @@ public class CommentService {
 	private CommentRepository commentRepo;
 	
 	public CommentTab getCommentByStudyKey(ReqParams params) {
-		System.out.println("CommentService_getCommentByStudyKey : " + params.getStudyKey());
-		CommentTab result = null;
-		Optional<CommentTab> comment = commentRepo.findById(params.getStudyKey());
-		
-		if(comment.isPresent()) {
-			System.out.println("코멘트가 존재함 : " + comment.toString());
-			result = comment.get();
-
-		}else {
-			System.out.println("코멘트가 존재하지 않음 ");
-			result = null;
-		}
-		
-		return result;
-			
-		
+	    System.out.println("CommentService_getCommentByStudyKey : " + params.getStudyKey());
+	    CommentTab result = commentRepo.findById(params.getStudyKey()).orElse(null); // 코멘트가 없으면 null 반환
+	    if (result != null) {
+	        System.out.println("코멘트가 존재함 : " + result);
+	    } else {
+	        System.out.println("코멘트가 존재하지 않음");
+	    }
+	    return result;
 	}
+
+
+	public void saveComment(ReqParams params) {
+        CommentTab comment = new CommentTab();
+        comment.setStudyKey(params.getStudyKey());
+        comment.setComment(params.getComment());
+
+        System.out.println("Comment 객체 생성: " + comment.toString());
+
+        commentRepo.save(comment);  // 데이터베이스에 코멘트 저장
+        System.out.println("코멘트가 데이터베이스에 저장되었습니다.");
+    }
+	    
+
 
 }
