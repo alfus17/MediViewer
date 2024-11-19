@@ -6,25 +6,27 @@
      <!-- Verify 항목은 실제로는 별로 사용하지 않는다는 설명이 있었으므로 표현하지 않음  -->
      <span class="studylist_container" id="liForEachSpan"></span>
      <span style="display: flex; justify-content: center;">
-	     <button class="btn_get_more" name="getMoreDefList"> 더보기 </button>
-	     <button class="btn_get_more" name="getMoreQueryList"> 더보기 </button>
+	     <button class="btn" name="getMoreDefList"> 더보기 </button>
+	     <button class="btn" name="getMoreQueryList"> 더보기 </button>
 	 </span>
   </ul>
   
   <section th:fragment="hist-list" class="section_history_area">
-	  <label for="">과거 검사 이력</label>
-	  <div class="div_history_info">
-		  <span>
-			  <span name="pIdVerticalSpan">|</span>
-			  <label for="pIdVerticalSpan" name="pIdLabel">환자 아이디: </label>
-			  <label for="pIdLabel" id="histPID"></label>
-		  </span>
-		  
-		  <span>
-			  <span name="pNameVerticalSpan">|</span>
-			  <label for="pNameVerticalSpan" name="pNameLabel">환자 이름: </label>
-			  <label for="pNameLabel" id="histPName"></label>			  
-		  </span>
+	  <div style="display: flex; justify-content: space-between;">
+		  <label style="white-space: nowrap;">과거 검사 이력</label>
+		  <div class="div_history_info">
+			  <span>
+				  <span name="pIdVerticalSpan">|</span>
+				  <label for="pIdVerticalSpan" name="pIdLabel">환자 아이디: </label>
+				  <label for="pIdLabel" id="histPID"></label>
+			  </span>
+			  
+			  <span>
+				  <span name="pNameVerticalSpan">|</span>
+				  <label for="pNameVerticalSpan" name="pNameLabel">환자 이름: </label>
+				  <label for="pNameLabel" id="histPName"></label>			  
+			  </span>
+		  </div>		  
 	  </div>
 	  <ul class="studylist_container" name="histStudyList">
 		<li>

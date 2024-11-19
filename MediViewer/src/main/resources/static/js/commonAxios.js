@@ -134,8 +134,17 @@ const getImgPreview = (studyKey, element) => {
 			const imageId = `wadouri:dcm/${dicomPath.replace(/\\+/g, '/')}${dicomFile}`.replace(/\/+/g, '/');
 			
 			cornerstone.loadImage(imageId).then(image => {
-	            cornerstone.displayImage(element, image);
-	        }).catch(err => {
+				const viewport = cornerstone.getDefaultViewportForImage(element, image);
+				
+			    const scaleWidth = element.clientWidth / image.width;
+    			const scaleHeight = element.clientHeight / image.height;
+    			viewport.scale = Math.min(scaleWidth, scaleHeight);
+    			
+				console.log(viewport);
+				
+	            cornerstone.displayImage(element, image, viewport);
+	        }).then()
+	        .catch(err => {
 				console.log('이미지 로드 실패 : ', err);
 			});
 		})
@@ -158,14 +167,20 @@ const getPreviewSeries = (studykey) => {
 			const e = document.getElementById('prevImageArea');
 			cornerstone.enable(e);
 			
-			displayImage(currentIndex);
+			displayImage(e, currentIndex);
 			
-			function displayImage(index) {
+			function displayImage(e, index) {
 		        if (index < 0 || index >= testImgItems.length) {
 		            return;
 		        }
 		        cornerstone.loadImage(testImgItems[index]).then(image => {
-		            cornerstone.displayImage(e, image);
+					const viewport = cornerstone.getDefaultViewportForImage(e, image);
+				
+				    const scaleWidth = e.clientWidth / image.width;
+	    			const scaleHeight = e.clientHeight / image.height;
+	    			viewport.scale = Math.min(scaleWidth, scaleHeight);
+	    			
+		            cornerstone.displayImage(e, image, viewport);
 		        }).catch(err => {
 		            console.error("Image load error:", err);
 		        });
@@ -177,12 +192,12 @@ const getPreviewSeries = (studykey) => {
 				if (event.deltaY > 0) { // 휠을 아래로 스크롤
 	                if (currentIndex < testImgItems.length - 1) {
 	                    currentIndex++;
-	                    displayImage(currentIndex);
+	                    displayImage(e, currentIndex);
 	                }
 	            } else if (event.deltaY < 0) { // 휠을 위로 스크롤
 	                if (currentIndex > 0) {
 	                    currentIndex--;
-	                    displayImage(currentIndex);
+	                    displayImage(e, currentIndex);
 	                }
 	            }
 			})

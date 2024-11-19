@@ -62,27 +62,31 @@
 				<div class="div_list_control_panel">
 					<div class="div_list_query_panel">
 						<section>
-							<span id="queryStringContainer">
-								<input type="text" id="pid" placeholder="환자아이디를 입력하세요...">
+							<span class="query_text" id="queryStringContainer">
+								<input class="query_selector" type="text" id="pid" placeholder="환자아이디를 입력하세요...">
 							</span>
 
-							<span id="queryStringContainer">
-								<input type="text" id="pname" placeholder="환자명을  입력하세요...">
+							<span class="query_text" id="queryStringContainer">
+								<input class="query_selector" type="text" id="pname" placeholder="환자명을  입력하세요...">
 							</span>
 							
-							<select name="modality" id="modality">
-							</select>
+							<span class="query_option">
+								<select class="query_selector" name="modality" id="modality">
+								</select>								
+							</span>
 
-							<select name="status" id="status">
-								<option value="">판독 상태</option>
-								<option value=1 disabled>읽지않음</option>
-								<option value=3 disabled>열람중</option>
-								<option value=5 disabled>예비 판독</option>
-								<option value=6 disabled>판독</option>
-							</select>
+							<span class="query_option">	
+								<select class="query_selector" name="status" id="status">
+									<option value="">판독 상태</option>
+									<option value=1 disabled>읽지않음</option>
+									<option value=3 disabled>열람중</option>
+									<option value=5 disabled>예비 판독</option>
+									<option value=6 disabled>판독</option>
+								</select>
+							</span>
 
-							<button type="submit" id="doQuery">검색</button>
-							<button type="reset" id="resetQuery">초기화</button>
+							<button type="submit" id="doQuery" class="btn">검색</button>
+							<button type="reset" id="resetQuery" class="btn">초기화</button>
 						</section>
 						
 						<section class="section_date_query">
