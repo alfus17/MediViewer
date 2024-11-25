@@ -89,7 +89,7 @@ function addNavigationButtons(seriesList, rows, cols) {
     const nextButton = document.createElement('button');
     nextButton.innerText = '▶';
     nextButton.style.position = 'absolute';
-    nextButton.style.right = '40px';
+    nextButton.style.right = '230px';
     nextButton.style.top = '520px';
     nextButton.onclick = () => nextPage(seriesList, rows, cols);
     container.appendChild(nextButton);
