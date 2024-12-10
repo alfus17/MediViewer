@@ -69,17 +69,4 @@
 
 ---
 
-## 실행 방법
-1. **백엔드**
-   ```bash
-   mvn clean install
-   java -jar target/mediviewer.jar
-   ```
-2. **프론트엔드**
-   ```bash
-   cd frontend
-   npm install
-   npm start
-   ```
-
 
