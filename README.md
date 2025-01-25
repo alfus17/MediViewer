@@ -1,8 +1,55 @@
 
-# MediViewer
+# 🧬 메디뷰어
 
-## 소개
-**MediViewer**는 의료 검사 기록 및 시리즈 사진을 직관적이고 편리하게 확인할 수 있는 웹 애플리케이션입니다.
+### 📃 프로젝트 소개
+> 의료 검사 기록 및 시리즈 사진을 직관적이고 편리하게 확인할 수 있는 웹 애플리케이션
+
+### 📅 제작기간
+> 2024.10.07 ~ 2024.11.15
+
+### 🧑‍⚕️ 참여 인원
+> |                    Name                    |  Position   |
+> | :----------------------------------------: | :---------: |
+> | [장광진](https://github.com/alfus17) | Back | 
+> |     [김현수]()     | Front |
+> |   [임현승]()    | Front |
+> |     [양승혁]()     | Security |
+> |     [김솔]()     | Design |
+
+
+# 🚀 Stacks
+<div>
+<img src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white" alt="Oracle DB">
+</div>
+<div>
+<img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white" alt="Java">
+  <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" alt="Spring Security">
+  <img src="https://img.shields.io/badge/JPA-59666C?style=for-the-badge&logo=jpa&logoColor=white" alt="JPA">
+  <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" alt="Thymeleaf">
+</div>
+<div>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS">
+</div>
+<div>
+  <img src="https://img.shields.io/badge/SQL%20Developer-4479A1?style=for-the-badge&logo=oracle&logoColor=white" alt="SQL Developer">
+  <img src="https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" alt="VS Code">
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git"> 
+</div>
+
+---
+# 📊 프로젝트 설계
+###  간트차트
+<details>
+<summary>간트차트</summary>
+<div markdown="1" style="padding-left: 15px;">
+<img src="https://github.com/user-attachments/assets/f1fe365f-b2bf-48d5-88c0-d06744097eb8" width="800px"/>
+</div>
+</details>
+
+
 
 ### 주요 특징
 - 직관적인 UI와 사용자 친화적 설계.
