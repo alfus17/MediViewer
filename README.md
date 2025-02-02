@@ -58,61 +58,42 @@
 
 ---
 
-## 개발 환경
-- **Frontend**: React (MUI), Cornerstone.js
-- **Backend**: Spring Boot (JPA, Security)
-- **Database**: OracleDB
 
----
+# 🖥️ 기능 소개 및 시연
+### 1. 로그인/회원가입
+![image](https://github.com/user-attachments/assets/65a3b8bd-d947-45b9-aef7-a2c01e433440)
 
-## 역할 분담
-- **장광진**: 팀장, 백엔드
-- **김현수**: 백엔드
-- **임현승**: 백엔드, 시큐리티
-- **김솔**: 프론트엔드, 디자인
-- **양승혁**: 프론트엔드
 
----
 
-## 프로젝트 설계
-### Entity Relationship Diagram (ERD)
-데이터 구조를 효율적으로 관리하기 위해 설계된 ERD를 기반으로 구현.
+#### ⭐ 로그인 기능
+> Spring Security를 활용하여 인증 및 권한 기반 페이지 접근 제어 구현. <br>
+> 인증되지 않은 사용자는 `/login`으로 강제 이동.<br>
 
-### 간트 차트
-프로젝트 개발 일정과 팀원들의 작업 분담을 명확히 정의.
+### 2. **메인 페이지**
+![메인페이지 ](https://github.com/user-attachments/assets/88d6b70c-ea89-4468-a1fe-efe64240e9ab)
+![다중검색](https://github.com/user-attachments/assets/5a73c093-4237-4c30-ae8a-d4a8750103ab)
 
----
 
-## 주요 기능
-1. **로그인 및 회원가입**
-   - Spring Security를 활용하여 인증 및 권한 기반 페이지 접근 제어 구현.
-   - 인증되지 않은 사용자는 `/login`으로 강제 이동.
+#### ⭐ 메인페이지 기능
+> 동적 쿼리문을 이용하여 여러가지 검색 조건을 통한 검색 가능하도록 구현. <br>
+> 썸네일을 통하여 과거 검사 이미지를 미리 볼수있도록 구성 <br>
+> 해당 환자의 과거 진료 기록내역들을 일괄적으로 확인 가능 <br>
 
-2. **메인 페이지**
-   - 검색 및 동적 렌더링 기능.
-   - 검색 파라미터를 활용한 결과 필터링 및 렌더링.
-   - Cornerstone 라이브러리를 사용해 이미지 시각화.
+### 3. **상세 페이지**
+![디테일페이지1](https://github.com/user-attachments/assets/432b967f-7cb8-4c07-bd91-f4959b590d48)
+![메인페이지2](https://github.com/user-attachments/assets/241c4847-5dac-4c20-b9f5-dcb23e2fb2ea)
+![상세페이지3](https://github.com/user-attachments/assets/6c835ef1-79a2-4bf6-ac0d-27dc1cd74cbd)
 
-3. **상세 페이지**
-   - `axios.all`을 사용해 데이터를 한번에 처리.
-   - 검색 및 데이터 표시 최적화.
+#### ⭐ 상세페이지 기능
+> `axios.all`을 사용해 비동기로 일괄적으로 데이터 요청 및 응답 받기<br>
+> Conerstone API를 사용하여 여러가지 기능 및 렌더린 기능 구현<br>
 
----
-
-## 최적화
-- 쿼리 최적화: 인터페이스 대신 기본 클래스를 사용해 성능 개선.
-- 데이터 형식 통일: JPA로 날짜 비교 시 발생하는 오류 해결.
 
 ---
 
 ## 프로젝트의 장점
-- 직관적 설계로 사용자가 쉽게 접근 가능.
-- 관리 기능으로 유저 권한 설정 및 데이터 관리.
-
----
-
-## 추후 보완점
-- 코드 최적화 및 유지보수 용이성 향상.
+> 직관적 설계로 사용자가 쉽게 접근 가능.
+> 관리 기능으로 유저 권한 설정 및 데이터 관리.
 
 ---
 
